@@ -1,0 +1,16 @@
+Package: yourpackage
+Title: My Supper API Wrapper
+Version: 0.0.0.9000
+Authors@R: 
+    person("Colin", "Fay", , "contact@colinfay.me", role = c("cre", "aut"))
+Description: A long description of this super package I'm working on.
+License: {{ License }}
+URL: http://this
+BugReports: http://that
+Imports: 
+    attempt,
+    curl,
+    httr,
+    jsonlite,
+    purrr
+Encoding: UTF-8
