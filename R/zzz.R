@@ -7,8 +7,9 @@
   op.classroom <- list(
     classroom.client.id = "399382401954-f98jfqie6uuvlg5pl6td7i5efn2hi8hu.apps.googleusercontent.com",
     classroom.client.secret = "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",
-    classroom.endpoint.create = "https://classroom.googleapis.com/v1/course",
-    classroom.endpoint.get = "https://classroom.googleapis.com/v1/course/{courseId}",
+    classroom.endpoint.create = "https://classroom.googleapis.com/v1/courses",
+    classroom.endpoint.get = "https://classroom.googleapis.com/v1/courses",
+    classroom.endpoint.get.course = "https://classroom.googleapis.com/v1/courses/{courseId}",
     classroom.endpoint.topic.get = "https://classroom.googleapis.com/v1/courses/{courseId}/topics/{topicId}"
   )
   toset <- !(names(op.classroom) %in% names(op))

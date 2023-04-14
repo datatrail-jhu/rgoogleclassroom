@@ -1,3 +1,33 @@
+#' Get list of courses
+#' @param id ID of the course
+#' @importFrom httr config accept_json content
+#' @importFrom jsonlite fromJSON
+#' @importFrom assertthat assert_that is.string
+#' @export
+get_course_list <- function(){
+
+  # Get endpoint url
+  url <- get_endpoint("classroom.endpoint.get")
+
+  # Get auth token
+  token <- get_token()
+  config <- httr::config(token=token)
+
+  # Get course properties
+  result <- httr::GET(url, config = config, accept_json())
+
+  if(httr::status_code(result) != 200){
+    message("No courses found")
+    httr::stop_for_status(result)
+  }
+
+  # Process and return results
+  result_content <- content(result, "text")
+  result_list <- fromJSON(result_content)
+  return(result_list)
+}
+
+
 #' Create a new course
 #' @param title Title of the course
 #' @param full_response Parameter to decide whether to return the full response or just the presentation ID
