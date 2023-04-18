@@ -5,8 +5,7 @@
 .onLoad <- function(libname, pkgname) {
   op <- options()
   op.classroom <- list(
-    classroom.client.id = "399382401954-f98jfqie6uuvlg5pl6td7i5efn2hi8hu.apps.googleusercontent.com",
-    classroom.client.secret = "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",
+    classroom.endpoint.user = "https://classroom.googleapis.com/v1/userProfiles/me",
     classroom.endpoint.create = "https://classroom.googleapis.com/v1/courses",
     classroom.endpoint.get = "https://classroom.googleapis.com/v1/courses",
     classroom.endpoint.get.course = "https://classroom.googleapis.com/v1/courses/{courseId}",

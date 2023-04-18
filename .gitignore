@@ -5,3 +5,4 @@
 .httr-oauth
 .Rbuildignore
 .DS_Store
+.secrets

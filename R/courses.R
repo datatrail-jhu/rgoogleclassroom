@@ -4,19 +4,18 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
-get_course_list <- function(){
-
+get_course_list <- function() {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.get")
 
   # Get auth token
   token <- get_token()
-  config <- httr::config(token=token)
+  config <- httr::config(token = token)
 
   # Get course properties
   result <- httr::GET(url, config = config, accept_json())
 
-  if(httr::status_code(result) != 200){
+  if (httr::status_code(result) != 200) {
     message("No courses found")
     httr::stop_for_status(result)
   }
@@ -34,22 +33,24 @@ get_course_list <- function(){
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-create_course <- function(title = NULL, full_response = FALSE){
-
+create_course <- function(ownerId = get_owner_id()$id, name = NULL, full_response = FALSE) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.create")
 
   # Get auth token
   token <- get_token()
-  config <- httr::config(token=token)
+  config <- httr::config(token = token)
 
   # Wrapping body parameters in a requests list
-  body_params <- list(title = title)
+  body_params <- list(
+    ownerId = "103981286714282380585",
+    name = name
+  )
 
   # Modify course
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
-  if(httr::status_code(result) != 200){
+  if (httr::status_code(result) != 200) {
     message("Cannot create course")
     httr::stop_for_status(result)
   }
@@ -57,8 +58,10 @@ create_course <- function(title = NULL, full_response = FALSE){
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
+  message(paste("Course created at", result_list$alternateLink))
+
   # If user request for minimal response
-  if(full_response){
+  if (full_response) {
     return(result_list)
   } else {
     return(result_list$Id)
@@ -72,21 +75,21 @@ create_course <- function(title = NULL, full_response = FALSE){
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
-get_course_properties <- function(course_id){
+get_course_properties <- function(course_id) {
   # Check validity of inputs
   assert_that(is.string(course_id))
 
   # Get endpoint url
-  url <- get_endpoint("classroom.endpoint.get", course_id)
+  url <- get_endpoint("classroom.endpoint.get.course", course_id)
 
   # Get auth token
   token <- get_token()
-  config <- httr::config(token=token)
+  config <- httr::config(token = token)
 
   # Get course properties
   result <- httr::GET(url, config = config, accept_json())
 
-  if(httr::status_code(result) != 200){
+  if (httr::status_code(result) != 200) {
     message("ID provided does not point towards any course")
     httr::stop_for_status(result)
   }
@@ -94,5 +97,6 @@ get_course_properties <- function(course_id){
   # Process and return results
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
+
   return(result_list)
 }
