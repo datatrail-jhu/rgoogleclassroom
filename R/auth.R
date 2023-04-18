@@ -19,9 +19,18 @@ get_token <- function() {
 
 
 ### Declare all the scopes
-base_uri <- "https://www.googleapis.com/auth/classroom."
+forms_scopes_list <- c("https://www.googleapis.com/auth/drive",
+                       "https://www.googleapis.com/auth/drive.file",
+                       "https://www.googleapis.com/auth/drive.readonly",
+                       "https://www.googleapis.com/auth/drive.metadata.readonly",
+                        "https://www.googleapis.com/auth/forms.body",
+                        "https://www.googleapis.com/auth/forms.body.readonly",
+                        "https://www.googleapis.com/auth/forms.responses.readonly")
+
+base_classroom_uri <- "https://www.googleapis.com/auth/classroom."
+
 classroom_scopes_list <- paste0(
-  base_uri,
+  base_classroom_uri,
   c(
     "courses",
     "courses.readonly",
@@ -74,7 +83,7 @@ authorize <- function(
     endpoint <- oauth_endpoints("google")
     token <- oauth2.0_token(
       endpoint = endpoint, app = app,
-      scope = classroom_scopes_list,
+      scope = c(classroom_scopes_list, forms_scopes_list),
       ...
     )
   }
