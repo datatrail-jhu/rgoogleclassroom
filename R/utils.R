@@ -3,25 +3,57 @@
 #' @param course_id (Optional) ID of the google classroom to manipulate. Optional for classroom.endpoint.create
 #' @param topic_id (Optional) ID of the topic to be affected
 #' @importFrom assertthat is.string
-get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user", course_id = NULL, topic_id = NULL) {
-  # Check if type of endpoint is create a course
-  if (type_of_endpoint == "classroom.endpoint.user" ||
-    type_of_endpoint == "classroom.endpoint.create" ||
-    type_of_endpoint == "classroom.endpoint.get") {
-    return(getOption(type_of_endpoint))
+get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
+                         course_id = NULL,
+                         topic_id = NULL,
+                         coursework_id = NULL,
+                         materials_id = NULL) {
+
+  # Make sure the options given are strings
+  if (!is.null(course_id)) assert_that(is.string(course_id))
+  if (!is.null(topic_id)) assert_that(is.string(topic_id))
+  if (!is.null(coursework_id)) assert_that(is.string(coursework_id))
+  if (!is.null(materials_id)) assert_that(is.string(materials_id))
+
+  # Here's our endpoints
+  endpoint_list <- list(
+    classroom.endpoint.user = "https://classroom.googleapis.com/v1/userProfiles/me",
+    classroom.endpoint.course.get = "https://classroom.googleapis.com/v1/courses",
+    classroom.endpoint.course = "https://classroom.googleapis.com/v1/courses/{courseId}",
+    classroom.endpoint.topic.get = "https://classroom.googleapis.com/v1/courses/{courseId}/topics/",
+    classroom.endpoint.topic = "https://classroom.googleapis.com/v1/courses/{courseId}/topics/{topicId}",
+    classroom.endpoint.coursework.get = "https://classroom.googleapis.com/v1/courses/{courseId}/courseWork/",
+    classroom.endpoint.coursework = "https://classroom.googleapis.com/v1/courses/{courseId}/courseWork/{courseWorkId}/",
+    classroom.endpoint.materials.get = "https://classroom.googleapis.com//v1/courses/{courseId}/courseWorkMaterials",
+    classroom.endpoint.materials = "https://classroom.googleapis.com//v1/courses/{courseId}/courseWorkMaterials/{materialsId}"
+  )
+
+  # Extract the endpoint based on what is specified
+  endpoint <- endpoint_list[[type_of_endpoint]]
+
+  # Start off with URL that we will build
+  url_temp <- endpoint
+
+  # Here's the list of the ids we may need
+  variables_list <- list(
+    "{courseId}" = course_id,
+    "{topicId}" = topic_id,
+    "{courseworkId}" = coursework_id,
+    "{materialsId}" = materials_id
+    )
+
+  # Find out which need to be set based on endpoint grep
+  which_to_set <- sapply(names(variables_list), grepl, x = endpoint, fixed = TRUE)
+
+  variables_list <- variables_list[which_to_set]
+
+  # Go through each variable and replace it with the function defined ids to build the URL
+  if (length(variables_list) > 0) {
+    for (item in length(variables_list)) {
+      url_temp <- gsub(names(variables_list)[item], variables_list[item], url_temp, fixed = TRUE)
+    }
   }
 
-  # Check that course_id parameter is a character, if not throw an error
-  assert_that(is.string(course_id))
-
-  # Check if type of endpoint is classroom.endpoint.topic.get
-  if (type_of_endpoint == "classroom.endpoint.topic.get.course") {
-    # Check that topicId parameter is a character, if not throw an error
-    assert_that(is.string(topic_id))
-    url_temp <- gsub("{courseId}", course_id, getOption(type_of_endpoint), fixed = TRUE)
-    url_temp <- gsub("{topicId}", topic_id, url_temp, fixed = TRUE)
-
-    return(url_temp)
-  }
-  return(gsub("{courseId}", course_id, getOption(type_of_endpoint), fixed = TRUE))
+  # Return the URL
+  return(url_temp)
 }

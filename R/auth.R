@@ -1,3 +1,8 @@
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage("Use authorize() function to begin give the package the proper credentials to run.")
+}
+
+
 .classroomEnv <- new.env(parent = emptyenv())
 .classroomEnv$Token <- NULL
 
@@ -34,6 +39,7 @@ classroom_scopes_list <- paste0(
     "student-submissions.me.readonly",
     "coursework.me",
     "courseworkmaterials",
+    "coursework.students",
     "addons.student",
     "push-notifications",
     "addons.teacher",
