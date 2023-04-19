@@ -19,13 +19,15 @@ get_token <- function() {
 
 
 ### Declare all the scopes
-forms_scopes_list <- c("https://www.googleapis.com/auth/drive",
-                       "https://www.googleapis.com/auth/drive.file",
-                       "https://www.googleapis.com/auth/drive.readonly",
-                       "https://www.googleapis.com/auth/drive.metadata.readonly",
-                        "https://www.googleapis.com/auth/forms.body",
-                        "https://www.googleapis.com/auth/forms.body.readonly",
-                        "https://www.googleapis.com/auth/forms.responses.readonly")
+forms_scopes_list <- c(
+  "https://www.googleapis.com/auth/drive",
+  "https://www.googleapis.com/auth/drive.file",
+  "https://www.googleapis.com/auth/drive.readonly",
+  "https://www.googleapis.com/auth/drive.metadata.readonly",
+  "https://www.googleapis.com/auth/forms.body",
+  "https://www.googleapis.com/auth/forms.body.readonly",
+  "https://www.googleapis.com/auth/forms.responses.readonly"
+)
 
 base_classroom_uri <- "https://www.googleapis.com/auth/classroom."
 

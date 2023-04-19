@@ -9,7 +9,6 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
                          coursework_id = NULL,
                          materials_id = NULL,
                          form_id = NULL) {
-
   # Make sure the options given are strings
   if (!is.null(course_id)) assert_that(is.string(course_id))
   if (!is.null(topic_id)) assert_that(is.string(topic_id))
@@ -30,7 +29,8 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
     classroom.endpoint.materials.get = "https://classroom.googleapis.com//v1/courses/{courseId}/courseWorkMaterials",
     classroom.endpoint.materials = "https://classroom.googleapis.com//v1/courses/{courseId}/courseWorkMaterials/{materialsId}",
     forms.endpoint.get = "https://forms.googleapis.com/v1/forms/",
-    forms.endpoint = "https://forms.googleapis.com/v1/forms/{formId}"
+    forms.endpoint = "https://forms.googleapis.com/v1/forms/{formId}",
+    forms.endpoint.batchUpdate = "https://forms.googleapis.com/v1/forms/{formId}:batchUpdate"
   )
 
   # Extract the endpoint based on what is specified
@@ -46,7 +46,7 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
     "{courseworkId}" = coursework_id,
     "{materialsId}" = materials_id,
     "{formId}" = form_id
-    )
+  )
 
   # Find out which need to be set based on endpoint grep
   which_to_set <- sapply(names(variables_list), grepl, x = endpoint, fixed = TRUE)

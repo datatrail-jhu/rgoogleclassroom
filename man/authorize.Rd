@@ -4,22 +4,17 @@
 \alias{authorize}
 \title{Authorize R package to access Google classroom API}
 \usage{
-authorize(
-  client_id = getOption("classroom.client.id"),
-  client_secret = getOption("classroom.client.secret"),
-  token = NULL,
-  ...
-)
+authorize(token = NULL, ...)
 }
 \arguments{
-\item{client_id}{OAuth client ID. This is obtained from Google API Credentials}
-
-\item{client_secret}{OAuth client secret. This is obtained from Google API Credentials}
-
 \item{token}{an output from \code{\link{oauth2.0_token}} to set as the
 authentication token.}
 
 \item{...}{additional arguments to send to \code{\link{oauth2.0_token}}}
+
+\item{client_id}{OAuth client ID. This is obtained from Google API Credentials}
+
+\item{client_secret}{OAuth client secret. This is obtained from Google API Credentials}
 }
 \description{
 This is a function to authorize the R package to access the Googleclassroom API. If no

@@ -1,5 +1,14 @@
 ## File paths to needed data
 
+markdown_quiz_path <- function() {
+  list.files(
+    pattern = "quiz.md",
+    recursive = TRUE,
+    system.file("extdata", package = "rgoogleclassroom"),
+    full.names = TRUE
+  )
+}
+
 default_creds_path <- function() {
   list.files(
     pattern = "default_creds.rds",

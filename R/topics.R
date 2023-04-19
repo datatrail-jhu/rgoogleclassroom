@@ -78,7 +78,6 @@ create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
 #' @importFrom assertthat assert_that is.string
 #' @export
 get_topic_properties <- function(course_id, topic_id) {
-
   # Check validity of inputs
   assert_that(is.string(course_id))
   assert_that(is.string(topic_id))

@@ -6,7 +6,6 @@
 #' @export
 
 get_linked_quizzes_list <- function(course_id) {
-
   # Get all the coursework for a course
   all_material <- get_coursework_list(course_id = course_id)
 
@@ -27,7 +26,6 @@ get_linked_quizzes_list <- function(course_id) {
 #' @importFrom assertthat assert_that is.string
 #' @export
 get_form_properties <- function(form_id) {
-
   # Check validity of inputs
   assert_that(is.string(form_id))
 

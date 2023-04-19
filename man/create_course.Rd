@@ -4,10 +4,12 @@
 \alias{create_course}
 \title{Create a new course}
 \usage{
-create_course(title = NULL, full_response = FALSE)
+create_course(owner_id = get_owner_id()$id, name = NULL, full_response = FALSE)
 }
 \arguments{
-\item{title}{Title of the course}
+\item{owner_id}{The ownerId to use to create the course. Will attempt to retrieve ownerId based on credentials with get_owner_id()}
+
+\item{name}{Name of the new course}
 
 \item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
 }

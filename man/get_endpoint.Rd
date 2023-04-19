@@ -5,9 +5,12 @@
 \title{Generate endpoint for the Google classroom API}
 \usage{
 get_endpoint(
-  type_of_endpoint = "classroom.endpoint.get",
+  type_of_endpoint = "classroom.endpoint.user",
   course_id = NULL,
-  topic_id = NULL
+  topic_id = NULL,
+  coursework_id = NULL,
+  materials_id = NULL,
+  form_id = NULL
 )
 }
 \arguments{
