@@ -29,24 +29,22 @@ create_multiple_choice_question <- function(question_kind = "choiceQuestion",
   assert_that(is.string(choice_vector))
   assert_that(is.logical(shuffle_opt))
 
-  create_question_request <- list(
-    items = title = question,
-    createItem = list(
-      questionItem = list(
-        question = list(
-          choiceQuestion = list(
-            type = "RADIO",
-            shuffle = shuffle_opt
-            )
-          )
-        )
-      )
-    )
+  create_question_request <- list(createItem = list(item = list(questionItem = list())))
   
-  # Define question options
-  if(!is.null(choice_vector)){
-    create_question_request[["question"]][["choiceQuestion"]][["options"]] <- paste0(choice_vector, collapse = ",")
+  create_question_request[["createItem"]][["location"]][["index"]] <- as.integer(1)
+  
+  if(!is.null(question)){
+  create_question_request[["createItem"]][["item"]][["title"]] <- question 
   }
+  
+  create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["choiceQuestion"]][["type"]] <- "RADIO"
+  
+  # Define insertion index on where the slides to be appended
+  if(!is.null(choice_vector)){
+    create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["choiceQuestion"]][["options"]] <-  data.frame(value = choice_vector)
+  }
+
+  create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["choiceQuestion"]][["shuffle"]] <- shuffle_opt
 
   google_forms_request$add_request(create_question_request)
 

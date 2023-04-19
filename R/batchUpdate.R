@@ -21,8 +21,10 @@ commit_to_form <- function(form_id, google_forms_request) {
   # Wrapping body parameters in a requests list
   body_params <- list(requests = google_forms_request$to_list())
 
+  # body_params <- gsub("value\\..\"", "value\"", jsonlite::toJSON(body_params))
+
   # Modify slides
-  result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
+  result <- httr::POST(url, config = config, body = body_params, encode = "json")
 
   # Process results
   result_content <- content(result, "text")
@@ -32,5 +34,8 @@ commit_to_form <- function(form_id, google_forms_request) {
   if (httr::status_code(result) != 200) {
     stop(result_list$error$message)
   }
+
+  message(paste0("Check out your new adds to the form by going to this URL: https://docs.google.com/forms/d/", form_id))
+
   return(result_list)
 }
