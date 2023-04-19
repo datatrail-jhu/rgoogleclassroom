@@ -4,7 +4,7 @@
 \alias{commit_to_form}
 \title{Commit changes to a Google form}
 \usage{
-commit_to_form(form_id, form_request)
+commit_to_form(form_id, google_forms_request)
 }
 \arguments{
 \item{form_id}{The id of the google form to be updated}

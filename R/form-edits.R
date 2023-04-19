@@ -10,9 +10,14 @@
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-#' 
-#' question = "What answer do you want?"
-#' choice_vector = c("A", "B", "C", "D")
+#' @examples \dontrun{
+#'
+#' create_multiple_choice_question(
+#'   question = "What answer do you want?", 
+#'   choice_vector = c("A", "B", "C", "D")
+#'   )
+#'
+#'}
 create_multiple_choice_question <- function(question_kind = "choiceQuestion",
                                             required = FALSE,
                                             question = NULL,
