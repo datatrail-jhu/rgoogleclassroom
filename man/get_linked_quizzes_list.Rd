@@ -12,3 +12,9 @@ get_linked_quizzes_list(course_id)
 \description{
 Get list of forms used in a course as quizzes
 }
+\examples{
+\dontrun{
+
+
+}
+}

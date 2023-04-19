@@ -20,3 +20,9 @@ authentication token.}
 This is a function to authorize the R package to access the Googleclassroom API. If no
 client.id and client.secret is provided, the package would provide predefined values.
 }
+\examples{
+\dontrun{
+
+
+}
+}

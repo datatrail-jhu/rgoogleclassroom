@@ -3,6 +3,10 @@
 #' @param course_id (Optional) ID of the google classroom to manipulate. Optional for classroom.endpoint.create
 #' @param topic_id (Optional) ID of the topic to be affected
 #' @importFrom assertthat is.string
+#' @examples \dontrun{
+#'
+#'
+#'}
 get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
                          course_id = NULL,
                          topic_id = NULL,
@@ -26,8 +30,8 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
     classroom.endpoint.topic = "https://classroom.googleapis.com/v1/courses/{courseId}/topics/{topicId}",
     classroom.endpoint.coursework.get = "https://classroom.googleapis.com/v1/courses/{courseId}/courseWork/",
     classroom.endpoint.coursework = "https://classroom.googleapis.com/v1/courses/{courseId}/courseWork/{courseWorkId}/",
-    classroom.endpoint.materials.get = "https://classroom.googleapis.com//v1/courses/{courseId}/courseWorkMaterials",
-    classroom.endpoint.materials = "https://classroom.googleapis.com//v1/courses/{courseId}/courseWorkMaterials/{materialsId}",
+    classroom.endpoint.materials.get = "https://classroom.googleapis.com/v1/courses/{courseId}/courseWorkMaterials",
+    classroom.endpoint.materials = "https://classroom.googleapis.com/v1/courses/{courseId}/courseWorkMaterials/{materialsId}",
     forms.endpoint.get = "https://forms.googleapis.com/v1/forms/",
     forms.endpoint = "https://forms.googleapis.com/v1/forms/{formId}",
     forms.endpoint.batchUpdate = "https://forms.googleapis.com/v1/forms/{formId}:batchUpdate"

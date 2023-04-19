@@ -69,6 +69,10 @@ classroom_scopes_list <- paste0(
 #' authentication token.
 #' @param ... additional arguments to send to \code{\link{oauth2.0_token}}
 #' @export
+#' @examples \dontrun{
+#'
+#'
+#'}
 authorize <- function(
     token = NULL,
     ...) {

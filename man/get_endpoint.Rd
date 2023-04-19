@@ -23,3 +23,9 @@ get_endpoint(
 \description{
 Generate endpoint for the Google classroom API
 }
+\examples{
+\dontrun{
+
+
+}
+}
