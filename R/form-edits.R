@@ -5,6 +5,7 @@
 #' @param question a string that is what the question should say
 #' @param choice_vector a character vector of the choices that should be given for this question
 #' @param shuffle_opt TRUE or FALSE options should be shuffled? default is FALSE
+#' @param correct_answer The index that corresponds to the correct answer in the `choice_vector` supplied
 #' @importFrom assertthat assert_that is.string
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
@@ -16,7 +17,9 @@ create_multiple_choice_question <- function(question_kind = "choiceQuestion",
                                             required = FALSE,
                                             question = NULL,
                                             choice_vector = NULL,
-                                            shuffle_opt = FALSE) {
+                                            shuffle_opt = FALSE, 
+                                            correct_answer = NULL, 
+                                            point_value = NULL) {
   if (is.null(google_forms_request)) {
     google_forms_request <- google_forms_request_container$new()
   }
@@ -46,6 +49,14 @@ create_multiple_choice_question <- function(question_kind = "choiceQuestion",
 
   create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["choiceQuestion"]][["shuffle"]] <- shuffle_opt
 
+  if(!is.null(correct_answer)){
+    create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["grading"]][["correctAnswers"]][["answers"]] <- data.frame(value = choice_vector[correct_answer])
+  }
+  
+  if(!is.null(point_value)){
+    create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["grading"]][["pointValue"]] <- point_value
+  }
+  
   google_forms_request$add_request(create_question_request)
 
   return(google_forms_request)
