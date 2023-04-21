@@ -30,20 +30,30 @@ get_coursework_list <- function(course_id) {
 
 #' Create a new coursework
 #' @param course_id Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
-#' @param name Name of new coursework
-#' @param full_response Parameter to decide whether to return the full response or just the presentation ID
+#' @param title Name of new coursework
+#' @param work_type Type of new coursework
+#' @param due_date Due date for new coursework
+#' @param description Description of new coursework
+#' @param full_response Parameter to decide whether to return the full response
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
+#' topic_id <- "NjA0MDQyMzIzMjUw"
+#' course_id <- "604042323237"
+#' title = "a new coursework"
+#' work_type = "ASSIGNMENT"
+#' description = "blah blah"
+#' link = "https://www.datatrail.org/"
 create_coursework <- function(course_id = NULL,
                               topic_id = NULL,
-                              name = NULL,
+                              title = NULL,
                               work_type = NULL,
                               due_date = NULL,
                               description = NULL,
+                              link = NULL,
                               full_response = FALSE) {
   # Get endpoint url
-  url <- get_endpoint("classroom.endpoint.coursework")
+  url <- get_endpoint("classroom.endpoint.coursework.get", course_id = course_id)
 
   # Get auth token
   token <- get_token()
@@ -52,11 +62,12 @@ create_coursework <- function(course_id = NULL,
   # Wrapping body parameters in a requests list
   body_params <- list(
     courseId = course_id,
-    topic_id = topic_id,
-    name = name,
-    workType = work_type,
-    dueDate = due_date,
-    description = description
+    #topic_id = topic_id,
+    title = title,
+    workType = work_type
+    #dueDate = ,
+    #description = description
+    #materials = list("link" = list("url" = link))
   )
 
   # Modify course

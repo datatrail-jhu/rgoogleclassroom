@@ -13,6 +13,7 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
                          coursework_id = NULL,
                          materials_id = NULL,
                          form_id = NULL) {
+
   # Make sure the options given are strings
   if (!is.null(course_id)) assert_that(is.string(course_id))
   if (!is.null(topic_id)) assert_that(is.string(topic_id))
@@ -55,11 +56,16 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
   # Find out which need to be set based on endpoint grep
   which_to_set <- sapply(names(variables_list), grepl, x = endpoint, fixed = TRUE)
 
-  variables_list <- variables_list[which_to_set]
+  variables_list <- unlist(variables_list[which_to_set])
 
   # Go through each variable and replace it with the function defined ids to build the URL
   if (length(variables_list) > 0) {
-    for (item in length(variables_list)) {
+
+    for (item in 1:length(variables_list)) {
+      # If the variable is null stop.
+      if (is.null(variables_list[[item]])) stop(paste("Variable not set. Require:", names(variables_list)[item]))
+
+      # Replace the variable with the thing set
       url_temp <- gsub(names(variables_list)[item], variables_list[item], url_temp, fixed = TRUE)
     }
   }

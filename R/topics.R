@@ -7,7 +7,7 @@
 
 get_topic_list <- function(course_id) {
   # Get endpoint url
-  url <- get_endpoint("classroom.endpoint.topic", course_id = course_id)
+  url <- get_endpoint("classroom.endpoint.topic.get", course_id = course_id)
 
   # Get auth token
   token <- get_token()
@@ -30,14 +30,14 @@ get_topic_list <- function(course_id) {
 
 #' Create a new topic
 #' @param course_id Course id of where to make the new topic. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
-#' @param name Name of new topic
+#' @param name Name of new topic. Required.
 #' @param full_response Parameter to decide whether to return the full response or just the presentation ID
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
 create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
   # Get endpoint url
-  url <- get_endpoint("classroom.endpoint.topic")
+  url <- get_endpoint("classroom.endpoint.topic.get", course_id = course_id)
 
   # Get auth token
   token <- get_token()
@@ -45,7 +45,7 @@ create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
 
   # Wrapping body parameters in a requests list
   body_params <- list(
-    courseId = owner_id,
+    courseId = course_id,
     name = name
   )
 
@@ -71,8 +71,9 @@ create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
 }
 
 
-#' Get Google Classroom Course Properties
-#' @param id ID of the course
+#' Get Google Classroom Topic Properties
+#' @param course_id ID of the course
+#' @param topic_id ID of the course
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
@@ -83,7 +84,7 @@ get_topic_properties <- function(course_id, topic_id) {
   assert_that(is.string(topic_id))
 
   # Get endpoint url
-  url <- get_endpoint("classroom.endpoint.get.topic", course_id, topic_id)
+  url <- get_endpoint("classroom.endpoint.topic", course_id, topic_id)
 
   # Get auth token
   token <- get_token()

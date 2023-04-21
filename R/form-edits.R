@@ -13,8 +13,11 @@
 #' @examples \dontrun{
 #'
 #' create_multiple_choice_question(
-#'   question = "What answer do you want?", 
-#'   choice_vector = c("A", "B", "C", "D")
+#'   form_id = "12345",
+#'   question = "What answer do you want?",
+#'   choice_vector = c("A", "B", "C", "D"),
+#'   correct_answer = 3,
+#'   shuffle_opt = TRUE
 #'   )
 #'
 #'}
@@ -22,8 +25,8 @@ create_multiple_choice_question <- function(question_kind = "choiceQuestion",
                                             required = FALSE,
                                             question = NULL,
                                             choice_vector = NULL,
-                                            shuffle_opt = FALSE, 
-                                            correct_answer = NULL, 
+                                            shuffle_opt = FALSE,
+                                            correct_answer = NULL,
                                             point_value = NULL) {
   if (is.null(google_forms_request)) {
     google_forms_request <- google_forms_request_container$new()
@@ -38,15 +41,15 @@ create_multiple_choice_question <- function(question_kind = "choiceQuestion",
   assert_that(is.logical(shuffle_opt))
 
   create_question_request <- list(createItem = list(item = list(questionItem = list())))
-  
+
   create_question_request[["createItem"]][["location"]][["index"]] <- as.integer(1)
-  
+
   if(!is.null(question)){
-  create_question_request[["createItem"]][["item"]][["title"]] <- question 
+  create_question_request[["createItem"]][["item"]][["title"]] <- question
   }
-  
+
   create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["choiceQuestion"]][["type"]] <- "RADIO"
-  
+
   # Define insertion index on where the slides to be appended
   if(!is.null(choice_vector)){
     create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["choiceQuestion"]][["options"]] <-  data.frame(value = choice_vector)
@@ -57,11 +60,11 @@ create_multiple_choice_question <- function(question_kind = "choiceQuestion",
   if(!is.null(correct_answer)){
     create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["grading"]][["correctAnswers"]][["answers"]] <- data.frame(value = choice_vector[correct_answer])
   }
-  
+
   if(!is.null(point_value)){
     create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["grading"]][["pointValue"]] <- point_value
   }
-  
+
   google_forms_request$add_request(create_question_request)
 
   return(google_forms_request)
