@@ -87,7 +87,8 @@ create_coursework <- function(course_id = NULL,
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste0("Coursework created at: ", get_course_properties(result_list$courseId)$alternateLink, "/t/all"))
+  course_work_url <- gsub("/c/", "/w/", get_course_properties(result_list$courseId)$alternateLink)
+  message(paste0("Coursework created at: ", course_work_url, "/t/all"))
 
   # If user request for minimal response
   if (full_response) {

@@ -15,7 +15,7 @@ date_handler <- function(due_date) {
   return(dates)
 }
 
-time_handler <- function(due_time = lubridate::hms("24:00:00")) {
+time_handler <- function(due_time = lubridate::hms("23:59:59")) {
 
   due_time <- lubridate::hms(due_time)
 
