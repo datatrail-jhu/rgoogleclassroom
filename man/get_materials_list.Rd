@@ -7,14 +7,14 @@
 get_materials_list(course_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{course_id}{ID of the course}
 }
 \description{
 Get list of materials for a course
 }
 \examples{
 \dontrun{
-course_id <- get_course_list()$courses$id[3]
+course_id <- get_course_list()$courses$id[1]
 materials_df <- get_materials_list(course_id)
 }
 }

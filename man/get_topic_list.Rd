@@ -12,3 +12,11 @@ get_topic_list(course_id)
 \description{
 Get list of topics for a course
 }
+\examples{
+\dontrun{
+
+course_id <- get_course_list()$courses$id[1]
+
+get_topic_list(course_id)
+}
+}

@@ -5,8 +5,8 @@
 #' @importFrom assertthat assert_that is.string
 #' @export
 #' @examples \dontrun{
-#'
-#'
+#' course_id <- get_course_list()$courses$id[1]
+#' quiz_list <- get_linked_quizzes_list(course_id)
 #'}
 get_linked_quizzes_list <- function(course_id) {
   # Get all the coursework for a course
@@ -22,12 +22,20 @@ get_linked_quizzes_list <- function(course_id) {
   return(form_ids)
 }
 
-#' Get Google Classroom Course Properties
-#' @param id ID of the course
+#' Get Google Form Properties
+#' @param form_id Google form Id
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
+#' @examples \dontrun{
+#'
+#' # Make the form
+#' form_info <- create_form(title = "A great quiz", description = "This quiz is tricky")
+#'
+#' # Get info about the form
+#' form_info <- get_form_properties(form_id = form_info$formId)
+#'}
 get_form_properties <- function(form_id) {
   # Check validity of inputs
   assert_that(is.string(form_id))
@@ -55,13 +63,20 @@ get_form_properties <- function(form_id) {
 }
 
 #' Create a new form
-#' @param form_id Forms id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
-#' @param name Name of new coursework
+#' @param title The title for the new form. Required as a string.
+#' @param description The description for the new form as a string.
 #' @param full_response Parameter to decide whether to return the full response or just the presentation ID
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-create_form <- function(title = NULL, description = "", is_quiz = FALSE, full_response = TRUE) {
+#'
+#' @examples \dontrun{
+#'
+#' # Make the form
+#' form_info <- create_form(title = "A great quiz", description = "This quiz is tricky")
+#'
+#'}
+create_form <- function(title = NULL, description = "", full_response = TRUE) {
 
   # Check validity of inputs
   assert_that(is.string(title))
@@ -105,6 +120,15 @@ create_form <- function(title = NULL, description = "", is_quiz = FALSE, full_re
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
+#' @examples \dontrun{
+#'
+#' # Make the form
+#' form_info <- create_form(title = quiz_title)
+#'
+#' # Now make it a quiz
+#' make_form_quiz(form_id = form_info$formId)
+#'
+#'}
 make_form_quiz <- function(form_id, full_response = TRUE) {
 
   # Get endpoint url

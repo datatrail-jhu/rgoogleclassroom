@@ -25,7 +25,7 @@ date_handler <- function(due_date) {
 }
 
 #' Handle and parse a time
-#' @param date A string that is a date in format of year-month-day
+#' @param date A string that is a date in format of year-month-day. Default is midnight.
 #' @importFrom lubridate hour minute second hms
 #' @export
 #'

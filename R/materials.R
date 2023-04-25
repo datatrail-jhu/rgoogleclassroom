@@ -1,12 +1,12 @@
 #' Get list of materials for a course
-#' @param id ID of the course
+#' @param course_id ID of the course
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
 #'
 #' @examples \dontrun{
-#' course_id <- get_course_list()$courses$id[3]
+#' course_id <- get_course_list()$courses$id[1]
 #' materials_df <- get_materials_list(course_id)
 #' }
 
@@ -100,7 +100,7 @@ create_material <- function(course_id = NULL,
 
 
 #' Get Google Classroom Materials properties
-#' @param id ID of the course
+#' @param course_id ID of the course
 #' @param materials_id The material id you wish to retrieve
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON

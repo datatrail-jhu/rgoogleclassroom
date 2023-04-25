@@ -7,9 +7,9 @@
 get_materials_properties(course_id, materials_id)
 }
 \arguments{
-\item{materials_id}{The material id you wish to retrieve}
+\item{course_id}{ID of the course}
 
-\item{id}{ID of the course}
+\item{materials_id}{The material id you wish to retrieve}
 }
 \description{
 Get Google Classroom Materials properties

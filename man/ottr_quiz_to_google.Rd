@@ -4,24 +4,26 @@
 \alias{ottr_quiz_to_google}
 \title{Create quiz batch request from Markua quiz}
 \usage{
-ottr_quiz_to_google(course_id = NULL, form_id = NULL, make_new_quiz = FALSE)
+ottr_quiz_to_google(
+  quiz_path = NULL,
+  course_id = NULL,
+  form_id = NULL,
+  make_new_quiz = FALSE
+)
 }
 \arguments{
-\item{form_id}{quiz_specs which is output from [ottrpal::parse_quiz].}
+\item{quiz_path}{file path to a markdown Markua quiz}
 
-\item{quiz_name}{The name of the quiz being checked.}
+\item{course_id}{An id for the course where this is to be published and linked.}
+
+\item{form_id}{form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.}
+
+\item{make_new_quiz}{This can only be used if form_id is not specified. This will make a new quiz}
 
 \item{verbose}{Whether progress messages should be given.}
-
-\item{ignore_coursera}{Coursera doesn't like `!` or `:` in the quizzes. Do not convert quizzes to coursera and ignore ! and : in question prompts that would not be allowed in Leanpub quizzes when converted to a Coursera quiz. Default is to ignore Coursera compatibility.}
-}
-\value{
-A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.
-#'
 }
 \description{
-Takes output from [ottrpal::parse_quiz] and runs checks on each question in a quiz by calling [ottrpal::check_question] for each question.
-First splits questions into their own data frame. Returns a list of messages/warnings about each question's set up.
+Takes a file path to a Markua formatted quiz and
 }
 \examples{
 \dontrun{

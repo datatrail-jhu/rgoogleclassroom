@@ -14,7 +14,7 @@ Get list of forms used in a course as quizzes
 }
 \examples{
 \dontrun{
-
-
+course_id <- get_course_list()$courses$id[1]
+quiz_list <- get_linked_quizzes_list(course_id)
 }
 }

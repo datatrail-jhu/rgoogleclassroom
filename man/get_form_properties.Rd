@@ -2,13 +2,23 @@
 % Please edit documentation in R/forms.R
 \name{get_form_properties}
 \alias{get_form_properties}
-\title{Get Google Classroom Course Properties}
+\title{Get Google Form Properties}
 \usage{
 get_form_properties(form_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{form_id}{Google form Id}
 }
 \description{
-Get Google Classroom Course Properties
+Get Google Form Properties
+}
+\examples{
+\dontrun{
+
+# Make the form
+form_info <- create_form(title = "A great quiz", description = "This quiz is tricky")
+
+# Get info about the form
+form_info <- get_form_properties(form_id = form_info$formId)
+}
 }

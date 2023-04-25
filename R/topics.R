@@ -4,7 +4,12 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
-
+#' @examples \dontrun{
+#'
+#' course_id <- get_course_list()$courses$id[1]
+#'
+#' get_topic_list(course_id)
+#'}
 get_topic_list <- function(course_id) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.topic.get", course_id = course_id)

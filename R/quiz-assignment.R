@@ -12,8 +12,13 @@
 #' @export
 #'
 #' @examples \dontrun{
-#' date_handler("2025-12-1")
-#' }
+#'
+#' course_id <- get_course_list()$courses$id[1]
+#' topic_id <- get_topic_list(course_id)$topic$topicId[1]
+#'
+#' create_quiz(course_id, quiz_title = "new quiz", quiz_description = "This is a great quiz",
+#' topic_id = topic_id, due_date = "2025-12-1")
+#'}
 create_quiz <- function(course_id = NULL,
                         quiz_title = NULL,
                         quiz_description = NULL,
@@ -51,4 +56,5 @@ create_quiz <- function(course_id = NULL,
                       description =  assignment_description,
                       link = form_info$responderUri)
 
+  return(coursework)
 }

@@ -4,20 +4,23 @@
 \alias{create_form}
 \title{Create a new form}
 \usage{
-create_form(
-  title = NULL,
-  description = "",
-  is_quiz = FALSE,
-  full_response = TRUE
-)
+create_form(title = NULL, description = "", full_response = TRUE)
 }
 \arguments{
+\item{title}{The title for the new form. Required as a string.}
+
+\item{description}{The description for the new form as a string.}
+
 \item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
-
-\item{form_id}{Forms id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
-
-\item{name}{Name of new coursework}
 }
 \description{
 Create a new form
+}
+\examples{
+\dontrun{
+
+# Make the form
+form_info <- create_form(title = "A great quiz", description = "This quiz is tricky")
+
+}
 }

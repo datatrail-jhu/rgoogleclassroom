@@ -12,3 +12,14 @@ make_form_quiz(form_id, full_response = TRUE)
 \description{
 Turn a form into a quiz
 }
+\examples{
+\dontrun{
+
+# Make the form
+form_info <- create_form(title = quiz_title)
+
+# Now make it a quiz
+make_form_quiz(form_id = form_info$formId)
+
+}
+}

@@ -14,9 +14,7 @@
 #' # Using quiz example
 #'
 #' quiz_path <- markdown_quiz_path()
-#' good_quiz <- readLines(quiz_path)
-#' good_quiz_specs <- parse_quiz(good_quiz)
-#' good_quiz_checks <- check_all_questions(good_quiz_specs)
+#' parsed_questions <- translate_questions_api(quiz_path)
 #' }
 #'
 translate_questions_api <- function(quiz_path) {
@@ -72,16 +70,14 @@ translate_questions_api <- function(quiz_path) {
 
 #' Create quiz batch request from Markua quiz
 #'
-#' Takes output from [ottrpal::parse_quiz] and runs checks on each question in a quiz by calling [ottrpal::check_question] for each question.
-#' First splits questions into their own data frame. Returns a list of messages/warnings about each question's set up.
-#'
-#' @param form_id quiz_specs which is output from [ottrpal::parse_quiz].
-#' @param quiz_name The name of the quiz being checked.
+#' Takes a file path to a Markua formatted quiz and
+
+#' @param quiz_path file path to a markdown Markua quiz
+#' @param course_id An id for the course where this is to be published and linked.
+#' @param form_id form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.
+#' @param make_new_quiz This can only be used if form_id is not specified. This will make a new quiz
 #' @param verbose Whether progress messages should be given.
-#' @param ignore_coursera Coursera doesn't like `!` or `:` in the quizzes. Do not convert quizzes to coursera and ignore ! and : in question prompts that would not be allowed in Leanpub quizzes when converted to a Coursera quiz. Default is to ignore Coursera compatibility.
 #' @importFrom magrittr %>%
-#' @return A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.
-#'#'
 #' @examples \dontrun{
 #'
 #' # Using quiz example
@@ -91,7 +87,8 @@ translate_questions_api <- function(quiz_path) {
 #' ottr_quiz_to_google(quiz_path)
 #' }
 #'
-ottr_quiz_to_google <- function(course_id = NULL,
+ottr_quiz_to_google <- function(quiz_path = NULL,
+                                course_id = NULL,
                                 form_id = NULL,
                                 make_new_quiz = FALSE) {
 
@@ -104,18 +101,25 @@ ottr_quiz_to_google <- function(course_id = NULL,
   }
 
   if (make_new_quiz) {
-    create_quiz()
+    extract_title <- grep("^#", readLines(quiz_path), value = TRUE)
+
+    extract_title <- stringr::word(extract_title, sep = "# ", -1)
+
+    form_id <- create_quiz(course_id,
+                           quiz_title = extract_title,
+                           quiz_description = "")
+  } else {
+
   }
 
-
-# For each question, add it to the batch request we are building
-for (question_index in 1:nrow(formatted_df)) {
-  create_multiple_choice_question(
-    form_id = form_id,
-    question = formatted_df$question[question_index],
-    choice_vector = all_answers[[question_index]],
-    correct_answer = formatted_df$correct_answer[question_index],
-    shuffle_opt = formatted_df$shuffle_opt[[question_index]]
-  )
-}
+  # For each question, add it to the batch request we are building
+  for (question_index in 1:nrow(formatted_df)) {
+    create_multiple_choice_question(
+      form_id = form_info$formId,
+      question = formatted_df$question[question_index],
+      choice_vector = all_answers[[question_index]],
+      correct_answer = formatted_df$correct_answer[question_index],
+      shuffle_opt = formatted_df$shuffle_opt[[question_index]]
+    )
+  }
 }

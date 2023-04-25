@@ -15,6 +15,8 @@ Get list of courseworks for a course
 \examples{
 \dontrun{
 
-courses_id <- get_course_list()$courses$id[2]
+course_id <- get_course_list()$courses$id[1]
+
+get_coursework_list(course_id)
 }
 }

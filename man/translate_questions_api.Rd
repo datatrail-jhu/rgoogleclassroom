@@ -24,9 +24,7 @@ Takes a Markua formatted quiz and translates it to something that can be sent to
 # Using quiz example
 
 quiz_path <- markdown_quiz_path()
-good_quiz <- readLines(quiz_path)
-good_quiz_specs <- parse_quiz(good_quiz)
-good_quiz_checks <- check_all_questions(good_quiz_specs)
+parsed_questions <- translate_questions_api(quiz_path)
 }
 
 }
