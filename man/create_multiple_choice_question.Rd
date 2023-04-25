@@ -36,8 +36,11 @@ Commit changes to a Google form
 \dontrun{
 
 create_multiple_choice_question(
-  question = "What answer do you want?", 
-  choice_vector = c("A", "B", "C", "D")
+  form_id = "12345",
+  question = "What answer do you want?",
+  choice_vector = c("A", "B", "C", "D"),
+  correct_answer = 3,
+  shuffle_opt = TRUE
   )
 
 }

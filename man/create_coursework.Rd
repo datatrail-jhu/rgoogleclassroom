@@ -7,20 +7,38 @@
 create_coursework(
   course_id = NULL,
   topic_id = NULL,
-  name = NULL,
-  work_type = NULL,
+  title = NULL,
+  work_type = "ASSIGNMENT",
   due_date = NULL,
   description = NULL,
+  link = NULL,
   full_response = FALSE
 )
 }
 \arguments{
 \item{course_id}{Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
 
-\item{name}{Name of new coursework}
+\item{title}{Name of new coursework}
 
-\item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
+\item{due_date}{Required Due date for new coursework, must be given in year-month-day format.}
+
+\item{description}{Description of new coursework. Is a string}
+
+\item{link}{A url to an associated resource for the coursework being made.}
+
+\item{full_response}{Parameter to decide whether to return the full response}
 }
 \description{
 Create a new coursework
+}
+\examples{
+\dontrun{
+topic_id <- get_topic_list("604042323237")$topic$topicId[1]
+course_id <- get_course_list()$courses$id[1]
+
+create_coursework(course_id, topic_id, title = "a new quiz", due_date = "2025-12-1",
+  description = "blah blah", link = "https://www.datatrail.org/")
+
+}
+
 }

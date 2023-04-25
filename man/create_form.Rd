@@ -5,21 +5,18 @@
 \title{Create a new form}
 \usage{
 create_form(
-  course_id = NULL,
-  topic_id = NULL,
-  name = NULL,
-  work_type = NULL,
-  due_date = NULL,
-  description = NULL,
-  full_response = FALSE
+  title = NULL,
+  description = "",
+  is_quiz = FALSE,
+  full_response = TRUE
 )
 }
 \arguments{
-\item{name}{Name of new coursework}
-
 \item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
 
 \item{form_id}{Forms id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
+
+\item{name}{Name of new coursework}
 }
 \description{
 Create a new form

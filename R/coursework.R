@@ -35,29 +35,38 @@ get_coursework_list <- function(course_id) {
 #' Create a new coursework
 #' @param course_id Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
 #' @param title Name of new coursework
-#' @param work_type Type of new coursework
-#' @param due_date Due date for new coursework
-#' @param description Description of new coursework
+#' @param due_date Required Due date for new coursework, must be given in year-month-day format.
+#' @param link A url to an associated resource for the coursework being made.
+#' @param description Description of new coursework. Is a string
 #' @param full_response Parameter to decide whether to return the full response
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-#' topic_id <- get_topic_list("604042323237")$topic$topicId[3]
-#' course_id <- "604042323237"
-#' title = "a new quiz"
-#' work_type = "ASSIGNMENT"
-#' description = "blah blah"
-#' link = "https://www.datatrail.org/"
+#'
+#' @examples \dontrun{
+#' topic_id <- get_topic_list("604042323237")$topic$topicId[1]
+#' course_id <- get_course_list()$courses$id[1]
+#'
+#' create_coursework(course_id, topic_id, title = "a new quiz", due_date = "2025-12-1",
+#'   description = "blah blah", link = "https://www.datatrail.org/")
+#'
+#' }
+#'
 create_coursework <- function(course_id = NULL,
                               topic_id = NULL,
                               title = NULL,
-                              work_type = NULL,
+                              work_type = "ASSIGNMENT",
                               due_date = NULL,
                               description = NULL,
                               link = NULL,
                               full_response = FALSE) {
+
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.coursework.get", course_id = course_id)
+
+  assert_that(is.string(course_id))
+  assert_that(is.string(topic_id))
+  if (!is.null(description)) assert_that(is.string(description))
 
   # Get auth token
   token <- get_token()
@@ -88,7 +97,7 @@ create_coursework <- function(course_id = NULL,
   result_list <- fromJSON(result_content)
 
   course_work_url <- gsub("/c/", "/w/", get_course_properties(result_list$courseId)$alternateLink)
-  message(paste0("Coursework created at: ", course_work_url, "/t/all"))
+  message(paste0("Coursework called: ", result_list$title, "\n Created at: ", course_work_url, "/t/all"))
 
   # If user request for minimal response
   if (full_response) {

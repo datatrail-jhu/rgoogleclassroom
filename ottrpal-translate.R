@@ -91,18 +91,20 @@ translate_questions_api <- function(quiz_path) {
 #' ottr_quiz_to_google(quiz_path)
 #' }
 #'
-ottr_quiz_to_google <- function(form_id = NULL, course_id, make_new_form = FALSE)
+ottr_quiz_to_google <- function(course_id = NULL,
+                                form_id = NULL,
+                                make_new_quiz = FALSE)
 
-  if (is.null(form_id) && make_new_form == FALSE) {
-    stop("No form ID supplied and make_new_form is set to FALSE. Stopping.")
+  if (is.null(form_id) && make_new_quiz == FALSE) {
+    stop("No form ID supplied and make_new_quiz is set to FALSE. Stopping.")
   }
 
-  if (!is.null(form_id) && make_new_form == TRUE) {
-    stop("Form ID supplied and make_new_form is set to TRUE. Unclear if you want to create a new form or use the form_id you supplied. Stopping.")
+  if (!is.null(form_id) && make_new_quiz == TRUE) {
+    stop("Form ID supplied and make_new_quiz is set to TRUE. Unclear if you want to create a new form or use the form_id you supplied. Stopping.")
   }
 
-  if (make_new_form) {
-      create_form()
+  if (make_new_quiz) {
+    create_quiz()
   }
 
 

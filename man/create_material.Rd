@@ -19,8 +19,6 @@ create_material(
 
 \item{title}{Name of new material}
 
-\item{due_date}{A due date for the associated material}
-
 \item{description}{A description for the new material}
 
 \item{material_link}{A URL to go with the associated material}
@@ -29,4 +27,13 @@ create_material(
 }
 \description{
 Create a new material
+}
+\examples{
+\dontrun {
+course_id <- get_course_list()$courses$id[3]
+topic_id <- get_topic_list(course_id)$topic$topicId[1]
+
+create_material(course_id, topic_id, title = "new material")
+
+}
 }

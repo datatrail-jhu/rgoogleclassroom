@@ -4,6 +4,11 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
+#'
+#' @examples \dontrun {
+#' course_id <- get_course_list()$courses$id[3]
+#' materials_df <- get_materials_list(course_id)
+#' }
 
 get_materials_list <- function(course_id) {
   # Get endpoint url
@@ -33,18 +38,26 @@ get_materials_list <- function(course_id) {
 #' @param title Name of new material
 #' @param description A description for the new material
 #' @param material_link A URL to go with the associated material
-#' @param due_date A due date for the associated material
 #' @param full_response Parameter to decide whether to return the full response or just the presentation ID
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
+#'
+#'
+#' @examples \dontrun {
+#' course_id <- get_course_list()$courses$id[3]
+#' topic_id <- get_topic_list(course_id)$topic$topicId[1]
+#'
+#' create_material(course_id, topic_id, title = "new material")
+#'
+#' }
 create_material <- function(course_id = NULL,
-                              topic_id = NULL,
-                              title = NULL,
-                              due_date = NULL,
-                              description = NULL,
-                              material_link = NULL,
-                              full_response = FALSE) {
+                            topic_id = NULL,
+                            title = NULL,
+                            due_date = NULL,
+                            description = NULL,
+                            material_link = NULL,
+                            full_response = FALSE) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.materials.get", course_id)
 
@@ -55,11 +68,10 @@ create_material <- function(course_id = NULL,
   # Wrapping body parameters in a requests list
   body_params <- list(
     courseId = course_id,
-     topic_id = topic_id,
-     materials = list("link" = list("url" = material_link)),
-     title = title,
-     dueDate = due_date,
-     description = description
+    topic_id = topic_id,
+    title = title,
+    description = description,
+    materials = list("link" = list("url" = link))
   )
 
   # Modify course
@@ -73,7 +85,7 @@ create_material <- function(course_id = NULL,
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste("Coursework created at", result_list$alternateLink))
+  message(paste("Coursework Material created at", result_list$alternateLink))
 
   # If user request for minimal response
   if (full_response) {

@@ -2,13 +2,15 @@
 % Please edit documentation in R/topics.R
 \name{get_topic_properties}
 \alias{get_topic_properties}
-\title{Get Google Classroom Course Properties}
+\title{Get Google Classroom Topic Properties}
 \usage{
 get_topic_properties(course_id, topic_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{course_id}{ID of the course}
+
+\item{topic_id}{ID of the course}
 }
 \description{
-Get Google Classroom Course Properties
+Get Google Classroom Topic Properties
 }

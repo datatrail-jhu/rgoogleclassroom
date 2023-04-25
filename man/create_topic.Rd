@@ -9,7 +9,7 @@ create_topic(course_id = NULL, name = NULL, full_response = FALSE)
 \arguments{
 \item{course_id}{Course id of where to make the new topic. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
 
-\item{name}{Name of new topic}
+\item{name}{Name of new topic. Required.}
 
 \item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
 }

@@ -12,3 +12,9 @@ get_materials_list(course_id)
 \description{
 Get list of materials for a course
 }
+\examples{
+\dontrun {
+course_id <- get_course_list()$courses$id[3]
+materials_df <- get_materials_list(course_id)
+}
+}
