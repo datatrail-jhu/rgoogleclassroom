@@ -35,6 +35,7 @@ get_coursework_list <- function(course_id) {
 #' Create a new coursework
 #' @param course_id Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
 #' @param title Name of new coursework
+#' @param publish TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).
 #' @param due_date Required Due date for new coursework, must be given in year-month-day format.
 #' @param link A url to an associated resource for the coursework being made.
 #' @param description Description of new coursework. Is a string
@@ -54,6 +55,7 @@ get_coursework_list <- function(course_id) {
 #'
 create_coursework <- function(course_id = NULL,
                               topic_id = NULL,
+                              publish = FALSE,
                               title = NULL,
                               work_type = "ASSIGNMENT",
                               due_date = NULL,
@@ -82,7 +84,8 @@ create_coursework <- function(course_id = NULL,
     dueDate = date_handler(due_date),
     dueTime = time_handler(),
     description = description,
-    materials = list("link" = list("url" = link))
+    materials = list("link" = list("url" = link)),
+    state = ifelse(publish, "PUBLISHED", "DRAFT")
   )
 
   # Modify course

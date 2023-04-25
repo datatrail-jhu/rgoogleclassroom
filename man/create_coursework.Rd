@@ -7,6 +7,7 @@
 create_coursework(
   course_id = NULL,
   topic_id = NULL,
+  publish = FALSE,
   title = NULL,
   work_type = "ASSIGNMENT",
   due_date = NULL,
@@ -17,6 +18,8 @@ create_coursework(
 }
 \arguments{
 \item{course_id}{Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
+
+\item{publish}{TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).}
 
 \item{title}{Name of new coursework}
 

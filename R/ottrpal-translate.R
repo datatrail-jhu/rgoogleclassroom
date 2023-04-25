@@ -93,7 +93,7 @@ translate_questions_api <- function(quiz_path) {
 #'
 ottr_quiz_to_google <- function(course_id = NULL,
                                 form_id = NULL,
-                                make_new_quiz = FALSE)
+                                make_new_quiz = FALSE) {
 
   if (is.null(form_id) && make_new_quiz == FALSE) {
     stop("No form ID supplied and make_new_quiz is set to FALSE. Stopping.")
@@ -117,4 +117,5 @@ for (question_index in 1:nrow(formatted_df)) {
     correct_answer = formatted_df$correct_answer[question_index],
     shuffle_opt = formatted_df$shuffle_opt[[question_index]]
   )
+}
 }

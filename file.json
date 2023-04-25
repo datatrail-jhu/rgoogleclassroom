@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "title": "a title",
+      "questionItem": {
+        "question": {
+          "choiceQuestion": {
+            "type": "RADIO",
+            "options": []
+          }
+        }
+      }
+    }
+  ]
+}

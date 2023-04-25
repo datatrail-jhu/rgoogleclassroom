@@ -5,7 +5,7 @@
 #' @importFrom assertthat assert_that is.string
 #' @export
 #'
-#' @examples \dontrun {
+#' @examples \dontrun{
 #' course_id <- get_course_list()$courses$id[3]
 #' materials_df <- get_materials_list(course_id)
 #' }
@@ -36,6 +36,7 @@ get_materials_list <- function(course_id) {
 #' Create a new material
 #' @param course_id Course id of where to make the new materials. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
 #' @param title Name of new material
+#' @param publish TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).
 #' @param description A description for the new material
 #' @param material_link A URL to go with the associated material
 #' @param full_response Parameter to decide whether to return the full response or just the presentation ID
@@ -44,7 +45,7 @@ get_materials_list <- function(course_id) {
 #' @export
 #'
 #'
-#' @examples \dontrun {
+#' @examples \dontrun{
 #' course_id <- get_course_list()$courses$id[3]
 #' topic_id <- get_topic_list(course_id)$topic$topicId[1]
 #'
@@ -53,6 +54,7 @@ get_materials_list <- function(course_id) {
 #' }
 create_material <- function(course_id = NULL,
                             topic_id = NULL,
+                            publish = FALSE,
                             title = NULL,
                             due_date = NULL,
                             description = NULL,
@@ -71,7 +73,8 @@ create_material <- function(course_id = NULL,
     topic_id = topic_id,
     title = title,
     description = description,
-    materials = list("link" = list("url" = link))
+    materials = list("link" = list("url" = link)),
+    state = ifelse(publish, "PUBLISHED", "DRAFT")
   )
 
   # Modify course
@@ -103,10 +106,15 @@ create_material <- function(course_id = NULL,
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
+#'
+#' @examples \dontrun{
+#' course_id <- get_course_list()$courses$id[3]
+#' materials_id <- get_materials_list(course_id)$material_id$courseWorkMaterial$id[1]
+#'
+#' get_materials_properties(course_id, materials_id)
+#'
+#' }
 get_materials_properties <- function(course_id, materials_id) {
-  # Check validity of inputs
-  assert_that(is.string(course_id))
-  assert_that(is.string(materials_id))
 
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.materials.get", course_id, materials_id)

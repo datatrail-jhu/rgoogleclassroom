@@ -17,17 +17,15 @@ create_quiz(
 )
 }
 \arguments{
-\item{course_id}{= NULL,}
+\item{course_id}{A course id where the quiz should be created}
 
-\item{quiz_title}{= NULL,}
+\item{quiz_title}{A string indicating the title for the quiz}
 
-\item{quiz_description}{= NULL,}
+\item{quiz_description}{A description for the quiz that will be made}
 
-\item{topic_id}{= NULL,}
+\item{topic_id}{Optional - a topic Id where the quiz will be posted}
 
 \item{coursework_title}{a string that will be what the coursework title}
-
-\item{work_type}{= By default}
 
 \item{due_date}{A due date for this quiz, in year-month-day format}
 
@@ -37,4 +35,9 @@ create_quiz(
 }
 \description{
 Create a quiz at a course
+}
+\examples{
+\dontrun{
+date_handler("2025-12-1")
+}
 }

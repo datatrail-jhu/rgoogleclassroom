@@ -7,6 +7,7 @@
 create_material(
   course_id = NULL,
   topic_id = NULL,
+  publish = FALSE,
   title = NULL,
   due_date = NULL,
   description = NULL,
@@ -16,6 +17,8 @@ create_material(
 }
 \arguments{
 \item{course_id}{Course id of where to make the new materials. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
+
+\item{publish}{TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).}
 
 \item{title}{Name of new material}
 
@@ -29,7 +32,7 @@ create_material(
 Create a new material
 }
 \examples{
-\dontrun {
+\dontrun{
 course_id <- get_course_list()$courses$id[3]
 topic_id <- get_topic_list(course_id)$topic$topicId[1]
 

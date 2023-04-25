@@ -13,7 +13,7 @@ get_materials_list(course_id)
 Get list of materials for a course
 }
 \examples{
-\dontrun {
+\dontrun{
 course_id <- get_course_list()$courses$id[3]
 materials_df <- get_materials_list(course_id)
 }

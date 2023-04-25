@@ -1,10 +1,9 @@
 #' Create a quiz at a course
-#' @param course_id = NULL,
-#' @param quiz_title = NULL,
-#' @param quiz_description = NULL,
-#' @param topic_id = NULL,
+#' @param course_id  A course id where the quiz should be created
+#' @param quiz_title A string indicating the title for the quiz
+#' @param quiz_description A description for the quiz that will be made
+#' @param topic_id Optional - a topic Id where the quiz will be posted
 #' @param coursework_title a string that will be what the coursework title
-#' @param work_type = By default
 #' @param due_date A due date for this quiz, in year-month-day format
 #' @param assignment_description The description that will be given for the assignment
 #' @param full_response Parameter to decide whether to return the full response or just the presentation ID
@@ -12,7 +11,9 @@
 #' @importFrom jsonlite fromJSON
 #' @export
 #'
-#'
+#' @examples \dontrun{
+#' date_handler("2025-12-1")
+#' }
 create_quiz <- function(course_id = NULL,
                         quiz_title = NULL,
                         quiz_description = NULL,
