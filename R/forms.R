@@ -61,19 +61,23 @@ get_form_properties <- function(form_id) {
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-create_form <- function(is_quiz = FALSE) {
+create_form <- function(title = NULL, description = "", is_quiz = FALSE, full_response = TRUE) {
+
+  # Check validity of inputs
+  assert_that(is.string(title))
+
   # Get endpoint url
-  url <- get_endpoint("form.endpoint")
+  url <- get_endpoint("forms.endpoint.get")
 
   # Get auth token
   token <- get_token()
   config <- httr::config(token = token)
 
-  # Wrapping body parameters in a requests list
   body_params <- list(
-    is_quiz
+    "info" = list(
+      "title" = title
+    )
   )
-
   # Modify course
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
@@ -85,7 +89,7 @@ create_form <- function(is_quiz = FALSE) {
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste("Form created at", result_list$alternateLink))
+  message(paste("Form created at", result_list$responderUri))
 
   # If user request for minimal response
   if (full_response) {
@@ -95,50 +99,45 @@ create_form <- function(is_quiz = FALSE) {
   }
 }
 
-
-#' Create a quiz at a course
-#' @param course_id Course id of where to make the new quiz. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
-#' @param name Name of new coursework
-#' @param full_response Parameter to decide whether to return the full response or just the presentation ID
+#' Turn a form into a quiz
+#' @param form_id The id of the google form to be updated into a Quiz
+#' @importFrom assertthat assert_that is.string
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-#'
-#' NjA0MDQyMzIzMjM3
-create_quiz <- function(course_id) {
-  # Get endpoint url
-  url <- get_endpoint("form.endpoint")
+make_form_quiz <- function(form_id, full_response = TRUE) {
 
-  # Get auth token
+  # Get endpoint url
+  url <- get_endpoint("forms.endpoint.batchUpdate", form_id = form_id)
+
+  # Get token
   token <- get_token()
   config <- httr::config(token = token)
 
   # Wrapping body parameters in a requests list
   body_params <- list(
-    topic_id = topic_id,
-    name = name,
-    workType = work_type,
-    dueDate = due_date,
-    description = description
+    "requests" = list(
+      "updateSettings" = list(
+        "settings" = list(
+          "quizSettings" = list(
+            "isQuiz" = "true"
+          )
+        ), "updateMask" =  "quizSettings"
+      )
+    )
   )
 
-  # Modify course
-  result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
+  # Modify slides
+  result <- httr::POST(url, config = config, body = body_params, encode = "json")
 
-  if (httr::status_code(result) != 200) {
-    message("Cannot create form")
-    httr::stop_for_status(result)
-  }
-  # Process and return results
+  # Process results
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste("Form created at", result_list$alternateLink))
-
-  # If user request for minimal response
-  if (full_response) {
-    return(result_list)
-  } else {
-    return(result_list$Id)
+  # If endpoint return url status other than 200, return error message
+  if (httr::status_code(result) != 200) {
+    stop(result_list$error$message)
   }
+
+  return(result_list)
 }

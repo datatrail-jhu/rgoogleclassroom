@@ -4,7 +4,11 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
-
+#'
+#' @examples \dontrun{
+#'
+#' courses_id <- get_course_list()$courses$id[2]
+#'}
 get_coursework_list <- function(course_id) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.coursework.get", course_id = course_id)
@@ -38,9 +42,9 @@ get_coursework_list <- function(course_id) {
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-#' topic_id <- "NjA0MDQyMzIzMjUw"
+#' topic_id <- get_topic_list("604042323237")$topic$topicId[3]
 #' course_id <- "604042323237"
-#' title = "a new coursework"
+#' title = "a new quiz"
 #' work_type = "ASSIGNMENT"
 #' description = "blah blah"
 #' link = "https://www.datatrail.org/"
@@ -59,15 +63,17 @@ create_coursework <- function(course_id = NULL,
   token <- get_token()
   config <- httr::config(token = token)
 
+
   # Wrapping body parameters in a requests list
   body_params <- list(
     courseId = course_id,
-    #topic_id = topic_id,
+    topic_id = topic_id,
     title = title,
-    workType = work_type
-    #dueDate = ,
-    #description = description
-    #materials = list("link" = list("url" = link))
+    workType = work_type,
+    dueDate = date_handler(due_date),
+    dueTime = time_handler(),
+    description = description,
+    materials = list("link" = list("url" = link))
   )
 
   # Modify course
@@ -81,7 +87,7 @@ create_coursework <- function(course_id = NULL,
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste("Coursework created at", result_list$alternateLink))
+  message(paste0("Coursework created at: ", get_course_properties(result_list$courseId)$alternateLink, "/t/all"))
 
   # If user request for minimal response
   if (full_response) {

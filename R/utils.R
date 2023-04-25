@@ -38,6 +38,10 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
     forms.endpoint.batchUpdate = "https://forms.googleapis.com/v1/forms/{formId}:batchUpdate"
   )
 
+  if (!(type_of_endpoint %in% names(endpoint_list))) {
+    stop(paste0("No such endpoint: '",type_of_endpoint, "' supported or in the list"))
+  }
+
   # Extract the endpoint based on what is specified
   endpoint <- endpoint_list[[type_of_endpoint]]
 

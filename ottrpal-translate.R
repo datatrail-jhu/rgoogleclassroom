@@ -62,7 +62,7 @@ translate_questions_api <- function(quiz_path) {
   # Remove beginning format
   question_info_df <- data.frame(
     question = question_names,
-    shuffle_opt = 1:length(all_answers) %in% shuffle_tag,
+    shuffle_opt = 1:length(all_answers_df) %in% shuffle_tag,
     correct_answer = correct_answer_index,
     row.names = question_names
     )
