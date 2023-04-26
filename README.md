@@ -42,7 +42,7 @@ There are different objects on the Google API:
 - courseWork Materials 
 - topics
 
-Most of these objects has functions that do the following: 
+Most of these objects have functions that do the following: 
 
 - `get_<object>_list()` 
 - `create_<object>()`

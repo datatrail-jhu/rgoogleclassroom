@@ -1,5 +1,5 @@
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Use authorize() function to begin give the package the proper credentials to run.")
+  packageStartupMessage("Use authorize() function to begin give the package the proper credentials to run. ")
 }
 
 .classroomEnv <- new.env(parent = emptyenv())
@@ -79,6 +79,12 @@ authorize <- function(
     key = readRDS(key_encrypt_creds_path())
   )
 
+  cache_it <- menu(c("Yes store credentials as .httr-oauth file", "No do not store credentials, I will re-run this authorize() in my next R session"))
+
+  if (cache_it == 1) {
+    message("You chose to cache your credentials, if you change your mind, just delete the .httr-oauth. Be careful not to push this file to GitHub or share it anywhere.")
+  }
+
   if (is.null(token)) {
     app <- oauth_app(
       appname = "googleclassroom",
@@ -87,7 +93,9 @@ authorize <- function(
     )
     endpoint <- oauth_endpoints("google")
     token <- oauth2.0_token(
-      endpoint = endpoint, app = app,
+      endpoint = endpoint,
+      app = app,
+      cache = cache_it == 1,
       scope = c(classroom_scopes_list, forms_scopes_list),
       ...
     )
@@ -95,3 +103,8 @@ authorize <- function(
   set_token(token)
   return(invisible(token))
 }
+
+can_decrypt <- function() {
+  ("openssl" %in% installed.packages())
+}
+

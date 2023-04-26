@@ -103,17 +103,17 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
 
     extract_title <- stringr::word(extract_title, sep = "# ", -1)
 
-    form_id <- create_quiz(course_id,
+    quiz_id <- create_quiz(course_id,
                            quiz_title = extract_title,
                            quiz_description = "")
-  } else {
 
+    form_id <- quiz_id$formId
   }
 
   # For each question, add it to the batch request we are building
   for (question_index in 1:nrow(formatted_df)) {
     create_multiple_choice_question(
-      form_id = form_info$formId,
+      form_id = form_id,
       question = formatted_df$question[question_index],
       choice_vector = all_answers[[question_index]],
       correct_answer = formatted_df$correct_answer[question_index],
