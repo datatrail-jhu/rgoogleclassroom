@@ -6,7 +6,6 @@
 .Rbuildignore
 .DS_Store
 .secrets
-docs
 man/default_creds_path.Rd
 man/key_encrypt_creds_path.Rd
 man/encrypt_creds_path.Rd
