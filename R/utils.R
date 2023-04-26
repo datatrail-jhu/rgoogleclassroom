@@ -1,3 +1,9 @@
+utils::globalVariables(c(
+  "link", "point_value", "formatted_df", "form_info", "all_answers", "question",
+  "type", "original", "trimmed", "shuffle_opt", "index"
+))
+
+
 #' Generate endpoint for the Google classroom API
 #' @param type_of_endpoint Type of endpoint to convert to url
 #' @param course_id (Optional) ID of the google course to be affected/retrieved

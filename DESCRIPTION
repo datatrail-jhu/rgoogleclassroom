@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R:
     person("Candace", "Savonen", , "csavonen@fredhutch.org", role = c("cre", "aut"))
 Description: A Google Forms and Google Classroom API Wrapper for R. For managing Google Classrooms from R.
-License: CC-BY
+License: GPL-3
 URL: https://github.com/datatrail-jhu/rgoogleclassroom
 BugReports: https://github.com/datatrail-jhu/rgoogleclassroom/issues
 Imports:
