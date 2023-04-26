@@ -7,7 +7,7 @@
 get_linked_quizzes_list(course_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{course_id}{ID of the course to retrieve the linked quizzes from}
 }
 \description{
 Get list of forms used in a course as quizzes

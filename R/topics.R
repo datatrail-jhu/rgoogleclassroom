@@ -1,5 +1,5 @@
 #' Get list of topics for a course
-#' @param id ID of the course
+#' @param course_id ID of the course you wish to retrieve a topic list from
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
@@ -22,8 +22,8 @@ get_topic_list <- function(course_id) {
   result <- httr::GET(url, config = config, accept_json())
 
   if (httr::status_code(result) != 200) {
-    message("No topics found")
-    httr::stop_for_status(result)
+    warning("No topics found")
+    return(result_list)
   }
 
   # Process and return results
@@ -58,14 +58,15 @@ create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
   if (httr::status_code(result) != 200) {
-    message("Cannot create topic")
-    httr::stop_for_status(result)
+    warning("Cannot create topic")
+    return(result_list)
   }
   # Process and return results
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste("Topic created at", result_list$alternateLink))
+  course_url <- gsub("/c/", "/w/", get_course_properties(result_list$courseId)$alternateLink)
+  message(paste0("New topic called:", result_list$name, "\n Created at: ", course_url, "/t/all"))
 
   # If user request for minimal response
   if (full_response) {
@@ -78,7 +79,7 @@ create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
 
 #' Get Google Classroom Topic Properties
 #' @param course_id ID of the course
-#' @param topic_id ID of the course
+#' @param topic_id topic ID to be looked for.
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string

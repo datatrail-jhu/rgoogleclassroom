@@ -7,7 +7,7 @@
 get_coursework_list(course_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{course_id}{ID of the course to retrieve the courseworks from}
 }
 \description{
 Get list of courseworks for a course

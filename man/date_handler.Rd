@@ -7,7 +7,7 @@
 date_handler(due_date)
 }
 \arguments{
-\item{date}{A string that is a date in format of year-month-day}
+\item{due_date}{A string that is a date in format of year-month-day}
 }
 \description{
 Handle and parse a due_date

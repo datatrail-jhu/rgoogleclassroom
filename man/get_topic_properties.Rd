@@ -9,7 +9,7 @@ get_topic_properties(course_id, topic_id)
 \arguments{
 \item{course_id}{ID of the course}
 
-\item{topic_id}{ID of the course}
+\item{topic_id}{topic ID to be looked for.}
 }
 \description{
 Get Google Classroom Topic Properties

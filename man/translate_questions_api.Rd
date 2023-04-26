@@ -8,8 +8,6 @@ translate_questions_api(quiz_path)
 }
 \arguments{
 \item{quiz_path}{The file path to a Markua formatted quiz to be translated to Google Forms API format}
-
-\item{verbose}{Whether progress messages should be given.}
 }
 \value{
 A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.

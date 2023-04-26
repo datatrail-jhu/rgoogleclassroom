@@ -9,7 +9,7 @@ commit_to_form(form_id, google_forms_request)
 \arguments{
 \item{form_id}{The id of the google form to be updated}
 
-\item{form_request}{The google slide request to be applied to the slides}
+\item{google_forms_request}{The google slide request to be applied to the slides}
 }
 \description{
 Commit changes to a Google form

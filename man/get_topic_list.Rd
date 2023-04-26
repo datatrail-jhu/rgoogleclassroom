@@ -7,7 +7,7 @@
 get_topic_list(course_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{course_id}{ID of the course you wish to retrieve a topic list from}
 }
 \description{
 Get list of topics for a course

@@ -4,10 +4,10 @@
 \alias{get_course_list}
 \title{Get list of courses}
 \usage{
-get_course_list()
+get_course_list(owner_id = NULL)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{owner_id}{owner_id to retrieve course listings from}
 }
 \description{
 Get list of courses

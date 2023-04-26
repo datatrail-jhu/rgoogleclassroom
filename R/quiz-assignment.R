@@ -5,6 +5,7 @@
 #' @param topic_id Optional - a topic Id where the quiz will be posted
 #' @param coursework_title a string that will be what the coursework title
 #' @param due_date A due date for this quiz, in year-month-day format
+#' @param work_type Currently only supported work type is ASSIGNMENT.
 #' @param assignment_description The description that will be given for the assignment
 #' @param full_response Parameter to decide whether to return the full response or just the presentation ID
 #' @importFrom httr config accept_json content
@@ -24,7 +25,7 @@ create_quiz <- function(course_id = NULL,
                         quiz_description = NULL,
                         topic_id = NULL,
                         coursework_title = "none",
-                        work_type = NULL,
+                        work_type = "ASSIGNMENT",
                         due_date = NULL,
                         assignment_description = "",
                         full_response = TRUE) {

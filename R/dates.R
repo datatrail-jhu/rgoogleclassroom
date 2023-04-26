@@ -1,5 +1,5 @@
 #' Handle and parse a due_date
-#' @param date A string that is a date in format of year-month-day
+#' @param due_date A string that is a date in format of year-month-day
 #' @importFrom lubridate day month year ymd
 #' @export
 #'
@@ -25,7 +25,7 @@ date_handler <- function(due_date) {
 }
 
 #' Handle and parse a time
-#' @param date A string that is a date in format of year-month-day. Default is midnight.
+#' @param due_time A string that is a date in format of year-month-day. Default is midnight.
 #' @importFrom lubridate hour minute second hms
 #' @export
 #'

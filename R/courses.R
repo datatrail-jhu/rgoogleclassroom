@@ -1,10 +1,15 @@
 #' Get list of courses
-#' @param id ID of the course
+#' @param owner_id owner_id to retrieve course listings from
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
 #' @export
-get_course_list <- function() {
+get_course_list <- function(owner_id = NULL) {
+
+  if (is.null(owner_id)) {
+    stop("Need to provide owner_id from which to retrieve a list of courses from")
+  }
+
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.course.get")
 
@@ -16,8 +21,8 @@ get_course_list <- function() {
   result <- httr::GET(url, config = config, accept_json())
 
   if (httr::status_code(result) != 200) {
-    message("No courses found")
-    httr::stop_for_status(result)
+    warning("No courses found")
+    return(result_list)
   }
 
   # Process and return results
@@ -52,9 +57,10 @@ create_course <- function(owner_id = get_owner_id()$id, name = NULL, full_respon
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
   if (httr::status_code(result) != 200) {
-    message("Cannot create course")
-    httr::stop_for_status(result)
+    warning("Cannot create course")
+    return(result_list)
   }
+
   # Process and return results
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
@@ -70,7 +76,7 @@ create_course <- function(owner_id = get_owner_id()$id, name = NULL, full_respon
 }
 
 #' Get Google Classroom Course Properties
-#' @param id ID of the course
+#' @param course_id ID of the course you wish to retrieve information from
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
@@ -91,7 +97,7 @@ get_course_properties <- function(course_id) {
 
   if (httr::status_code(result) != 200) {
     message("ID provided does not point towards any course")
-    httr::stop_for_status(result)
+    return(result_list)
   }
 
   # Process and return results

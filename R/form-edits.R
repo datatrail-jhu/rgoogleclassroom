@@ -21,15 +21,18 @@
 #'   )
 #'
 #'}
-create_multiple_choice_question <- function(question_kind = "choiceQuestion",
+create_multiple_choice_question <- function(form_id = NULL,
+                                            question_kind = "choiceQuestion",
                                             required = FALSE,
                                             question = NULL,
                                             choice_vector = NULL,
                                             shuffle_opt = FALSE,
-                                            correct_answer = NULL,
-                                            point_value = NULL) {
+                                            correct_answer = NULL) {
   if (is.null(google_forms_request)) {
     google_forms_request <- google_forms_request_container$new()
+  }
+  if (is.null(form_id)) {
+    stop("form_id must be provided")
   }
 
   # Input Validation

@@ -19,8 +19,6 @@ ottr_quiz_to_google(
 \item{form_id}{form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.}
 
 \item{make_new_quiz}{This can only be used if form_id is not specified. This will make a new quiz}
-
-\item{verbose}{Whether progress messages should be given.}
 }
 \description{
 Takes a file path to a Markua formatted quiz and

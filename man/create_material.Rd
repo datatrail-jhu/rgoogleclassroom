@@ -9,7 +9,6 @@ create_material(
   topic_id = NULL,
   publish = FALSE,
   title = NULL,
-  due_date = NULL,
   description = NULL,
   material_link = NULL,
   full_response = FALSE
@@ -17,6 +16,8 @@ create_material(
 }
 \arguments{
 \item{course_id}{Course id of where to make the new materials. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
+
+\item{topic_id}{topic ID to be looked for.}
 
 \item{publish}{TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).}
 

@@ -1,5 +1,5 @@
 #' Get list of files from a Google Shared Drive
-#' @param id ID of the course
+#' @param drive_id ID of the drive to retrieve a list of files from
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string

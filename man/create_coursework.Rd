@@ -19,9 +19,13 @@ create_coursework(
 \arguments{
 \item{course_id}{Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
 
+\item{topic_id}{topic ID to be looked for.}
+
 \item{publish}{TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).}
 
-\item{title}{Name of new coursework}
+\item{title}{Name of new coursework. Required.}
+
+\item{work_type}{Currently only supported work type is ASSIGNMENT.}
 
 \item{due_date}{Required Due date for new coursework, must be given in year-month-day format.}
 

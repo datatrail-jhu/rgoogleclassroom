@@ -7,7 +7,7 @@
 get_drive_file_list(drive_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{drive_id}{ID of the drive to retrieve a list of files from}
 }
 \description{
 Get list of files from a Google Shared Drive

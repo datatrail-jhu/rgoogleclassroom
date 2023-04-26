@@ -64,15 +64,13 @@ classroom_scopes_list <- paste0(
 #' @description This is a function to authorize the R package to access the Googleclassroom API. If no
 #' client.id and client.secret is provided, the package would provide predefined values.
 #' @importFrom httr oauth_app oauth_endpoints oauth2.0_token
-#' @param client_id OAuth client ID. This is obtained from Google API Credentials
-#' @param client_secret OAuth client secret. This is obtained from Google API Credentials
 #' @param token an output from \code{\link{oauth2.0_token}} to set as the
 #' authentication token.
 #' @param ... additional arguments to send to \code{\link{oauth2.0_token}}
 #' @export
 #' @examples \dontrun{
 #'
-#'
+#' authorize()
 #'}
 authorize <- function(
     token = NULL,

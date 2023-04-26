@@ -10,7 +10,7 @@ create_quiz(
   quiz_description = NULL,
   topic_id = NULL,
   coursework_title = "none",
-  work_type = NULL,
+  work_type = "ASSIGNMENT",
   due_date = NULL,
   assignment_description = "",
   full_response = TRUE
@@ -26,6 +26,8 @@ create_quiz(
 \item{topic_id}{Optional - a topic Id where the quiz will be posted}
 
 \item{coursework_title}{a string that will be what the coursework title}
+
+\item{work_type}{Currently only supported work type is ASSIGNMENT.}
 
 \item{due_date}{A due date for this quiz, in year-month-day format}
 

@@ -1,5 +1,5 @@
 #' Get list of courseworks for a course
-#' @param id ID of the course
+#' @param course_id ID of the course to retrieve the courseworks from
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
@@ -36,11 +36,13 @@ get_coursework_list <- function(course_id) {
 
 #' Create a new coursework
 #' @param course_id Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
-#' @param title Name of new coursework
+#' @param title Name of new coursework. Required.
+#' @param topic_id topic ID to be looked for.
 #' @param publish TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).
 #' @param due_date Required Due date for new coursework, must be given in year-month-day format.
 #' @param link A url to an associated resource for the coursework being made.
 #' @param description Description of new coursework. Is a string
+#' @param work_type Currently only supported work type is ASSIGNMENT.
 #' @param full_response Parameter to decide whether to return the full response
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
@@ -69,8 +71,8 @@ create_coursework <- function(course_id = NULL,
   url <- get_endpoint("classroom.endpoint.coursework.get", course_id = course_id)
 
   assert_that(is.string(course_id))
-  assert_that(is.string(topic_id))
   if (!is.null(description)) assert_that(is.string(description))
+  if (is.null(title)) stop("Argument 'title' must be set")
 
   # Get auth token
   token <- get_token()
@@ -94,8 +96,8 @@ create_coursework <- function(course_id = NULL,
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
   if (httr::status_code(result) != 200) {
-    message("Cannot create coursework")
-    httr::stop_for_status(result)
+    warning("Cannot create coursework")
+    return(result_list)
   }
   # Process and return results
   result_content <- content(result, "text")
@@ -114,7 +116,8 @@ create_coursework <- function(course_id = NULL,
 
 
 #' Get Google Classroom Course Properties
-#' @param id ID of the course
+#' @param course_id ID of the course you wish to retrieve information about a particular coursework
+#' @param coursework_id ID of the coursework you wish to retrieve information about
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string

@@ -1,6 +1,6 @@
 #' Commit changes to a Google form
 #' @param form_id The id of the google form to be updated
-#' @param form_request The google slide request to be applied to the slides
+#' @param google_forms_request The google slide request to be applied to the slides
 #' @importFrom assertthat assert_that is.string
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
@@ -32,7 +32,8 @@ commit_to_form <- function(form_id, google_forms_request) {
 
   # If endpoint return url status other than 200, return error message
   if (httr::status_code(result) != 200) {
-    stop(result_list$error$message)
+    warning("Cannot create coursework")
+    return(result_list)
   }
 
   message(paste0("Check out your new adds to the form by going to this URL: https://docs.google.com/forms/d/", form_id))

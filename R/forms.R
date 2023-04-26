@@ -1,5 +1,5 @@
 #' Get list of forms used in a course as quizzes
-#' @param id ID of the course
+#' @param course_id ID of the course to retrieve the linked quizzes from
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
@@ -129,7 +129,7 @@ create_form <- function(title = NULL, description = "", full_response = TRUE) {
 #' make_form_quiz(form_id = form_info$formId)
 #'
 #'}
-make_form_quiz <- function(form_id, full_response = TRUE) {
+make_form_quiz <- function(form_id) {
 
   # Get endpoint url
   url <- get_endpoint("forms.endpoint.batchUpdate", form_id = form_id)

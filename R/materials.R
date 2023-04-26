@@ -35,6 +35,7 @@ get_materials_list <- function(course_id) {
 
 #' Create a new material
 #' @param course_id Course id of where to make the new materials. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
+#' @param topic_id topic ID to be looked for.
 #' @param title Name of new material
 #' @param publish TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).
 #' @param description A description for the new material
@@ -56,7 +57,6 @@ create_material <- function(course_id = NULL,
                             topic_id = NULL,
                             publish = FALSE,
                             title = NULL,
-                            due_date = NULL,
                             description = NULL,
                             material_link = NULL,
                             full_response = FALSE) {
@@ -81,8 +81,8 @@ create_material <- function(course_id = NULL,
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
   if (httr::status_code(result) != 200) {
-    message("Cannot create coursework")
-    httr::stop_for_status(result)
+    warning("Cannot create coursework material")
+    return(result_list)
   }
   # Process and return results
   result_content <- content(result, "text")

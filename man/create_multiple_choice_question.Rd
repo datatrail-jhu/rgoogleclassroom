@@ -5,16 +5,18 @@
 \title{Commit changes to a Google form}
 \usage{
 create_multiple_choice_question(
+  form_id = NULL,
   question_kind = "choiceQuestion",
   required = FALSE,
   question = NULL,
   choice_vector = NULL,
   shuffle_opt = FALSE,
-  correct_answer = NULL,
-  point_value = NULL
+  correct_answer = NULL
 )
 }
 \arguments{
+\item{form_id}{The id of the google form to be updated}
+
 \item{question_kind}{Can be choiceQuestion or textQuestion}
 
 \item{required}{TRUE or FALSE is this a required question? Default is not required.}
@@ -26,8 +28,6 @@ create_multiple_choice_question(
 \item{shuffle_opt}{TRUE or FALSE options should be shuffled? default is FALSE}
 
 \item{correct_answer}{The index that corresponds to the correct answer in the `choice_vector` supplied}
-
-\item{form_id}{The id of the google form to be updated}
 }
 \description{
 Commit changes to a Google form

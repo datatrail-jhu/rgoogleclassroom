@@ -7,7 +7,7 @@
 time_handler(due_time = lubridate::hms("23:59:59"))
 }
 \arguments{
-\item{date}{A string that is a date in format of year-month-day. Default is midnight.}
+\item{due_time}{A string that is a date in format of year-month-day. Default is midnight.}
 }
 \description{
 Handle and parse a time

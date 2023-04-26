@@ -7,7 +7,7 @@
 get_course_properties(course_id)
 }
 \arguments{
-\item{id}{ID of the course}
+\item{course_id}{ID of the course you wish to retrieve information from}
 }
 \description{
 Get Google Classroom Course Properties

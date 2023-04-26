@@ -1,12 +1,13 @@
 #' Generate endpoint for the Google classroom API
 #' @param type_of_endpoint Type of endpoint to convert to url
-#' @param course_id (Optional) ID of the google classroom to manipulate. Optional for classroom.endpoint.create
-#' @param topic_id (Optional) ID of the topic to be affected
+#' @param course_id (Optional) ID of the google course to be affected/retrieved
+#' @param topic_id (Optional) ID of the topic to be affected/retrieved
+#' @param coursework_id (Optional) ID of the coursework to be affected/retrieved
+#' @param materials_id (Optional) ID of the material to be affected/retrieved
+#' @param form_id (Optional) ID of the form to be affected/retrieved
+
 #' @importFrom assertthat is.string
-#' @examples \dontrun{
-#'
-#'
-#'}
+
 get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
                          course_id = NULL,
                          topic_id = NULL,

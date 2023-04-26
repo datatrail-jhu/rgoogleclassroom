@@ -4,7 +4,7 @@
 \alias{make_form_quiz}
 \title{Turn a form into a quiz}
 \usage{
-make_form_quiz(form_id, full_response = TRUE)
+make_form_quiz(form_id)
 }
 \arguments{
 \item{form_id}{The id of the google form to be updated into a Quiz}

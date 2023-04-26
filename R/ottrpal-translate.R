@@ -5,7 +5,6 @@
 #' Takes a Markua formatted quiz and translates it to something that can be sent to Google Forms API.
 #'
 #' @param quiz_path The file path to a Markua formatted quiz to be translated to Google Forms API format
-#' @param verbose Whether progress messages should be given.
 #' @importFrom magrittr %>%
 #' @return A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.
 #'#'
@@ -76,7 +75,6 @@ translate_questions_api <- function(quiz_path) {
 #' @param course_id An id for the course where this is to be published and linked.
 #' @param form_id form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.
 #' @param make_new_quiz This can only be used if form_id is not specified. This will make a new quiz
-#' @param verbose Whether progress messages should be given.
 #' @importFrom magrittr %>%
 #' @examples \dontrun{
 #'

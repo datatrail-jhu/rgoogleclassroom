@@ -16,16 +16,16 @@ get_endpoint(
 \arguments{
 \item{type_of_endpoint}{Type of endpoint to convert to url}
 
-\item{course_id}{(Optional) ID of the google classroom to manipulate. Optional for classroom.endpoint.create}
+\item{course_id}{(Optional) ID of the google course to be affected/retrieved}
 
-\item{topic_id}{(Optional) ID of the topic to be affected}
+\item{topic_id}{(Optional) ID of the topic to be affected/retrieved}
+
+\item{coursework_id}{(Optional) ID of the coursework to be affected/retrieved}
+
+\item{materials_id}{(Optional) ID of the material to be affected/retrieved}
+
+\item{form_id}{(Optional) ID of the form to be affected/retrieved}
 }
 \description{
 Generate endpoint for the Google classroom API
-}
-\examples{
-\dontrun{
-
-
-}
 }

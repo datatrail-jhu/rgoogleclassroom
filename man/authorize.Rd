@@ -11,10 +11,6 @@ authorize(token = NULL, ...)
 authentication token.}
 
 \item{...}{additional arguments to send to \code{\link{oauth2.0_token}}}
-
-\item{client_id}{OAuth client ID. This is obtained from Google API Credentials}
-
-\item{client_secret}{OAuth client secret. This is obtained from Google API Credentials}
 }
 \description{
 This is a function to authorize the R package to access the Googleclassroom API. If no
@@ -23,6 +19,6 @@ client.id and client.secret is provided, the package would provide predefined va
 \examples{
 \dontrun{
 
-
+authorize()
 }
 }

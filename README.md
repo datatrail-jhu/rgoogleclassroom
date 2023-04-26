@@ -8,7 +8,7 @@
 
 # rgoogleclassroom 
 
-`rgoogleclassroom` is a Google API wrapper that allows you to use Google Classroom and Google Forms from the comfort of R. 
+`rgoogleclassroom` is a Google API wrapper that allows you to use Google Classroom and Google Forms from the coziness and comfort of R. 
 
 You can [read the rgoogleclassroom package documentation here](https://datatrail-jhu.github.io/rgoogleclassroom/docs/index.html).
 
@@ -58,14 +58,59 @@ These can be built together to be pretty nifty.
 
 ## Example workflow
 
+Run the function to authorize the app to use your Google account. 
 ```r
 authorize() 
 ```
 
+Retrieve whatever your owner id for Google Classroom is. 
 ```r
 owner_id <- get_owner_id()
 ```
 
+Now you can retrieve a list of courses that are associated with your owner id. 
 ```r
 course_df <- get_course_list(owner_id)
+```
+
+We can create new material for the students using by building this together like this:
+
+```r
+# Get a course id
+course_id <- get_course_list()$courses$id[1]
+
+topic_id <- create_topic(course_id)
+
+# Get a topic id
+topic_id <- get_topic_list(course_id)$topic$topicId[1]
+
+create_material(
+  course_id, 
+  topic_id, 
+  title = "new material"
+)
+```
+
+We can build a quiz like this: 
+
+```
+course_id <- get_course_list()$courses$id[1]
+
+quiz_form_id <- create_quiz(
+  course_id = course_id, 
+  quiz_title = "new quiz", 
+  quiz_description = "This is a great quiz",
+  due_date = "2025-12-1")
+```
+
+We can create a new multiple choice question in the quiz we just made by using these steps:  
+
+```r
+create_multiple_choice_question(
+  form_id = quiz_form_id$formId,
+  question = "What answer do you want?",
+  choice_vector = c("A", "B", "C", "D"),
+  correct_answer = 3,
+  shuffle_opt = TRUE
+)
 ```
