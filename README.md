@@ -12,7 +12,7 @@
 
 You can [read the rgoogleclassroom package documentation here](https://datatrail-jhu.github.io/rgoogleclassroom/docs/index.html).
 
-To use this package you need to have a GOogle Classroom account. Go here to get that: https://edu.google.com/workspace-for-education/classroom/
+To use this package you need to have a Google Classroom account. Go here to get that: https://edu.google.com/workspace-for-education/classroom/
 
 ## How to install
 
