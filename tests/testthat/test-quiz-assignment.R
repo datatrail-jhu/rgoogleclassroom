@@ -1,4 +1,6 @@
 test_that("Test quiz making function", {
+
+
   authorize(cache = TRUE)
   skip_if_no_auth()
 
@@ -10,6 +12,8 @@ test_that("Test quiz making function", {
                           quiz_title = "new quiz",
                           quiz_description = "This is a great quiz",
                           due_date = lubridate::today() + lubridate::hours(24))
+
+  expect_type(new_quiz, "list")
 
   # Clean up and delete the course
   archive_course(new_course$id)

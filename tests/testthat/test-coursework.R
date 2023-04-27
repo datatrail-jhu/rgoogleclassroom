@@ -11,6 +11,7 @@ test_that("Test coursework functions", {
   new_coursework <- create_coursework(course_id = new_course$id,
                                       title = "New coursework",
                                       due_date = lubridate::today() + lubridate::hours(24))
+  expect_type(new_coursework, "list")
 
   # Get coursework properties
   course_work_info <- get_coursework_properties(course_id = new_course$id, coursework_id = new_coursework$id)

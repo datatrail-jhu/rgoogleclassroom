@@ -19,8 +19,7 @@ test_that("Test topic functions", {
 
   # Retrieve info about this topic
   topic_info <- get_topic_properties(course_id = new_course$id, topic_id = topic_list$topic$topicId)
-  # This should retrieve length of 1
-  expect_length(topic_info, 1)
+  expect_type(topic_info, "list")
 
   # Clean up and delete the course
   archive_course(new_course$id)

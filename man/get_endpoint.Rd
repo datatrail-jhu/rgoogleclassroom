@@ -26,6 +26,9 @@ get_endpoint(
 
 \item{form_id}{(Optional) ID of the form to be affected/retrieved}
 }
+\value{
+A url that is the endpoint for the API call
+}
 \description{
 Generate endpoint for the Google classroom API
 }

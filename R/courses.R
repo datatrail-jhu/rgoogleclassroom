@@ -44,6 +44,7 @@ get_course_list <- function(owner_id = get_owner_id()$id) {
 #' @param name Name of the new course. Required.
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
+#' @importFrom utils browseURL
 #' @export
 #'
 #' @examples \dontrun{

@@ -73,23 +73,53 @@ Now you can retrieve a list of courses that are associated with your owner id.
 course_df <- get_course_list(owner_id)
 ```
 
+For the following examples, we will need to use 
+```r
+Create a course
+new_course <- create_course(owner_id$id, name = "New course")
+```
+
+### Managing materials
+
 We can create new material for the students using by building this together like this:
 
 ```r
-# Get a course id
-course_id <- get_course_list()$courses$id[1]
+# Create a course we will use for this test
+owner_id <- get_owner_id()
+new_course <- create_course(owner_id$id, name = "New course")
 
-topic_id <- create_topic(course_id)
+# Create material at this course
+new_material <- create_material(course_id = new_course$id,
+                                title = "New material")
 
-# Get a topic id
-topic_id <- get_topic_list(course_id)$topic$topicId[1]
-
-create_material(
-  course_id, 
-  topic_id, 
-  title = "new material"
-)
+# Retrieve the material info
+materials_info <- get_materials_properties(course_id = new_course$id,
+                                             materials_id = new_material$id)
 ```
+
+Retrieve the list of all the materials for the course
+```r
+materials_list <- get_materials_list(course_id = new_course$id)
+```
+
+### Managing courseworks 
+
+We can manage courseworks!
+
+```
+# Create a new coursework
+new_coursework <- create_coursework(course_id = new_course$id,
+                                    title = "New coursework",
+                                    due_date = lubridate::today() + lubridate::hours(24))
+
+# Get coursework properties
+course_work_info <- get_coursework_properties(course_id = new_course$id, coursework_id = new_coursework$id)
+
+# Retrieve all the courseworks for this course
+coursework_list <- get_coursework_list(course_id = new_course$id)
+```
+
+### Make a quiz 
 
 We can build a quiz like this: 
 
@@ -114,3 +144,12 @@ create_multiple_choice_question(
   shuffle_opt = TRUE
 )
 ```
+
+### Delete or archive courses 
+
+```
+# Clean up this test course
+archive_course(new_course$id)
+delete_course(new_course$id)
+```
+

@@ -16,6 +16,12 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/archive_course.html</loc>
+  </url>
+  <url>
+    <loc>/reference/auth_from_secret.html</loc>
+  </url>
+  <url>
     <loc>/reference/authorize.html</loc>
   </url>
   <url>
@@ -47,6 +53,12 @@
   </url>
   <url>
     <loc>/reference/default_creds_path.html</loc>
+  </url>
+  <url>
+    <loc>/reference/delete_course.html</loc>
+  </url>
+  <url>
+    <loc>/reference/delete_coursework.html</loc>
   </url>
   <url>
     <loc>/reference/encrypt_creds_path.html</loc>
@@ -107,6 +119,9 @@
   </url>
   <url>
     <loc>/reference/ottr_quiz_to_google.html</loc>
+  </url>
+  <url>
+    <loc>/reference/publish_coursework.html</loc>
   </url>
   <url>
     <loc>/reference/time_handler.html</loc>

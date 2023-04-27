@@ -3,7 +3,6 @@ utils::globalVariables(c(
   "type", "original", "trimmed", "shuffle_opt", "index"
 ))
 
-
 #' Generate endpoint for the Google classroom API
 #' @param type_of_endpoint Type of endpoint to convert to url
 #' @param course_id (Optional) ID of the google course to be affected/retrieved
@@ -11,7 +10,7 @@ utils::globalVariables(c(
 #' @param coursework_id (Optional) ID of the coursework to be affected/retrieved
 #' @param materials_id (Optional) ID of the material to be affected/retrieved
 #' @param form_id (Optional) ID of the form to be affected/retrieved
-
+#' @return A url that is the endpoint for the API call
 #' @importFrom assertthat is.string
 
 get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
@@ -67,7 +66,7 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
   # Find out which need to be set based on endpoint grep
   which_to_set <- sapply(names(variables_list), grepl, x = endpoint, fixed = TRUE)
 
-  variables_list <- unlist(variables_list[which_to_set])
+  variables_list <- as.vector(variables_list[which_to_set])
 
   # Go through each variable and replace it with the function defined ids to build the URL
   if (length(variables_list) > 0) {
