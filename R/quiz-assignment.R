@@ -7,7 +7,6 @@
 #' @param due_date A due date for this quiz, in year-month-day format
 #' @param work_type Currently only supported work type is ASSIGNMENT.
 #' @param assignment_description The description that will be given for the assignment
-#' @param full_response Parameter to decide whether to return the full response or just the presentation ID
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
@@ -17,9 +16,11 @@
 #' course_id <- get_course_list()$courses$id[1]
 #' topic_id <- get_topic_list(course_id)$topic$topicId[1]
 #'
-#' create_quiz(course_id, quiz_title = "new quiz", quiz_description = "This is a great quiz",
-#' topic_id = topic_id, due_date = "2025-12-1")
-#'}
+#' create_quiz(course_id,
+#'   quiz_title = "new quiz", quiz_description = "This is a great quiz",
+#'   topic_id = topic_id, due_date = "2025-12-1"
+#' )
+#' }
 create_quiz <- function(course_id = NULL,
                         quiz_title = NULL,
                         quiz_description = NULL,
@@ -29,14 +30,16 @@ create_quiz <- function(course_id = NULL,
                         due_date = NULL,
                         assignment_description = "",
                         full_response = TRUE) {
-
   # Check validity of inputs
-  assert_that(is.string(course_id))
   assert_that(is.string(quiz_title))
   assert_that(is.string(coursework_title))
   assert_that(is.string(quiz_description))
   assert_that(is.string(coursework_title))
   assert_that(is.string(assignment_description))
+
+  if (is.null(due_date)) {
+    stop("Due date must be set. Use the due_date argument.")
+  }
 
   # Build the due date as a list
   date_list <- date_handler(due_date)
@@ -49,13 +52,15 @@ create_quiz <- function(course_id = NULL,
 
   # Now make it an assignment on the course
   coursework <-
-    create_coursework(course_id = course_id,
-                      topic_id = topic_id,
-                      title = coursework_title,
-                      work_type = "ASSIGNMENT",
-                      due_date = due_date,
-                      description =  assignment_description,
-                      link = form_info$responderUri)
+    create_coursework(
+      course_id = course_id,
+      topic_id = topic_id,
+      title = coursework_title,
+      work_type = "ASSIGNMENT",
+      due_date = due_date,
+      description = assignment_description,
+      link = form_info$responderUri
+    )
 
-  return(coursework)
+  return(list(form_info = form_info, coursework = coursework))
 }

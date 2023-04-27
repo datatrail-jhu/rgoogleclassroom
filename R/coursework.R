@@ -10,7 +10,7 @@
 #' course_id <- get_course_list()$courses$id[1]
 #'
 #' get_coursework_list(course_id)
-#'}
+#' }
 get_coursework_list <- function(course_id) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.coursework.get", course_id = course_id)
@@ -20,9 +20,11 @@ get_coursework_list <- function(course_id) {
   config <- httr::config(token = token)
 
   # Modify course
-  result <- httr::GET(url, config = config, accept_json(),
-                      query = list(courseWorkStates = "DRAFT", courseWorkStates = "PUBLISHED"),
-                      encode = "json")
+  result <- httr::GET(url,
+    config = config, accept_json(),
+    query = list(courseWorkStates = "DRAFT", courseWorkStates = "PUBLISHED"),
+    encode = "json"
+  )
 
   if (httr::status_code(result) != 200) {
     message("No courseworks found")
@@ -53,9 +55,10 @@ get_coursework_list <- function(course_id) {
 #' topic_id <- get_topic_list("604042323237")$topic$topicId[1]
 #' course_id <- get_course_list()$courses$id[1]
 #'
-#' create_coursework(course_id, topic_id, title = "a new quiz", due_date = "2025-12-1",
-#'   description = "blah blah", link = "https://www.datatrail.org/")
-#'
+#' create_coursework(course_id, topic_id,
+#'   title = "a new quiz", due_date = "2025-12-1",
+#'   description = "blah blah", link = "https://www.datatrail.org/"
+#' )
 #' }
 #'
 create_coursework <- function(course_id = NULL,
@@ -66,7 +69,6 @@ create_coursework <- function(course_id = NULL,
                               due_date = NULL,
                               description = NULL,
                               link = NULL) {
-
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.coursework.get", course_id = course_id)
 
@@ -97,7 +99,7 @@ create_coursework <- function(course_id = NULL,
   )
 
   # Only keep non NULL items
-  body_params <- body_params %>% purrr::keep( ~ !is.null(.))
+  body_params <- body_params %>% purrr::keep(~ !is.null(.))
 
   # Modify course
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
@@ -137,9 +139,11 @@ get_coursework_properties <- function(course_id, coursework_id) {
   config <- httr::config(token = token)
 
   # Get course properties
-  result <- httr::GET(url, config = config,
-                      query = list(courseWorkStates = "DRAFT", courseWorkStates = "PUBLISHED"),
-                      accept_json())
+  result <- httr::GET(url,
+    config = config,
+    query = list(courseWorkStates = "DRAFT", courseWorkStates = "PUBLISHED"),
+    accept_json()
+  )
 
   if (httr::status_code(result) != 200) {
     message("ID provided does not point towards any course or coursework")
@@ -196,7 +200,6 @@ delete_coursework <- function(course_id, coursework_id) {
 #' @importFrom assertthat assert_that is.string
 #' @export
 publish_coursework <- function(course_id, coursework_id) {
-
   # Check validity of inputs
   assert_that(is.string(course_id))
   assert_that(is.string(coursework_id))
@@ -217,11 +220,13 @@ publish_coursework <- function(course_id, coursework_id) {
   )
 
   # Modify course
-  result <- httr::PUT(url, config = config,
-                      accept_json(),
-                      body = body_params,
-                      query = list(courseWorkStates = "DRAFT"),
-                      encode = "json")
+  result <- httr::PUT(url,
+    config = config,
+    accept_json(),
+    body = body_params,
+    query = list(courseWorkStates = "DRAFT"),
+    encode = "json"
+  )
 
   if (httr::status_code(result) != 200) {
     message("Failed to change the coursework")
@@ -234,4 +239,3 @@ publish_coursework <- function(course_id, coursework_id) {
 
   return(result_list)
 }
-

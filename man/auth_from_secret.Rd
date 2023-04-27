@@ -21,10 +21,12 @@ client.id and client.secret is provided, the package would provide predefined va
 \examples{
 \dontrun{
 
-token <-authorize()
+token <- authorize()
 
-auth_from_secret(token$credentials$access_token,
-                 token$credentials$refresh_token)
+auth_from_secret(
+  token$credentials$access_token,
+  token$credentials$refresh_token
+)
 }
 
 }

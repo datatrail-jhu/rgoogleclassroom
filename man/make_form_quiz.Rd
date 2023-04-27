@@ -20,6 +20,5 @@ form_info <- create_form(title = quiz_title)
 
 # Now make it a quiz
 make_form_quiz(form_id = form_info$formId)
-
 }
 }

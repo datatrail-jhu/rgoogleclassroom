@@ -19,7 +19,6 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
                          coursework_id = NULL,
                          materials_id = NULL,
                          form_id = NULL) {
-
   # Make sure the options given are strings
   if (!is.null(course_id)) assert_that(is.string(course_id))
   if (!is.null(topic_id)) assert_that(is.string(topic_id))
@@ -45,7 +44,7 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
   )
 
   if (!(type_of_endpoint %in% names(endpoint_list))) {
-    stop(paste0("No such endpoint: '",type_of_endpoint, "' supported or in the list"))
+    stop(paste0("No such endpoint: '", type_of_endpoint, "' supported or in the list"))
   }
 
   # Extract the endpoint based on what is specified
@@ -70,7 +69,6 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
 
   # Go through each variable and replace it with the function defined ids to build the URL
   if (length(variables_list) > 0) {
-
     for (item in 1:length(variables_list)) {
       # If the variable is null stop.
       if (is.null(variables_list[[item]])) stop(paste("Variable not set. Require:", names(variables_list)[item]))

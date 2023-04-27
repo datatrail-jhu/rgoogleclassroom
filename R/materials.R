@@ -9,7 +9,6 @@
 #' course_id <- get_course_list()$courses$id[1]
 #' materials_df <- get_materials_list(course_id)
 #' }
-
 get_materials_list <- function(course_id) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.materials.get", course_id = course_id)
@@ -19,9 +18,11 @@ get_materials_list <- function(course_id) {
   config <- httr::config(token = token)
 
   # Get list of courseworks
-  result <- httr::GET(url, config = config,
-                      query = list(courseWorkMaterialStates = "DRAFT", courseWorkMaterialStates = "PUBLISHED"),
-                      accept_json())
+  result <- httr::GET(url,
+    config = config,
+    query = list(courseWorkMaterialStates = "DRAFT", courseWorkMaterialStates = "PUBLISHED"),
+    accept_json()
+  )
 
   if (httr::status_code(result) != 200) {
     message("No materials found")
@@ -53,7 +54,6 @@ get_materials_list <- function(course_id) {
 #' topic_id <- get_topic_list(course_id)$topic$topicId[1]
 #'
 #' create_material(course_id, topic_id, title = "new material")
-#'
 #' }
 create_material <- function(course_id = NULL,
                             topic_id = NULL,
@@ -84,7 +84,7 @@ create_material <- function(course_id = NULL,
   )
 
   # Only keep non NULL items
-  body_params <- body_params %>% purrr::keep( ~ !is.null(.))
+  body_params <- body_params %>% purrr::keep(~ !is.null(.))
 
   # Modify course
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
@@ -117,10 +117,8 @@ create_material <- function(course_id = NULL,
 #' materials_id <- get_materials_list(course_id)$material_id$courseWorkMaterial$id[1]
 #'
 #' get_materials_properties(course_id, materials_id)
-#'
 #' }
 get_materials_properties <- function(course_id, materials_id) {
-
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.materials.get", course_id, materials_id)
 
@@ -130,9 +128,10 @@ get_materials_properties <- function(course_id, materials_id) {
 
   # Get course properties
   result <- httr::GET(url,
-                      config = config,
-                      query = list(courseWorkMaterialStates = "DRAFT", courseWorkMaterialStates = "PUBLISHED"),
-                      accept_json())
+    config = config,
+    query = list(courseWorkMaterialStates = "DRAFT", courseWorkMaterialStates = "PUBLISHED"),
+    accept_json()
+  )
 
   if (httr::status_code(result) != 200) {
     message("ID provided does not point towards any material")

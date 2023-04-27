@@ -7,7 +7,7 @@
 #' @param quiz_path The file path to a Markua formatted quiz to be translated to Google Forms API format
 #' @importFrom magrittr %>%
 #' @return A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.
-#'#'
+#' #'
 #' @examples \dontrun{
 #'
 #' # Using quiz example
@@ -17,7 +17,6 @@
 #' }
 #'
 translate_questions_api <- function(quiz_path) {
-
   quiz_specs <- ottrpal::parse_quiz(readLines(markdown_quiz_path()))
 
   # Remove header part and split into per question data frames
@@ -48,7 +47,7 @@ translate_questions_api <- function(quiz_path) {
     wording <- question_df[c(which(question_df$type == "correct_answer")[1], which(question_df$type == "wrong_answer")), ] %>%
       dplyr::arrange(index) %>%
       dplyr::pull(wording)
-    })
+  })
 
   correct_answer_index <- sapply(all_answers_df, function(question_df) {
     which(question_df$type == "correct_answer")[1]
@@ -62,9 +61,9 @@ translate_questions_api <- function(quiz_path) {
     shuffle_opt = 1:length(all_answers_df) %in% shuffle_tag,
     correct_answer = correct_answer_index,
     row.names = question_names
-    )
+  )
 
-  return(list(question_info_df, choice_vectors))
+  return(list(question_info_df = question_info_df, choice_vectors = choice_vectors))
 }
 
 #' Create quiz batch request from Markua quiz
@@ -75,6 +74,8 @@ translate_questions_api <- function(quiz_path) {
 #' @param course_id An id for the course where this is to be published and linked.
 #' @param form_id form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.
 #' @param make_new_quiz This can only be used if form_id is not specified. This will make a new quiz
+#' @param due_date A due date for this quiz, in year-month-day format
+#' @param assignment_description The description that will be given for the assignment
 #' @importFrom magrittr %>%
 #' @examples \dontrun{
 #'
@@ -82,14 +83,23 @@ translate_questions_api <- function(quiz_path) {
 #'
 #' quiz_path <- markdown_quiz_path()
 #'
-#' ottr_quiz_to_google(quiz_path)
+#' ottr_quiz_to_google(
+#'   markdown_quiz_path(),
+#'   course_id = "606463350924",
+#'   make_new_quiz = TRUE,
+#'   due_date = "2025-12-1"
+#' )
 #' }
 #'
 ottr_quiz_to_google <- function(quiz_path = NULL,
                                 course_id = NULL,
                                 form_id = NULL,
-                                make_new_quiz = FALSE) {
-
+                                due_date = NULL,
+                                make_new_quiz = FALSE,
+                                assignment_description = "") {
+  if (is.null(due_date)) {
+    stop("Due date must be set. Use the due_date argument.")
+  }
   if (is.null(form_id) && make_new_quiz == FALSE) {
     stop("No form ID supplied and make_new_quiz is set to FALSE. Stopping.")
   }
@@ -103,21 +113,33 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
 
     extract_title <- stringr::word(extract_title, sep = "# ", -1)
 
-    quiz_id <- create_quiz(course_id,
-                           quiz_title = extract_title,
-                           quiz_description = "")
+    new_quiz <- create_quiz(course_id,
+      quiz_title = extract_title,
+      quiz_description = "",
+      due_date = due_date,
+      assignment_description = assignment_description
+    )
 
-    form_id <- quiz_id$formId
+    form_id <- new_quiz$form_info$formId
   }
+
+  formatted_list <- translate_questions_api(quiz_path)
+
+  google_forms_request <- google_forms_request_container$new()
 
   # For each question, add it to the batch request we are building
-  for (question_index in 1:nrow(formatted_df)) {
+  for (question_index in 1:nrow(formatted_list$question_info_df)) {
     create_multiple_choice_question(
       form_id = form_id,
-      question = formatted_df$question[question_index],
-      choice_vector = all_answers[[question_index]],
-      correct_answer = formatted_df$correct_answer[question_index],
-      shuffle_opt = formatted_df$shuffle_opt[[question_index]]
+      question = formatted_list$question_info_df$question[question_index],
+      choice_vector = formatted_list$choice_vectors[[question_index]],
+      correct_answer = formatted_list$question_info_df$correct_answer[question_index],
+      shuffle_opt = formatted_list$question_info_df$shuffle_opt[[question_index]],
+      google_forms_request = google_forms_request,
+      location = (question_index - 1)
     )
   }
+  result <- commit_to_form(form_id = form_id, google_forms_request)
+
+  return(result)
 }

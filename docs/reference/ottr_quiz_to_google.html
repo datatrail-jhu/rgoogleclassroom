@@ -55,7 +55,9 @@
 <span>  quiz_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  course_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  form_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  make_new_quiz <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  due_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  make_new_quiz <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  assignment_description <span class="op">=</span> <span class="st">""</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -73,8 +75,16 @@
 <dd><p>form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.</p></dd>
 
 
+<dt>due_date</dt>
+<dd><p>A due date for this quiz, in year-month-day format</p></dd>
+
+
 <dt>make_new_quiz</dt>
 <dd><p>This can only be used if form_id is not specified. This will make a new quiz</p></dd>
+
+
+<dt>assignment_description</dt>
+<dd><p>The description that will be given for the assignment</p></dd>
 
 </dl></div>
 
@@ -86,7 +96,12 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">quiz_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="markdown_quiz_path.html">markdown_quiz_path</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">ottr_quiz_to_google</span><span class="op">(</span><span class="va">quiz_path</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ottr_quiz_to_google</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="markdown_quiz_path.html">markdown_quiz_path</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  course_id <span class="op">=</span> <span class="st">"606463350924"</span>,</span></span>
+<span class="r-in"><span>  make_new_quiz <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  due_date <span class="op">=</span> <span class="st">"2025-12-1"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

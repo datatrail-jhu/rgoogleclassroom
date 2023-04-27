@@ -8,7 +8,9 @@ ottr_quiz_to_google(
   quiz_path = NULL,
   course_id = NULL,
   form_id = NULL,
-  make_new_quiz = FALSE
+  due_date = NULL,
+  make_new_quiz = FALSE,
+  assignment_description = ""
 )
 }
 \arguments{
@@ -18,7 +20,11 @@ ottr_quiz_to_google(
 
 \item{form_id}{form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.}
 
+\item{due_date}{A due date for this quiz, in year-month-day format}
+
 \item{make_new_quiz}{This can only be used if form_id is not specified. This will make a new quiz}
+
+\item{assignment_description}{The description that will be given for the assignment}
 }
 \description{
 Takes a file path to a Markua formatted quiz and
@@ -30,7 +36,12 @@ Takes a file path to a Markua formatted quiz and
 
 quiz_path <- markdown_quiz_path()
 
-ottr_quiz_to_google(quiz_path)
+ottr_quiz_to_google(
+  markdown_quiz_path(),
+  course_id = "606463350924",
+  make_new_quiz = TRUE,
+  due_date = "2025-12-1"
+)
 }
 
 }

@@ -40,9 +40,10 @@ Create a new coursework
 topic_id <- get_topic_list("604042323237")$topic$topicId[1]
 course_id <- get_course_list()$courses$id[1]
 
-create_coursework(course_id, topic_id, title = "a new quiz", due_date = "2025-12-1",
-  description = "blah blah", link = "https://www.datatrail.org/")
-
+create_coursework(course_id, topic_id,
+  title = "a new quiz", due_date = "2025-12-1",
+  description = "blah blah", link = "https://www.datatrail.org/"
+)
 }
 
 }

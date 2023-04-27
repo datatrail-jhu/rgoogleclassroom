@@ -77,9 +77,8 @@ classroom_scopes_list <- paste0(
 #' @examples \dontrun{
 #'
 #' authorize()
-#'}
+#' }
 authorize <- function(token = NULL, cache = FALSE, ...) {
-
   if (!cache) {
     cache_it <- menu(c("Yes store credentials as .httr-oauth file", "No do not store credentials, I will re-run this authorize() in my next R session"))
     if (cache_it == 1) {
@@ -112,20 +111,22 @@ authorize <- function(token = NULL, cache = FALSE, ...) {
 #' @export
 #' @examples \dontrun{
 #'
-#' token <-authorize()
+#' token <- authorize()
 #'
-#' auth_from_secret(token$credentials$access_token,
-#'                  token$credentials$refresh_token)
-#'}
+#' auth_from_secret(
+#'   token$credentials$access_token,
+#'   token$credentials$refresh_token
+#' )
+#' }
 #'
 auth_from_secret <- function(access_token, refresh_token) {
-
-  credentials = list(
+  credentials <- list(
     access_token = access_token,
     expires_in = 3599L,
     refresh_token = refresh_token,
     scope = c(classroom_scopes_list, forms_scopes_list),
-    token_type = "Bearer")
+    token_type = "Bearer"
+  )
 
   token <- httr::oauth2.0_token(
     endpoint = app_set_up()$endpoint,
@@ -140,18 +141,17 @@ auth_from_secret <- function(access_token, refresh_token) {
 
 # This sets up the app creds no matter which way authorization is called
 app_set_up <- function() {
-
   decrypted <- openssl::aes_cbc_decrypt(
     readRDS(encrypt_creds_path()),
     key = readRDS(key_encrypt_creds_path())
-    )
+  )
 
-    app <- oauth_app(
-      appname = "googleclassroom",
-      key = unserialize(decrypted)$classroom_client_id,
-      secret = unserialize(decrypted)$classroom_client_secret
-    )
-    endpoint <- oauth_endpoints("google")
+  app <- oauth_app(
+    appname = "googleclassroom",
+    key = unserialize(decrypted)$classroom_client_id,
+    secret = unserialize(decrypted)$classroom_client_secret
+  )
+  endpoint <- oauth_endpoints("google")
 
   return(list(app = app, endpoint = endpoint))
 }

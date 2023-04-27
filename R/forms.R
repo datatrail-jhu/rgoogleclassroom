@@ -7,7 +7,7 @@
 #' @examples \dontrun{
 #' course_id <- get_course_list()$courses$id[1]
 #' quiz_list <- get_linked_quizzes_list(course_id)
-#'}
+#' }
 get_linked_quizzes_list <- function(course_id) {
   # Get all the coursework for a course
   all_material <- get_coursework_list(course_id = course_id)
@@ -35,7 +35,7 @@ get_linked_quizzes_list <- function(course_id) {
 #'
 #' # Get info about the form
 #' form_info <- get_form_properties(form_id = form_info$formId)
-#'}
+#' }
 get_form_properties <- function(form_id) {
   # Check validity of inputs
   assert_that(is.string(form_id))
@@ -74,10 +74,8 @@ get_form_properties <- function(form_id) {
 #'
 #' # Make the form
 #' form_info <- create_form(title = "A great quiz", description = "This quiz is tricky")
-#'
-#'}
+#' }
 create_form <- function(title = NULL, description = "", full_response = TRUE) {
-
   # Check validity of inputs
   assert_that(is.string(title))
 
@@ -127,10 +125,8 @@ create_form <- function(title = NULL, description = "", full_response = TRUE) {
 #'
 #' # Now make it a quiz
 #' make_form_quiz(form_id = form_info$formId)
-#'
-#'}
+#' }
 make_form_quiz <- function(form_id) {
-
   # Get endpoint url
   url <- get_endpoint("forms.endpoint.batchUpdate", form_id = form_id)
 
@@ -146,7 +142,7 @@ make_form_quiz <- function(form_id) {
           "quizSettings" = list(
             "isQuiz" = "true"
           )
-        ), "updateMask" =  "quizSettings"
+        ), "updateMask" = "quizSettings"
       )
     )
   )

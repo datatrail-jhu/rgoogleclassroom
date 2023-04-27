@@ -58,7 +58,10 @@
 <span>  question <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  choice_vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  shuffle_opt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  correct_answer <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  correct_answer <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  google_forms_request <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  point_value <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  location <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,6 +94,10 @@
 <dt>correct_answer</dt>
 <dd><p>The index that corresponds to the correct answer in the `choice_vector` supplied</p></dd>
 
+
+<dt>point_value</dt>
+<dd><p>An integer representing how many points</p></dd>
+
 </dl></div>
 
     <div class="section level2">
@@ -103,8 +110,7 @@
 <span class="r-in"><span>  choice_vector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  correct_answer <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>  shuffle_opt <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

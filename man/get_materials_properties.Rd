@@ -20,6 +20,5 @@ course_id <- get_course_list()$courses$id[3]
 materials_id <- get_materials_list(course_id)$material_id$courseWorkMaterial$id[1]
 
 get_materials_properties(course_id, materials_id)
-
 }
 }

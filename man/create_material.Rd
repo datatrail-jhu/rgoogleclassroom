@@ -37,6 +37,5 @@ course_id <- get_course_list()$courses$id[3]
 topic_id <- get_topic_list(course_id)$topic$topicId[1]
 
 create_material(course_id, topic_id, title = "new material")
-
 }
 }

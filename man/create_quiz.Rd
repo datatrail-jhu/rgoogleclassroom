@@ -32,8 +32,6 @@ create_quiz(
 \item{due_date}{A due date for this quiz, in year-month-day format}
 
 \item{assignment_description}{The description that will be given for the assignment}
-
-\item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
 }
 \description{
 Create a quiz at a course
@@ -44,7 +42,9 @@ Create a quiz at a course
 course_id <- get_course_list()$courses$id[1]
 topic_id <- get_topic_list(course_id)$topic$topicId[1]
 
-create_quiz(course_id, quiz_title = "new quiz", quiz_description = "This is a great quiz",
-topic_id = topic_id, due_date = "2025-12-1")
+create_quiz(course_id,
+  quiz_title = "new quiz", quiz_description = "This is a great quiz",
+  topic_id = topic_id, due_date = "2025-12-1"
+)
 }
 }

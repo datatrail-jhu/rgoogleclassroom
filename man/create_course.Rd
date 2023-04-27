@@ -19,6 +19,5 @@ Create a new course
 
 owner_id <- get_owner_id()
 course_df <- create_course(owner_id, name = "New course")
-
 }
 }

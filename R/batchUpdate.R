@@ -6,7 +6,6 @@
 #' @importFrom jsonlite fromJSON
 #' @export
 commit_to_form <- function(form_id, google_forms_request) {
-
   # Validate input
   assert_that(is.string(form_id))
   assert_that(is.google_forms_request(google_forms_request))
@@ -40,4 +39,3 @@ commit_to_form <- function(form_id, google_forms_request) {
 
   return(result_list)
 }
-

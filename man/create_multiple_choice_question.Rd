@@ -11,7 +11,10 @@ create_multiple_choice_question(
   question = NULL,
   choice_vector = NULL,
   shuffle_opt = FALSE,
-  correct_answer = NULL
+  correct_answer = NULL,
+  google_forms_request = NULL,
+  point_value = 1,
+  location = 0
 )
 }
 \arguments{
@@ -28,6 +31,8 @@ create_multiple_choice_question(
 \item{shuffle_opt}{TRUE or FALSE options should be shuffled? default is FALSE}
 
 \item{correct_answer}{The index that corresponds to the correct answer in the `choice_vector` supplied}
+
+\item{point_value}{An integer representing how many points}
 }
 \description{
 Commit changes to a Google form
@@ -41,7 +46,6 @@ create_multiple_choice_question(
   choice_vector = c("A", "B", "C", "D"),
   correct_answer = 3,
   shuffle_opt = TRUE
-  )
-
+)
 }
 }

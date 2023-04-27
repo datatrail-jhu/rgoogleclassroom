@@ -9,10 +9,8 @@
 #'
 #' owner_id <- get_owner_id()
 #' course_df <- get_course_list(owner_id)
-#'
 #' }
 get_course_list <- function(owner_id = get_owner_id()$id) {
-
   if (is.null(owner_id)) {
     stop("Need to provide owner_id from which to retrieve a list of courses from")
   }
@@ -51,7 +49,6 @@ get_course_list <- function(owner_id = get_owner_id()$id) {
 #'
 #' owner_id <- get_owner_id()
 #' course_df <- create_course(owner_id, name = "New course")
-#'
 #' }
 create_course <- function(owner_id = get_owner_id()$id, name = NULL) {
   # Get endpoint url
@@ -93,9 +90,6 @@ create_course <- function(owner_id = get_owner_id()$id, name = NULL) {
 #' @importFrom assertthat assert_that is.string
 #' @export
 get_course_properties <- function(course_id) {
-  # Check validity of inputs
-  assert_that(is.string(course_id))
-
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.course", course_id)
 
@@ -125,9 +119,6 @@ get_course_properties <- function(course_id) {
 #' @importFrom assertthat assert_that is.string
 #' @export
 archive_course <- function(course_id) {
-  # Check validity of inputs
-  assert_that(is.string(course_id))
-
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.course", course_id)
 
@@ -164,9 +155,6 @@ archive_course <- function(course_id) {
 #' @importFrom assertthat assert_that is.string
 #' @export
 delete_course <- function(course_id) {
-  # Check validity of inputs
-  assert_that(is.string(course_id))
-
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.course", course_id)
 

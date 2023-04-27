@@ -17,6 +17,5 @@ Get list of courses
 
 owner_id <- get_owner_id()
 course_df <- get_course_list(owner_id)
-
 }
 }
