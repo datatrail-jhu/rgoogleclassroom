@@ -4,15 +4,21 @@
 \alias{create_course}
 \title{Create a new course}
 \usage{
-create_course(owner_id = get_owner_id()$id, name = NULL, full_response = FALSE)
+create_course(owner_id = get_owner_id()$id, name = NULL)
 }
 \arguments{
 \item{owner_id}{The ownerId to use to create the course. Will attempt to retrieve ownerId based on credentials with get_owner_id()}
 
-\item{name}{Name of the new course}
-
-\item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
+\item{name}{Name of the new course. Required.}
 }
 \description{
 Create a new course
+}
+\examples{
+\dontrun{
+
+owner_id <- get_owner_id()
+course_df <- create_course(owner_id, name = "New course")
+
+}
 }

@@ -4,7 +4,7 @@
 \alias{authorize}
 \title{Authorize R package to access Google classroom API}
 \usage{
-authorize(token = NULL, ...)
+authorize(token = NULL, cache = FALSE, ...)
 }
 \arguments{
 \item{token}{an output from \code{\link{oauth2.0_token}} to set as the

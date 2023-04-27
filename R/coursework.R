@@ -45,7 +45,6 @@ get_coursework_list <- function(course_id) {
 #' @param link A url to an associated resource for the coursework being made.
 #' @param description Description of new coursework. Is a string
 #' @param work_type Currently only supported work type is ASSIGNMENT.
-#' @param full_response Parameter to decide whether to return the full response
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export

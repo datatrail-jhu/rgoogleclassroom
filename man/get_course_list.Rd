@@ -4,11 +4,19 @@
 \alias{get_course_list}
 \title{Get list of courses}
 \usage{
-get_course_list(owner_id = NULL)
+get_course_list(owner_id = get_owner_id()$id)
 }
 \arguments{
 \item{owner_id}{owner_id to retrieve course listings from}
 }
 \description{
 Get list of courses
+}
+\examples{
+\dontrun{
+
+owner_id <- get_owner_id()
+course_df <- get_course_list(owner_id)
+
+}
 }

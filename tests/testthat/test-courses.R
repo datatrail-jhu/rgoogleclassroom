@@ -1,5 +1,5 @@
 test_that("Test courses functions", {
-
+  authorize(cache = TRUE)
   skip_if_no_auth()
 
   owner_id <- get_owner_id()

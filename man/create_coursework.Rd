@@ -12,8 +12,7 @@ create_coursework(
   work_type = "ASSIGNMENT",
   due_date = NULL,
   description = NULL,
-  link = NULL,
-  full_response = FALSE
+  link = NULL
 )
 }
 \arguments{
@@ -32,8 +31,6 @@ create_coursework(
 \item{description}{Description of new coursework. Is a string}
 
 \item{link}{A url to an associated resource for the coursework being made.}
-
-\item{full_response}{Parameter to decide whether to return the full response}
 }
 \description{
 Create a new coursework

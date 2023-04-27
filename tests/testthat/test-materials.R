@@ -1,5 +1,5 @@
 test_that("Test coursework materials functions", {
-
+  authorize(cache = TRUE)
   skip_if_no_auth()
 
   # Create a course we will use for this test

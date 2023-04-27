@@ -10,8 +10,7 @@ create_material(
   publish = FALSE,
   title = NULL,
   description = NULL,
-  material_link = NULL,
-  full_response = FALSE
+  link = NULL
 )
 }
 \arguments{

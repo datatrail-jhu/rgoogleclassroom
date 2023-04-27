@@ -74,17 +74,20 @@ classroom_scopes_list <- paste0(
 #'}
 authorize <- function(
     token = NULL,
+    cache = FALSE,
     ...) {
   decrypted <- openssl::aes_cbc_decrypt(readRDS(encrypt_creds_path()),
     key = readRDS(key_encrypt_creds_path())
   )
+  if (!cache) {
+    cache_it <- menu(c("Yes store credentials as .httr-oauth file", "No do not store credentials, I will re-run this authorize() in my next R session"))
 
-  cache_it <- menu(c("Yes store credentials as .httr-oauth file", "No do not store credentials, I will re-run this authorize() in my next R session"))
-
-  if (cache_it == 1) {
-    message("You chose to cache your credentials, if you change your mind, just delete the .httr-oauth. Be careful not to push this file to GitHub or share it anywhere.")
+    if (cache_it == 1) {
+      message("You chose to cache your credentials, if you change your mind, just delete the .httr-oauth. Be careful not to push this file to GitHub or share it anywhere.")
+    }
+  } else {
+    cache_it <- 1
   }
-
   if (is.null(token)) {
     app <- oauth_app(
       appname = "googleclassroom",
