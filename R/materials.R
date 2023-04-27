@@ -19,7 +19,9 @@ get_materials_list <- function(course_id) {
   config <- httr::config(token = token)
 
   # Get list of courseworks
-  result <- httr::GET(url, config = config, accept_json())
+  result <- httr::GET(url, config = config,
+                      query = list(courseWorkMaterialStates = "DRAFT", courseWorkMaterialStates = "PUBLISHED"),
+                      accept_json())
 
   if (httr::status_code(result) != 200) {
     message("No materials found")
@@ -58,8 +60,7 @@ create_material <- function(course_id = NULL,
                             publish = FALSE,
                             title = NULL,
                             description = NULL,
-                            material_link = NULL,
-                            full_response = FALSE) {
+                            link = NULL) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.materials.get", course_id)
 
@@ -67,35 +68,39 @@ create_material <- function(course_id = NULL,
   token <- get_token()
   config <- httr::config(token = token)
 
+  # If the link is specified, we need it to be in the list that Google wants
+  if (!is.null(link)) {
+    link <- list("link" = list("url" = link))
+  }
+
   # Wrapping body parameters in a requests list
   body_params <- list(
     courseId = course_id,
     topic_id = topic_id,
     title = title,
     description = description,
-    materials = list("link" = list("url" = link)),
+    materials = link,
     state = ifelse(publish, "PUBLISHED", "DRAFT")
   )
+
+  # Only keep non NULL items
+  body_params <- body_params %>% purrr::keep( ~ !is.null(.))
 
   # Modify course
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
   if (httr::status_code(result) != 200) {
     warning("Cannot create coursework material")
-    return(result_list)
+    return(result)
   }
   # Process and return results
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste("Coursework Material created at", result_list$alternateLink))
+  course_work_url <- gsub("/c/", "/w/", get_course_properties(result_list$courseId)$alternateLink)
+  message(paste0("Coursework Materials called: ", result_list$title, "\n Created at: ", course_work_url, "/t/all"))
 
-  # If user request for minimal response
-  if (full_response) {
-    return(result_list)
-  } else {
-    return(result_list$Id)
-  }
+  return(result_list)
 }
 
 
@@ -124,7 +129,10 @@ get_materials_properties <- function(course_id, materials_id) {
   config <- httr::config(token = token)
 
   # Get course properties
-  result <- httr::GET(url, config = config, accept_json())
+  result <- httr::GET(url,
+                      config = config,
+                      query = list(courseWorkMaterialStates = "DRAFT", courseWorkMaterialStates = "PUBLISHED"),
+                      accept_json())
 
   if (httr::status_code(result) != 200) {
     message("ID provided does not point towards any material")

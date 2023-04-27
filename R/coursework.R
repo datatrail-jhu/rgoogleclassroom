@@ -19,8 +19,10 @@ get_coursework_list <- function(course_id) {
   token <- get_token()
   config <- httr::config(token = token)
 
-  # Get list of courseworks
-  result <- httr::GET(url, config = config, accept_json())
+  # Modify course
+  result <- httr::GET(url, config = config, accept_json(),
+                      query = list(courseWorkStates = "DRAFT", courseWorkStates = "PUBLISHED"),
+                      encode = "json")
 
   if (httr::status_code(result) != 200) {
     message("No courseworks found")
@@ -64,8 +66,7 @@ create_coursework <- function(course_id = NULL,
                               work_type = "ASSIGNMENT",
                               due_date = NULL,
                               description = NULL,
-                              link = NULL,
-                              full_response = FALSE) {
+                              link = NULL) {
 
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.coursework.get", course_id = course_id)
@@ -78,6 +79,10 @@ create_coursework <- function(course_id = NULL,
   token <- get_token()
   config <- httr::config(token = token)
 
+  # If the link is specified, we need it to be in the list that Google wants
+  if (!is.null(link)) {
+    link <- list("link" = list("url" = link))
+  }
 
   # Wrapping body parameters in a requests list
   body_params <- list(
@@ -88,16 +93,19 @@ create_coursework <- function(course_id = NULL,
     dueDate = date_handler(due_date),
     dueTime = time_handler(),
     description = description,
-    materials = list("link" = list("url" = link)),
+    materials = link,
     state = ifelse(publish, "PUBLISHED", "DRAFT")
   )
+
+  # Only keep non NULL items
+  body_params <- body_params %>% purrr::keep( ~ !is.null(.))
 
   # Modify course
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
   if (httr::status_code(result) != 200) {
     warning("Cannot create coursework")
-    return(result_list)
+    return(result)
   }
   # Process and return results
   result_content <- content(result, "text")
@@ -106,12 +114,7 @@ create_coursework <- function(course_id = NULL,
   course_work_url <- gsub("/c/", "/w/", get_course_properties(result_list$courseId)$alternateLink)
   message(paste0("Coursework called: ", result_list$title, "\n Created at: ", course_work_url, "/t/all"))
 
-  # If user request for minimal response
-  if (full_response) {
-    return(result_list)
-  } else {
-    return(result_list$Id)
-  }
+  return(result_list)
 }
 
 
@@ -128,14 +131,16 @@ get_coursework_properties <- function(course_id, coursework_id) {
   assert_that(is.string(coursework_id))
 
   # Get endpoint url
-  url <- get_endpoint("classroom.endpoint.get.coursework", course_id, coursework_id)
+  url <- get_endpoint("classroom.endpoint.coursework.get", course_id, coursework_id)
 
   # Get auth token
   token <- get_token()
   config <- httr::config(token = token)
 
   # Get course properties
-  result <- httr::GET(url, config = config, accept_json())
+  result <- httr::GET(url, config = config,
+                      query = list(courseWorkStates = "DRAFT", courseWorkStates = "PUBLISHED"),
+                      accept_json())
 
   if (httr::status_code(result) != 200) {
     message("ID provided does not point towards any course or coursework")
@@ -148,3 +153,86 @@ get_coursework_properties <- function(course_id, coursework_id) {
 
   return(result_list)
 }
+
+
+##### This currently doesn't work! Not sure why.
+#' Delete a Google Classroom Coursework
+#' @param coursework_id ID of the archived course you wish to delete
+#' @param coursework_id ID of the coursework you wish to retrieve information about
+#' @importFrom httr config accept_json content
+#' @importFrom jsonlite fromJSON
+#' @importFrom assertthat assert_that is.string
+delete_coursework <- function(course_id, coursework_id) {
+  # Check validity of inputs
+  assert_that(is.string(coursework_id))
+
+  # Get endpoint url
+  url <- get_endpoint("classroom.endpoint.coursework", course_id, coursework_id)
+
+  # Get auth token
+  token <- get_token()
+  config <- httr::config(token = token)
+
+  # Get course properties
+  result <- httr::DELETE(url, config = config, accept_json())
+
+  if (httr::status_code(result) != 200) {
+    message("Failed to delete course - was it archived first?")
+    return(result_list)
+  }
+
+  # Process and return results
+  result_content <- content(result, "text")
+  result_list <- fromJSON(result_content)
+
+  return(result_list)
+}
+
+##### This currently doesn't work! Not sure why.
+#' Publish a Google Classroom CourseWork
+#' @param course_id ID of the archived course you wish to delete
+#' @param coursework_id coursework ID of the coursework you wish to publish
+#' @importFrom httr config accept_json content
+#' @importFrom jsonlite fromJSON
+#' @importFrom assertthat assert_that is.string
+#' @export
+publish_coursework <- function(course_id, coursework_id) {
+
+  # Check validity of inputs
+  assert_that(is.string(course_id))
+  assert_that(is.string(coursework_id))
+
+  # Get endpoint url
+  url <- get_endpoint("classroom.endpoint.coursework", course_id, coursework_id = coursework_id)
+
+  # Get auth token
+  token <- get_token()
+  config <- httr::config(token = token)
+
+  # Wrapping body parameters in a requests list
+  body_params <- list(
+    courseId = course_id,
+    id = coursework_id,
+    state = "PUBLISHED",
+    updateMask = "state"
+  )
+
+  # Modify course
+  result <- httr::PUT(url, config = config,
+                      accept_json(),
+                      body = body_params,
+                      query = list(courseWorkStates = "DRAFT"),
+                      encode = "json")
+
+  if (httr::status_code(result) != 200) {
+    message("Failed to change the coursework")
+    return(result)
+  }
+
+  # Process and return results
+  result_content <- content(result, "text")
+  result_list <- fromJSON(result_content)
+
+  return(result_list)
+}
+

@@ -59,7 +59,7 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
   variables_list <- list(
     "{courseId}" = course_id,
     "{topicId}" = topic_id,
-    "{courseworkId}" = coursework_id,
+    "{courseWorkId}" = coursework_id,
     "{materialsId}" = materials_id,
     "{formId}" = form_id
   )
