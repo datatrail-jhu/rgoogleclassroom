@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.httr-oauth
+.Rbuildignore
+.DS_Store
+.secrets
+man/default_creds_path.Rd
+man/key_encrypt_creds_path.Rd
+man/encrypt_creds_path.Rd
+docs
