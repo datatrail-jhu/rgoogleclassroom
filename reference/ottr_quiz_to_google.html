@@ -54,10 +54,14 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ottr_quiz_to_google</span><span class="op">(</span></span>
 <span>  quiz_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  course_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quiz_title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  coursework_title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  form_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  due_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  make_new_quiz <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  assignment_description <span class="op">=</span> <span class="st">""</span></span>
+<span>  assignment_description <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  quiz_description <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  output_path <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -69,6 +73,14 @@
 
 <dt>course_id</dt>
 <dd><p>An id for the course where this is to be published and linked.</p></dd>
+
+
+<dt>quiz_title</dt>
+<dd><p>The title for the quiz. If not supplied, it will attempt to be grabbed from the Markua doc</p></dd>
+
+
+<dt>coursework_title</dt>
+<dd><p>the title for the coursework to be created</p></dd>
 
 
 <dt>form_id</dt>
@@ -85,6 +97,14 @@
 
 <dt>assignment_description</dt>
 <dd><p>The description that will be given for the assignment</p></dd>
+
+
+<dt>quiz_description</dt>
+<dd><p>The description that will be given for the quiz</p></dd>
+
+
+<dt>output_path</dt>
+<dd><p>Optional file path to save the question formatted data to</p></dd>
 
 </dl></div>
 
