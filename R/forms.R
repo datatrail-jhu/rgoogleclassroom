@@ -24,6 +24,7 @@ get_linked_quizzes_list <- function(course_id) {
 
 #' Get Google Form Properties
 #' @param form_id Google form Id
+#' @param form_url Google form url
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
@@ -36,9 +37,17 @@ get_linked_quizzes_list <- function(course_id) {
 #' # Get info about the form
 #' form_info <- get_form_properties(form_id = form_info$formId)
 #' }
-get_form_properties <- function(form_id) {
+get_form_properties <- function(form_id = NULL, form_url = NULL) {
+
   # Check validity of inputs
-  assert_that(is.string(form_id))
+  if (is.null(form_id) && is.null(form_url)) stop("Must supply either a form id or form url")
+
+  if(!is.null(form_id)) assert_that(is.string(form_id))
+
+  if(!is.null(form_url)) {
+    assert_that(is.string(form_url))
+    form_id <- handle_form_url(form_url)
+  }
 
   # Get endpoint url
   url <- get_endpoint("forms.endpoint", form_id = form_id)
@@ -65,19 +74,26 @@ get_form_properties <- function(form_id) {
 #' Create a new form
 #' @param title The title for the new form. Required as a string.
 #' @param description The description for the new form as a string.
-#' @param full_response Parameter to decide whether to return the full response or just the presentation ID
+#' @param document_title The title for the form file that will be stored in Google Drive
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
 #'
 #' @examples \dontrun{
-#'
+#'#'
 #' # Make the form
-#' form_info <- create_form(title = "A great quiz", description = "This quiz is tricky")
+#' form_info <- create_form(
+#'   title = "A great quiz",
+#'   description = "This quiz is tricky"
+#'  )
 #' }
-create_form <- function(title = NULL, description = "", full_response = TRUE) {
+create_form <- function(title = NULL,
+                        document_title = "new_form",
+                        description = "") {
+
   # Check validity of inputs
   assert_that(is.string(title))
+  if (!is.null(linked_sheet)) assert_that(is.string(linked_sheet))
 
   # Get endpoint url
   url <- get_endpoint("forms.endpoint.get")
@@ -88,7 +104,8 @@ create_form <- function(title = NULL, description = "", full_response = TRUE) {
 
   body_params <- list(
     "info" = list(
-      "title" = title
+      "title" = title,
+      "documentTitle" = document_title
     )
   )
   # Modify course
@@ -96,7 +113,7 @@ create_form <- function(title = NULL, description = "", full_response = TRUE) {
 
   if (httr::status_code(result) != 200) {
     message("Cannot create form")
-    httr::stop_for_status(result)
+    return(result)
   }
   # Process and return results
   result_content <- content(result, "text")
@@ -104,12 +121,7 @@ create_form <- function(title = NULL, description = "", full_response = TRUE) {
 
   message(paste("Form created at", result_list$responderUri))
 
-  # If user request for minimal response
-  if (full_response) {
-    return(result_list)
-  } else {
-    return(result_list$Id)
-  }
+  return(result_list)
 }
 
 #' Turn a form into a quiz

@@ -40,7 +40,8 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
     classroom.endpoint.materials = "https://classroom.googleapis.com/v1/courses/{courseId}/courseWorkMaterials/{materialsId}",
     forms.endpoint.get = "https://forms.googleapis.com/v1/forms/",
     forms.endpoint = "https://forms.googleapis.com/v1/forms/{formId}",
-    forms.endpoint.batchUpdate = "https://forms.googleapis.com/v1/forms/{formId}:batchUpdate"
+    forms.endpoint.batchUpdate = "https://forms.googleapis.com/v1/forms/{formId}:batchUpdate",
+    forms.endpoint.responses = "https://forms.googleapis.com/v1beta/forms/{formId}/responses"
   )
 
   if (!(type_of_endpoint %in% names(endpoint_list))) {
@@ -80,4 +81,29 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
 
   # Return the URL
   return(url_temp)
+}
+
+
+handle_linked_sheet <- function(linked_sheet) {
+  if (!is.null(linked_sheet)) assert_that(is.string(linked_sheet))
+
+  # If user provides a link, extract the sheet id from it
+  if (grepl("http", linked_sheet)) {
+    strings_to_remove <- "https://docs.google.com/spreadsheets/d/|/edit"
+    linked_sheet <- stringr::word(linked_sheet, sep = strings_to_remove, 2)
+  }
+
+  return(linked_sheet)
+}
+
+handle_form_url <- function(form_url) {
+  if (!is.null(form_url)) assert_that(is.string(form_url))
+
+  # If user provides a link, extract the sheet id from it
+  if (grepl("http", form_url)) {
+    strings_to_remove <- "https://docs.google.com/forms/d/|/edit|/viewform"
+    form_url <- stringr::word(form_url, sep = strings_to_remove, 2)
+  }
+
+  return(form_url)
 }

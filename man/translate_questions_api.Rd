@@ -4,10 +4,12 @@
 \alias{translate_questions_api}
 \title{Translate Markua questions for submission to Google API}
 \usage{
-translate_questions_api(quiz_path)
+translate_questions_api(quiz_path, output_path = NULL)
 }
 \arguments{
 \item{quiz_path}{The file path to a Markua formatted quiz to be translated to Google Forms API format}
+
+\item{output_path}{Optional file path to save the formatted data to a JSON file}
 }
 \value{
 A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.

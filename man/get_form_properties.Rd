@@ -4,10 +4,12 @@
 \alias{get_form_properties}
 \title{Get Google Form Properties}
 \usage{
-get_form_properties(form_id)
+get_form_properties(form_id = NULL, form_url = NULL)
 }
 \arguments{
 \item{form_id}{Google form Id}
+
+\item{form_url}{Google form url}
 }
 \description{
 Get Google Form Properties

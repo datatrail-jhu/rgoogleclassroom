@@ -7,7 +7,7 @@
 delete_coursework(course_id, coursework_id)
 }
 \arguments{
-\item{coursework_id}{ID of the coursework you wish to retrieve information about}
+\item{coursework_id}{ID of the archived course you wish to delete}
 }
 \description{
 Delete a Google Classroom Coursework

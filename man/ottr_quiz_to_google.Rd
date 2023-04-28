@@ -7,16 +7,24 @@
 ottr_quiz_to_google(
   quiz_path = NULL,
   course_id = NULL,
+  quiz_title = NULL,
+  coursework_title = NULL,
   form_id = NULL,
   due_date = NULL,
   make_new_quiz = FALSE,
-  assignment_description = ""
+  assignment_description = "",
+  quiz_description = "",
+  output_path = NULL
 )
 }
 \arguments{
 \item{quiz_path}{file path to a markdown Markua quiz}
 
 \item{course_id}{An id for the course where this is to be published and linked.}
+
+\item{quiz_title}{The title for the quiz. If not supplied, it will attempt to be grabbed from the Markua doc}
+
+\item{coursework_title}{the title for the coursework to be created}
 
 \item{form_id}{form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.}
 
@@ -25,6 +33,10 @@ ottr_quiz_to_google(
 \item{make_new_quiz}{This can only be used if form_id is not specified. This will make a new quiz}
 
 \item{assignment_description}{The description that will be given for the assignment}
+
+\item{quiz_description}{The description that will be given for the quiz}
+
+\item{output_path}{Optional file path to save the question formatted data to}
 }
 \description{
 Takes a file path to a Markua formatted quiz and

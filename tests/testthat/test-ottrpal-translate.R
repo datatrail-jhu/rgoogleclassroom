@@ -11,7 +11,10 @@ test_that("Test ottrpal translate", {
     markdown_quiz_path(),
     course_id = new_course$id,
     make_new_quiz = TRUE,
-    due_date = lubridate::today() + lubridate::hours(24))
+    due_date = lubridate::today() + lubridate::hours(24),
+    output_path = "test.json")
+
+  file.remove("test.json")
 
   # Clean up and delete the course
   archive_course(new_course$id)

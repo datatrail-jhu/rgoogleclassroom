@@ -28,8 +28,7 @@ create_quiz <- function(course_id = NULL,
                         coursework_title = "none",
                         work_type = "ASSIGNMENT",
                         due_date = NULL,
-                        assignment_description = "",
-                        full_response = TRUE) {
+                        assignment_description = "") {
   # Check validity of inputs
   assert_that(is.string(quiz_title))
   assert_that(is.string(coursework_title))
@@ -45,7 +44,10 @@ create_quiz <- function(course_id = NULL,
   date_list <- date_handler(due_date)
 
   # Make the form
-  form_info <- create_form(title = quiz_title)
+  form_info <- create_form(
+    title = quiz_title,
+    description = quiz_description
+  )
 
   # Now make it a quiz
   make_form_quiz(form_id = form_info$formId)

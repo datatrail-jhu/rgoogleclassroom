@@ -1,11 +1,13 @@
-#' Commit changes to a Google form
+#' Create a multiple choice question
 #' @param form_id The id of the google form to be updated
-#' @param question_kind Can be choiceQuestion or textQuestion
+#' @param question_kind Currently only choiceQuestion 's are supported
+#' @param google_forms_request A google forms request object. If not supplied, it will be created new.
 #' @param required TRUE or FALSE is this a required question? Default is not required.
 #' @param question a string that is what the question should say
 #' @param choice_vector a character vector of the choices that should be given for this question
 #' @param shuffle_opt TRUE or FALSE options should be shuffled? default is FALSE
 #' @param correct_answer The index that corresponds to the correct answer in the `choice_vector` supplied
+#' @param location Where should the new question be added
 #' @param point_value An integer representing how many points
 #' @importFrom assertthat assert_that is.string
 #' @importFrom httr config accept_json content

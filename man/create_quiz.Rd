@@ -12,8 +12,7 @@ create_quiz(
   coursework_title = "none",
   work_type = "ASSIGNMENT",
   due_date = NULL,
-  assignment_description = "",
-  full_response = TRUE
+  assignment_description = ""
 )
 }
 \arguments{

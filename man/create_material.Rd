@@ -10,7 +10,7 @@ create_material(
   publish = FALSE,
   title = NULL,
   description = NULL,
-  link = NULL
+  material_link = NULL
 )
 }
 \arguments{
@@ -25,8 +25,6 @@ create_material(
 \item{description}{A description for the new material}
 
 \item{material_link}{A URL to go with the associated material}
-
-\item{full_response}{Parameter to decide whether to return the full response or just the presentation ID}
 }
 \description{
 Create a new material

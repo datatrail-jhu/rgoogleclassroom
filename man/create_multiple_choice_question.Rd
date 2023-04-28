@@ -2,7 +2,7 @@
 % Please edit documentation in R/form-edits.R
 \name{create_multiple_choice_question}
 \alias{create_multiple_choice_question}
-\title{Commit changes to a Google form}
+\title{Create a multiple choice question}
 \usage{
 create_multiple_choice_question(
   form_id = NULL,
@@ -20,7 +20,7 @@ create_multiple_choice_question(
 \arguments{
 \item{form_id}{The id of the google form to be updated}
 
-\item{question_kind}{Can be choiceQuestion or textQuestion}
+\item{question_kind}{Currently only choiceQuestion 's are supported}
 
 \item{required}{TRUE or FALSE is this a required question? Default is not required.}
 
@@ -32,10 +32,14 @@ create_multiple_choice_question(
 
 \item{correct_answer}{The index that corresponds to the correct answer in the `choice_vector` supplied}
 
+\item{google_forms_request}{A google forms request object. If not supplied, it will be created new.}
+
 \item{point_value}{An integer representing how many points}
+
+\item{location}{Where should the new question be added}
 }
 \description{
-Commit changes to a Google form
+Create a multiple choice question
 }
 \examples{
 \dontrun{
