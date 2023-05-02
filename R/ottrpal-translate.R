@@ -180,6 +180,7 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
       location = (question_index - 1)
     )
   }
+  # Add to the form
   result <- commit_to_form(form_id = form_id, google_forms_request)
 
   return(result)
