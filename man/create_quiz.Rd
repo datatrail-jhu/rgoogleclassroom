@@ -9,6 +9,7 @@ create_quiz(
   quiz_title = NULL,
   quiz_description = NULL,
   topic_id = NULL,
+  document_title = NULL,
   coursework_title = "none",
   work_type = "ASSIGNMENT",
   due_date = NULL,
