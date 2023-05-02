@@ -97,7 +97,7 @@ create_multiple_choice_question <- function(form_id = NULL,
 #'
 #' create_text_question(
 #'   form_id = "12345",
-#'   question = "Put text here",
+#'   question = "Put text here that is for filling in the blank",
 #'   correct_answer = c("dog", "cat", "fish", "elephant"),
 #'   shuffle_opt = TRUE
 #' )
