@@ -8,6 +8,7 @@ ottr_quiz_to_google(
   quiz_path = NULL,
   course_id = NULL,
   quiz_title = NULL,
+  topic_id = NULL,
   coursework_title = NULL,
   form_id = NULL,
   due_date = NULL,
@@ -23,6 +24,8 @@ ottr_quiz_to_google(
 \item{course_id}{An id for the course where this is to be published and linked.}
 
 \item{quiz_title}{The title for the quiz. If not supplied, it will attempt to be grabbed from the Markua doc}
+
+\item{topic_id}{Optional a topic Id to put the quiz underneath}
 
 \item{coursework_title}{the title for the coursework to be created}
 

@@ -71,7 +71,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
     question = question_names,
     shuffle_opt = 1:length(all_answers_df) %in% shuffle_tag,
     correct_answer = correct_answer_index,
-    row.names = question_names
+    row.names = paste0(1:length(question_names), question_names)
   )
 
   # Store as a list
@@ -93,6 +93,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 
 #' @param quiz_path file path to a markdown Markua quiz
 #' @param course_id An id for the course where this is to be published and linked.
+#' @param topic_id Optional a topic Id to put the quiz underneath
 #' @param quiz_title The title for the quiz. If not supplied, it will attempt to be grabbed from the Markua doc
 #' @param coursework_title the title for the coursework to be created
 #' @param form_id form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.
@@ -119,6 +120,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 ottr_quiz_to_google <- function(quiz_path = NULL,
                                 course_id = NULL,
                                 quiz_title = NULL,
+                                topic_id = NULL,
                                 coursework_title = NULL,
                                 form_id = NULL,
                                 due_date = NULL,
@@ -148,6 +150,7 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
     new_quiz <- create_quiz(course_id,
       quiz_title = quiz_title,
       coursework_title = coursework_title,
+      topic_id = topic_id,
       due_date = due_date,
       assignment_description = assignment_description,
       quiz_description = quiz_description

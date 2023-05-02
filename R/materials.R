@@ -68,8 +68,8 @@ create_material <- function(course_id = NULL,
   config <- httr::config(token = token)
 
   # If the link is specified, we need it to be in the list that Google wants
-  if (!is.null(link)) {
-    link <- list("link" = list("url" = link))
+  if (!is.null(material_link)) {
+    link <- list("link" = list("url" = material_link))
   }
 
   # Wrapping body parameters in a requests list

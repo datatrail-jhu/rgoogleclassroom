@@ -25,6 +25,7 @@ create_quiz <- function(course_id = NULL,
                         quiz_title = NULL,
                         quiz_description = NULL,
                         topic_id = NULL,
+                        document_title = NULL,
                         coursework_title = "none",
                         work_type = "ASSIGNMENT",
                         due_date = NULL,
@@ -46,7 +47,8 @@ create_quiz <- function(course_id = NULL,
   # Make the form
   form_info <- create_form(
     title = quiz_title,
-    description = quiz_description
+    description = quiz_description,
+    document_title = document_title
   )
 
   # Now make it a quiz

@@ -47,4 +47,8 @@ m) 1, 2, and 3
 o) All of the examples except 1 and 5
 o) All of the examples listed
 
+? An example of a text question. Write something in the below fill in the blank.
+
+! /(.*\?)/i
+
 {/quiz}

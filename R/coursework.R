@@ -160,7 +160,8 @@ get_coursework_properties <- function(course_id, coursework_id) {
 
 ##### This currently doesn't work! Not sure why.
 #' Delete a Google Classroom Coursework
-#' @param coursework_id ID of the archived course you wish to delete
+#' @param course_id ID of the course that has the coursework you'd like to delete
+#' @param coursework_id ID of the coursework you wish to delete
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
