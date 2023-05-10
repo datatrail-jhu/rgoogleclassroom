@@ -29,6 +29,7 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
   # Here's our endpoints
   endpoint_list <- list(
     googledrive.endpoint = "https://www.googleapis.com/drive/v3/files/",
+    googledrive.endpoint.copy = "https://www.googleapis.com/drive/v3/files/{formId}/copy",
     classroom.endpoint.user = "https://classroom.googleapis.com/v1/userProfiles/me",
     classroom.endpoint.course.get = "https://classroom.googleapis.com/v1/courses",
     classroom.endpoint.course = "https://classroom.googleapis.com/v1/courses/{courseId}",

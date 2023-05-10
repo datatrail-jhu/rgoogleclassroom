@@ -75,5 +75,76 @@ create_multiple_choice_question <- function(form_id = NULL,
 
   google_forms_request$add_request(create_question_request)
 
-  return(google_forms_request)
+  result <- commit_to_form(form_id, google_forms_request)
+  return(result)
 }
+
+
+#' Create a text question
+#' @description This function makes a google request object that will be able to be posted with a batch request and
+#' and added to a Google form to edit it.
+#' @param form_id The id of the google form to be updated
+#' @param google_forms_request A google forms request object. If not supplied, it will be created new.
+#' @param required TRUE or FALSE is this a required question? Default is not required.
+#' @param question a string that is what the question should say
+#' @param location Where should the new question be added
+#' @param correct_answer A string that matches exactly what would be considered a correct
+#' @param point_value An integer representing how many points
+#' @importFrom assertthat assert_that is.string
+#' @importFrom httr config accept_json content
+#' @importFrom jsonlite fromJSON
+#' @export
+#' @examples \dontrun{
+#'
+#' create_text_question(
+#'   form_id = "12345",
+#'   question = "Put text here that is for filling in the blank",
+#'   point_value = 1
+#' )
+#' }
+create_text_question <- function(
+    form_id = NULL,
+    question_kind = "textQuestion",
+    required = FALSE,
+    question = NULL,
+    correct_answer = NULL,
+    google_forms_request = NULL,
+    point_value = 1,
+    location = 0) {
+
+  if (is.null(google_forms_request)) {
+    google_forms_request <- google_forms_request_container$new()
+  }
+  if (is.null(form_id)) {
+    stop("form_id must be provided")
+  }
+
+  # Input Validation
+  assert_that(is.google_forms_request(google_forms_request))
+  assert_that(is.logical(required))
+  assert_that(is.numeric(point_value))
+
+  create_question_request <- list(createItem = list(item = list(questionItem = list())))
+
+  create_question_request[["createItem"]][["location"]][["index"]] <- as.integer(location)
+
+  if (!is.null(question)) {
+    create_question_request[["createItem"]][["item"]][["title"]] <- question
+  }
+
+  create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["textQuestion"]][["paragraph"]] <- TRUE
+
+  if (!is.null(point_value)) {
+    create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["grading"]][["pointValue"]] <- point_value
+  }
+
+  if (!is.null(correct_answer)) {
+    create_question_request[["createItem"]][["item"]][["questionItem"]][["question"]][["grading"]][["correctAnswers"]][["answers"]] <- correct_answer
+  }
+
+  google_forms_request$add_request(create_question_request)
+
+  result <- commit_to_form(form_id, google_forms_request)
+  return(result)
+}
+

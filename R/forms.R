@@ -173,3 +173,43 @@ make_form_quiz <- function(form_id) {
 
   return(result_list)
 }
+
+#' Make a copy of an existing form
+#' @param form_id The form_id that is desired to be copied.
+#' @param description The description for the new form as a string.
+#' @param document_title The title for the form file that will be stored in Google Drive
+#' @importFrom httr config accept_json content
+#' @importFrom jsonlite fromJSON
+#' @export
+#'
+#' @examples \dontrun{
+#'#'
+#' # Make the form
+#' form_info <- create_form(form_id = <google_form_url>)
+#' }
+copy_form <- function(form_id) {
+
+  form_id <- handle_form_url(form_id)
+
+  # Get endpoint url
+  url <- get_endpoint("googledrive.endpoint.copy", form_id = form_id)
+
+  # Get auth token
+  token <- get_token()
+  config <- httr::config(token = token)
+
+  # Modify course
+  result <- httr::POST(url, config = config, query = list("supportsAllDrives" = TRUE), encode = "json")
+
+  if (httr::status_code(result) != 200) {
+    message("Cannot create form")
+    return(result)
+  }
+  # Process and return results
+  result_content <- content(result, "text")
+  result_list <- fromJSON(result_content)
+
+  message(paste("Form created at", result_list$responderUri))
+
+  return(result_list)
+}
