@@ -14,9 +14,9 @@ get_form_responses <- function(form_id = NULL, form_url = NULL) {
   # Check validity of inputs
   if (is.null(form_id) && is.null(form_url)) stop("Must supply either a form id or form url")
 
-  if(!is.null(form_id)) assert_that(is.string(form_id))
+  if (!is.null(form_id)) assert_that(is.string(form_id))
 
-  if(!is.null(form_url)) {
+  if (!is.null(form_url)) {
     assert_that(is.string(form_url))
     form_id <- handle_form_url(form_url)
   }

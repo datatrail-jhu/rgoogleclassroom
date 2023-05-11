@@ -8,9 +8,11 @@ test_that("Test coursework functions", {
   new_course <- create_course(owner_id$id, name = "New course")
 
   # Create a new coursework
-  new_coursework <- create_coursework(course_id = new_course$id,
-                                      title = "New coursework",
-                                      due_date = lubridate::today() + lubridate::hours(24))
+  new_coursework <- create_coursework(
+    course_id = new_course$id,
+    title = "New coursework",
+    due_date = lubridate::today() + lubridate::hours(24)
+  )
   expect_type(new_coursework, "list")
 
   # Get coursework properties

@@ -4,14 +4,12 @@
 \alias{copy_form}
 \title{Make a copy of an existing form}
 \usage{
-copy_form(form_id)
+copy_form(form_id, new_name = NULL)
 }
 \arguments{
 \item{form_id}{The form_id that is desired to be copied.}
 
-\item{description}{The description for the new form as a string.}
-
-\item{document_title}{The title for the form file that will be stored in Google Drive}
+\item{new_name}{What should the new file name for the copied file be?}
 }
 \description{
 Make a copy of an existing form
@@ -20,6 +18,7 @@ Make a copy of an existing form
 \dontrun{
 #'
 # Make the form
-form_info <- create_form(form_id = <google_form_url>)
+form_info <- copy_form(form_id = "https://docs.google.com/forms/d/someformidhere/edit",
+                       new_name = "copied form")
 }
 }

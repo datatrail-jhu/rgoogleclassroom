@@ -23,6 +23,6 @@ Create a new form
 form_info <- create_form(
   title = "A great quiz",
   description = "This quiz is tricky"
- )
+)
 }
 }

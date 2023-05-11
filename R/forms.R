@@ -38,13 +38,12 @@ get_linked_quizzes_list <- function(course_id) {
 #' form_info <- get_form_properties(form_id = form_info$formId)
 #' }
 get_form_properties <- function(form_id = NULL, form_url = NULL) {
-
   # Check validity of inputs
   if (is.null(form_id) && is.null(form_url)) stop("Must supply either a form id or form url")
 
-  if(!is.null(form_id)) assert_that(is.string(form_id))
+  if (!is.null(form_id)) assert_that(is.string(form_id))
 
-  if(!is.null(form_url)) {
+  if (!is.null(form_url)) {
     assert_that(is.string(form_url))
     form_id <- handle_form_url(form_url)
   }
@@ -80,17 +79,16 @@ get_form_properties <- function(form_id = NULL, form_url = NULL) {
 #' @export
 #'
 #' @examples \dontrun{
-#'#'
+#' #'
 #' # Make the form
 #' form_info <- create_form(
 #'   title = "A great quiz",
 #'   description = "This quiz is tricky"
-#'  )
+#' )
 #' }
 create_form <- function(title = NULL,
                         document_title = "new_form",
                         description = "") {
-
   # Check validity of inputs
   assert_that(is.string(title))
   if (!is.null(linked_sheet)) assert_that(is.string(linked_sheet))
@@ -183,12 +181,12 @@ make_form_quiz <- function(form_id) {
 #' @export
 #'
 #' @examples \dontrun{
-#'#'
+#' #'
 #' # Make the form
-#' form_info <- create_form(form_id = <google_form_url>)
+#' form_info <- copy_form(form_id = "https://docs.google.com/forms/d/someformidhere/edit",
+#'                        new_name = "copied form")
 #' }
 copy_form <- function(form_id, new_name = NULL) {
-
   form_id <- handle_form_url(form_id)
 
   # Get endpoint url

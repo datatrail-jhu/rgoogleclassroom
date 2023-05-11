@@ -12,7 +12,8 @@ test_that("Test ottrpal translate", {
     course_id = new_course$id,
     make_new_quiz = TRUE,
     due_date = lubridate::today() + lubridate::hours(24),
-    output_path = "test.json")
+    output_path = "test.json"
+  )
 
   file.remove("test.json")
 

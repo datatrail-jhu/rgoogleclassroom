@@ -2,16 +2,19 @@
 % Please edit documentation in R/ottrpal-translate.R
 \name{ottr_quiz_to_google}
 \alias{ottr_quiz_to_google}
-\title{Create quiz batch request from Markua quiz}
+\title{Create Google Form Quiz from Markua quiz}
 \usage{
 ottr_quiz_to_google(
   quiz_path = NULL,
   course_id = NULL,
   quiz_title = NULL,
+  topic_id = NULL,
   coursework_title = NULL,
   form_id = NULL,
   due_date = NULL,
   make_new_quiz = FALSE,
+  copy_from_template_quiz = TRUE,
+  new_name = NULL,
   assignment_description = "",
   quiz_description = "",
   output_path = NULL
@@ -32,6 +35,10 @@ ottr_quiz_to_google(
 
 \item{make_new_quiz}{This can only be used if form_id is not specified. This will make a new quiz}
 
+\item{copy_from_template_quiz}{TRUE or FALSE the form supplied should be copied over and used as a template.}
+
+\item{new_name}{To be passed to `copy_form` if `copy_from_template_quiz` is TRUE. What the new file name should be called}
+
 \item{assignment_description}{The description that will be given for the assignment}
 
 \item{quiz_description}{The description that will be given for the quiz}
@@ -39,7 +46,8 @@ ottr_quiz_to_google(
 \item{output_path}{Optional file path to save the question formatted data to}
 }
 \description{
-Takes a file path to a Markua formatted quiz and
+Takes a file path to a Markua formatted quiz and runs the steps to convert it to a Google Form Request and sends
+It to be a Google form quiz.
 }
 \examples{
 \dontrun{

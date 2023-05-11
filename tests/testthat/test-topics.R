@@ -1,5 +1,4 @@
 test_that("Test topic functions", {
-
   authorize(cache = TRUE)
 
   skip_if_no_auth()
@@ -9,8 +8,10 @@ test_that("Test topic functions", {
   new_course <- create_course(owner_id$id, name = "New course")
 
   # Create a new topic
-  new_topic <- create_topic(course_id = new_course$id,
-                            name = "New topic")
+  new_topic <- create_topic(
+    course_id = new_course$id,
+    name = "New topic"
+  )
 
   # Retrieve list of topics for this course
   topic_list <- get_topic_list(course_id = new_course$id)

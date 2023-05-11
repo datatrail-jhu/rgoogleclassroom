@@ -15,6 +15,4 @@ test_that("Test endpoints", {
   expect_type(get_endpoint("forms.endpoint.get"), "character")
   expect_type(get_endpoint("forms.endpoint", form_id = "made_up_form_id"), "character")
   expect_type(get_endpoint("forms.endpoint.batchUpdate", form_id = "made_up_form_id"), "character")
-
-
 })

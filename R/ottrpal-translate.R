@@ -105,9 +105,10 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
   return(question_data)
 }
 
-#' Create quiz batch request from Markua quiz
+#' Create Google Form Quiz from Markua quiz
 #'
-#' Takes a file path to a Markua formatted quiz and
+#' @description Takes a file path to a Markua formatted quiz and runs the steps to convert it to a Google Form Request and sends
+#' It to be a Google form quiz.
 
 #' @param quiz_path file path to a markdown Markua quiz
 #' @param course_id An id for the course where this is to be published and linked.
@@ -139,6 +140,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 ottr_quiz_to_google <- function(quiz_path = NULL,
                                 course_id = NULL,
                                 quiz_title = NULL,
+                                topic_id = NULL,
                                 coursework_title = NULL,
                                 form_id = NULL,
                                 due_date = NULL,
@@ -157,7 +159,7 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
   if (!is.null(form_id) && make_new_quiz == TRUE) {
     stop("Form ID supplied and make_new_quiz is set to TRUE. Unclear if you want to create a new form or use the form_id you supplied. Stopping.")
   }
-  if (copy_from_template_quiz = TRUE && is.null(form_id)) {
+  if (copy_from_template_quiz && is.null(form_id)) {
     stop("copy_from_template_quiz is set to TRUE but no form_id to identify what to copy has been supplied")
   }
 
@@ -175,6 +177,7 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
     new_quiz <- create_quiz(course_id,
       quiz_title = quiz_title,
       coursework_title = coursework_title,
+      topic_id = topic_id,
       due_date = due_date,
       assignment_description = assignment_description,
       quiz_description = quiz_description
@@ -189,16 +192,27 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
       extract_title <- stringr::word(extract_title, sep = "# ", -1)
       title <- extract_title
     }
-    new_quiz <- copy_form(form_id = form_id,
-                          new_name = new_name)
+    new_quiz <- copy_form(
+      form_id = form_id,
+      new_name = new_name
+    )
+
+    if (!is.null(quiz_title)) {
+      update_form_settings(new_quiz$id, title = quiz_title)
+    }
+
+    if (!is.null(quiz_description)) {
+      update_form_settings(new_quiz$id, description = quiz_description)
+    }
 
     quiz_link <- paste0("https://docs.google.com/forms/d/e/", new_quiz$id, "/viewform?usp=sf_link")
 
     create_coursework(course_id,
-                      coursework_title = coursework_title,
-                      due_date = due_date,
-                      description = description,
-                      link = quiz_link
+      title = coursework_title,
+      topic_id = topic_id,
+      due_date = due_date,
+      description = assignment_description,
+      link = quiz_link
     )
 
     form_id <- new_quiz$id
@@ -214,7 +228,6 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
 
   # For each question, add it to the batch request we are building
   for (question_index in 1:nrow(formatted_list$question_info_df)) {
-
     if (formatted_list$question_info_df$question_type[question_index] == "multiple_choice") {
       create_multiple_choice_question(
         form_id = form_id,
@@ -226,9 +239,11 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
         location = (question_index - 1)
       )
     } else if (formatted_list$question_info_df$question_type[question_index] == "text") {
-      create_text_question(form_id = form_id,
-                           question = formatted_list$question_info_df$question[question_index],
-                           location = (question_index - 1))
+      create_text_question(
+        form_id = form_id,
+        question = formatted_list$question_info_df$question[question_index],
+        location = (question_index - 1)
+      )
     }
   }
   result <- commit_to_form(form_id = form_id, google_forms_request)

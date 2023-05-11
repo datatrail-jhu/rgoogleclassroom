@@ -31,7 +31,7 @@ commit_to_form <- function(form_id, google_forms_request) {
 
   # If endpoint return url status other than 200, return error message
   if (httr::status_code(result) != 200) {
-    warning("Cannot create coursework")
+    warning("Cannot make form edit")
     return(result_list)
   }
 

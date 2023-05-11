@@ -10,7 +10,7 @@ create_material(
   publish = FALSE,
   title = NULL,
   description = NULL,
-  material_link = NULL
+  link = NULL
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ create_material(
 
 \item{description}{A description for the new material}
 
-\item{material_link}{A URL to go with the associated material}
+\item{link}{A URL to go with the associated material}
 }
 \description{
 Create a new material
