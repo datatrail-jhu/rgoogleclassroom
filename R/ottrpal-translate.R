@@ -33,7 +33,20 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
   # Remove header part and split into per question data frames
   question_dfs <- quiz_specs$data %>%
     dplyr::filter(question > 0) %>%
+    dplyr::mutate(question_type = dplyr::case_when(
+      grepl("fill_in_blank_answer", type) ~ "text",
+      grepl("correct_answer|wrong_answer", type) ~ "multiple_choice"
+    )) %>%
     dplyr::group_split(question)
+
+  question_type <- sapply(question_dfs, function(question_df) {
+    question_type <- question_df %>%
+      dplyr::select(question_type) %>%
+      dplyr::filter(!is.na(question_type)) %>%
+      dplyr::pull(question_type)
+
+    return(unique(question_type))
+  })
 
   # Get prompt names
   question_names <- quiz_specs$data %>%
@@ -50,7 +63,9 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
   # Get answer sets
   all_answers_df <- quiz_specs$data %>%
     dplyr::filter(grepl("_answer", type)) %>%
-    dplyr::mutate(wording = stringr::word(original, sep = "\\) ", 2)) %>%
+    dplyr::mutate(wording = stringr::word(original, sep = "\\) ", 2))
+
+  all_answers_df <- all_answers_df %>%
     dplyr::group_split(question)
 
   # We only want one correct answer
@@ -66,9 +81,12 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 
   question_names <- stringr::str_remove(question_names, "^\\? ")
 
+  unlist(all_answers_df)
+
   # Remove beginning format
   question_info_df <- data.frame(
     question = question_names,
+    question_type,
     shuffle_opt = 1:length(all_answers_df) %in% shuffle_tag,
     correct_answer = correct_answer_index,
     row.names = question_names
@@ -97,6 +115,8 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 #' @param coursework_title the title for the coursework to be created
 #' @param form_id form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.
 #' @param make_new_quiz This can only be used if form_id is not specified. This will make a new quiz
+#' @param copy_from_template_quiz TRUE or FALSE the form supplied should be copied over and used as a template.
+#' @param new_name To be passed to `copy_form` if `copy_from_template_quiz` is TRUE. What the new file name should be called
 #' @param due_date A due date for this quiz, in year-month-day format
 #' @param quiz_description The description that will be given for the quiz
 #' @param assignment_description The description that will be given for the assignment
@@ -123,6 +143,8 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
                                 form_id = NULL,
                                 due_date = NULL,
                                 make_new_quiz = FALSE,
+                                copy_from_template_quiz = TRUE,
+                                new_name = NULL,
                                 assignment_description = "",
                                 quiz_description = "",
                                 output_path = NULL) {
@@ -135,6 +157,11 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
   if (!is.null(form_id) && make_new_quiz == TRUE) {
     stop("Form ID supplied and make_new_quiz is set to TRUE. Unclear if you want to create a new form or use the form_id you supplied. Stopping.")
   }
+  if (copy_from_template_quiz = TRUE && is.null(form_id)) {
+    stop("copy_from_template_quiz is set to TRUE but no form_id to identify what to copy has been supplied")
+  }
+
+
   if (!is.null(output_path)) {
     file.access(output_path, mode = 2)
   }
@@ -156,6 +183,26 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
     form_id <- new_quiz$form_info$formId
   }
 
+  if (copy_from_template_quiz) {
+    if (is.null(title)) {
+      extract_title <- grep("^#", readLines(quiz_path), value = TRUE)
+      extract_title <- stringr::word(extract_title, sep = "# ", -1)
+      title <- extract_title
+    }
+    new_quiz <- copy_form(form_id = form_id,
+                          new_name = new_name)
+
+    quiz_link <- paste0("https://docs.google.com/forms/d/e/", new_quiz$id, "/viewform?usp=sf_link")
+
+    create_coursework(course_id,
+                      coursework_title = coursework_title,
+                      due_date = due_date,
+                      description = description,
+                      link = quiz_link
+    )
+
+    form_id <- new_quiz$id
+  }
   # Format the questions and save to RDS
   formatted_list <- translate_questions_api(
     quiz_path,
@@ -167,15 +214,22 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
 
   # For each question, add it to the batch request we are building
   for (question_index in 1:nrow(formatted_list$question_info_df)) {
-    create_multiple_choice_question(
-      form_id = form_id,
-      question = formatted_list$question_info_df$question[question_index],
-      choice_vector = formatted_list$choice_vectors[[question_index]],
-      correct_answer = formatted_list$question_info_df$correct_answer[question_index],
-      shuffle_opt = formatted_list$question_info_df$shuffle_opt[[question_index]],
-      google_forms_request = google_forms_request,
-      location = (question_index - 1)
-    )
+
+    if (formatted_list$question_info_df$question_type[question_index] == "multiple_choice") {
+      create_multiple_choice_question(
+        form_id = form_id,
+        question = formatted_list$question_info_df$question[question_index],
+        choice_vector = formatted_list$choice_vectors[[question_index]],
+        correct_answer = formatted_list$question_info_df$correct_answer[question_index],
+        shuffle_opt = formatted_list$question_info_df$shuffle_opt[[question_index]],
+        google_forms_request = google_forms_request,
+        location = (question_index - 1)
+      )
+    } else if (formatted_list$question_info_df$question_type[question_index] == "text") {
+      create_text_question(form_id = form_id,
+                           question = formatted_list$question_info_df$question[question_index],
+                           location = (question_index - 1))
+    }
   }
   result <- commit_to_form(form_id = form_id, google_forms_request)
 

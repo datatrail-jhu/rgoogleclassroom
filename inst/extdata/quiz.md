@@ -47,4 +47,8 @@ m) 1, 2, and 3
 o) All of the examples except 1 and 5
 o) All of the examples listed
 
+? Here's an example of a text question. And we don't care what the answer is with the regex we've used below. 
+
+! /(.*\?)/i
+
 {/quiz}

@@ -42,7 +42,7 @@ get_materials_list <- function(course_id) {
 #' @param title Name of new material
 #' @param publish TRUE/FALSE, automatically publish the coursework upon posting? Default is to be posted as a draft (students will not see it until you click Post).
 #' @param description A description for the new material
-#' @param material_link A URL to go with the associated material
+#' @param link A URL to go with the associated material
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
@@ -59,7 +59,7 @@ create_material <- function(course_id = NULL,
                             publish = FALSE,
                             title = NULL,
                             description = NULL,
-                            material_link = NULL) {
+                            link = NULL) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.materials.get", course_id)
 

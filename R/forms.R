@@ -162,22 +162,22 @@ make_form_quiz <- function(form_id) {
   # Modify slides
   result <- httr::POST(url, config = config, body = body_params, encode = "json")
 
-  # Process results
+  if (httr::status_code(result) != 200) {
+    message("Cannot create form")
+    return(result)
+  }
+  # Process and return results
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  # If endpoint return url status other than 200, return error message
-  if (httr::status_code(result) != 200) {
-    stop(result_list$error$message)
-  }
+  message(paste("Form created at", result_list$responderUri))
 
   return(result_list)
 }
 
 #' Make a copy of an existing form
 #' @param form_id The form_id that is desired to be copied.
-#' @param description The description for the new form as a string.
-#' @param document_title The title for the form file that will be stored in Google Drive
+#' @param new_name What should the new file name for the copied file be?
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
@@ -187,7 +187,7 @@ make_form_quiz <- function(form_id) {
 #' # Make the form
 #' form_info <- create_form(form_id = <google_form_url>)
 #' }
-copy_form <- function(form_id) {
+copy_form <- function(form_id, new_name = NULL) {
 
   form_id <- handle_form_url(form_id)
 
@@ -198,8 +198,13 @@ copy_form <- function(form_id) {
   token <- get_token()
   config <- httr::config(token = token)
 
+  # Wrapping body parameters in a requests list
+  body_params <- list(
+    "name" = new_name
+  )
+
   # Modify course
-  result <- httr::POST(url, config = config, query = list("supportsAllDrives" = TRUE), encode = "json")
+  result <- httr::POST(url, config = config, body = body_params, query = list("supportsAllDrives" = TRUE), encode = "json")
 
   if (httr::status_code(result) != 200) {
     message("Cannot create form")

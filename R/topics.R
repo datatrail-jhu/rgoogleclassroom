@@ -36,11 +36,10 @@ get_topic_list <- function(course_id) {
 #' Create a new topic
 #' @param course_id Course id of where to make the new topic. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
 #' @param name Name of new topic. Required.
-#' @param full_response Parameter to decide whether to return the full response or just the presentation ID
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
-create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
+create_topic <- function(course_id = NULL, name = NULL) {
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.topic.get", course_id = course_id)
 
@@ -59,7 +58,7 @@ create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
 
   if (httr::status_code(result) != 200) {
     warning("Cannot create topic")
-    return(result_list)
+    return(result)
   }
   # Process and return results
   result_content <- content(result, "text")
@@ -69,11 +68,7 @@ create_topic <- function(course_id = NULL, name = NULL, full_response = FALSE) {
   message(paste0("New topic called:", result_list$name, "\n Created at: ", course_url, "/t/all"))
 
   # If user request for minimal response
-  if (full_response) {
-    return(result_list)
-  } else {
-    return(result_list$Id)
-  }
+  return(result_list)
 }
 
 
