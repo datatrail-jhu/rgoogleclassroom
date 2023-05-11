@@ -28,6 +28,9 @@
     <loc>/reference/commit_to_form.html</loc>
   </url>
   <url>
+    <loc>/reference/copy_form.html</loc>
+  </url>
+  <url>
     <loc>/reference/create_course.html</loc>
   </url>
   <url>
@@ -44,6 +47,9 @@
   </url>
   <url>
     <loc>/reference/create_quiz.html</loc>
+  </url>
+  <url>
+    <loc>/reference/create_text_question.html</loc>
   </url>
   <url>
     <loc>/reference/create_topic.html</loc>
@@ -122,5 +128,8 @@
   </url>
   <url>
     <loc>/reference/translate_questions_api.html</loc>
+  </url>
+  <url>
+    <loc>/reference/update_form_settings.html</loc>
   </url>
 </urlset>
