@@ -56,13 +56,15 @@ and added to a Google form to edit it.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_text_question</span><span class="op">(</span></span>
 <span>  form_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  commit_to_form <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  question_kind <span class="op">=</span> <span class="st">"textQuestion"</span>,</span>
 <span>  required <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  question <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  correct_answer <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  google_forms_request <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  point_value <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  location <span class="op">=</span> <span class="fl">0</span></span>
+<span>  location <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -70,6 +72,10 @@ and added to a Google form to edit it.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>form_id</dt>
 <dd><p>The id of the google form to be updated</p></dd>
+
+
+<dt>commit_to_form</dt>
+<dd><p>Whether or not the request should be committed. If need to build the request further, you will want to say FALSE. Default is TRUE</p></dd>
 
 
 <dt>required</dt>
@@ -94,6 +100,10 @@ and added to a Google form to edit it.</p>
 
 <dt>location</dt>
 <dd><p>Where should the new question be added</p></dd>
+
+
+<dt>quiet</dt>
+<dd><p>TRUE/FALSE you'd like a progress message?</p></dd>
 
 </dl></div>
 
