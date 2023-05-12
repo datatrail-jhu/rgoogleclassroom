@@ -176,6 +176,7 @@ make_form_quiz <- function(form_id) {
 #' Make a copy of an existing form
 #' @param form_id The form_id that is desired to be copied.
 #' @param new_name What should the new file name for the copied file be?
+#' @param quiet TRUE or FALSE whether messages should be printed out.
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @export
@@ -186,7 +187,7 @@ make_form_quiz <- function(form_id) {
 #' form_info <- copy_form(form_id = "https://docs.google.com/forms/d/someformidhere/edit",
 #'                        new_name = "copied form")
 #' }
-copy_form <- function(form_id, new_name = NULL) {
+copy_form <- function(form_id, new_name = NULL, quiet = FALSE) {
   form_id <- handle_form_url(form_id)
 
   # Get endpoint url
@@ -212,7 +213,9 @@ copy_form <- function(form_id, new_name = NULL) {
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  message(paste("Form created at", result_list$responderUri))
+  if (quiet) {
+    message(paste("Form created at", result_list$id))
+  }
 
   return(result_list)
 }

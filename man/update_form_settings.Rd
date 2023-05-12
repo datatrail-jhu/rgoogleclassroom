@@ -8,7 +8,8 @@ update_form_settings(
   form_id = NULL,
   title = NULL,
   description = NULL,
-  google_forms_request = NULL
+  google_forms_request = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ update_form_settings(
 \item{description}{An updated description}
 
 \item{google_forms_request}{A google forms request object. If not supplied, it will be created new.}
+
+\item{quiet}{TRUE/FALSE you'd like a progress message?}
 }
 \description{
 Create a multiple choice question

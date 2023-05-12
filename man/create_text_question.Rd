@@ -6,17 +6,21 @@
 \usage{
 create_text_question(
   form_id = NULL,
+  commit_to_form = TRUE,
   question_kind = "textQuestion",
   required = FALSE,
   question = NULL,
   correct_answer = NULL,
   google_forms_request = NULL,
   point_value = 1,
-  location = 0
+  location = 0,
+  quiet = FALSE
 )
 }
 \arguments{
 \item{form_id}{The id of the google form to be updated}
+
+\item{commit_to_form}{Whether or not the request should be committed. If need to build the request further, you will want to say FALSE. Default is TRUE}
 
 \item{required}{TRUE or FALSE is this a required question? Default is not required.}
 
@@ -29,6 +33,8 @@ create_text_question(
 \item{point_value}{An integer representing how many points}
 
 \item{location}{Where should the new question be added}
+
+\item{quiet}{TRUE/FALSE you'd like a progress message?}
 }
 \description{
 This function makes a google request object that will be able to be posted with a batch request and

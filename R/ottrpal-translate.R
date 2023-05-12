@@ -122,6 +122,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 #' @param quiz_description The description that will be given for the quiz
 #' @param assignment_description The description that will be given for the assignment
 #' @param output_path Optional file path to save the question formatted data to
+#' @param quiet TRUE/FALSE you'd like a progress message?
 #' @importFrom magrittr %>%
 #' @examples \dontrun{
 #'
@@ -149,7 +150,8 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
                                 new_name = NULL,
                                 assignment_description = "",
                                 quiz_description = "",
-                                output_path = NULL) {
+                                output_path = NULL,
+                                quiet = FALSE) {
   if (is.null(due_date)) {
     stop("Due date must be set. Use the due_date argument.")
   }
@@ -198,14 +200,14 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
     )
 
     if (!is.null(quiz_title)) {
-      update_form_settings(new_quiz$id, title = quiz_title)
+      update_form_settings(form_id = new_quiz$id, title = quiz_title)
     }
 
     if (!is.null(quiz_description)) {
-      update_form_settings(new_quiz$id, description = quiz_description)
+      update_form_settings(form_id = new_quiz$id, description = quiz_description)
     }
 
-    quiz_link <- paste0("https://docs.google.com/forms/d/e/", new_quiz$id, "/viewform?usp=sf_link")
+    quiz_link <- paste0("https://docs.google.com/forms/d/", new_quiz$id, "/viewform")
 
     create_coursework(course_id,
       title = coursework_title,
@@ -236,17 +238,21 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
         correct_answer = formatted_list$question_info_df$correct_answer[question_index],
         shuffle_opt = formatted_list$question_info_df$shuffle_opt[[question_index]],
         google_forms_request = google_forms_request,
+        commit_to_form = FALSE,
         location = (question_index - 1)
       )
     } else if (formatted_list$question_info_df$question_type[question_index] == "text") {
       create_text_question(
         form_id = form_id,
         question = formatted_list$question_info_df$question[question_index],
+        google_forms_request = google_forms_request,
+        commit_to_form = FALSE,
         location = (question_index - 1)
       )
     }
   }
-  result <- commit_to_form(form_id = form_id, google_forms_request)
+
+  result <- commit_to_form(form_id, google_forms_request, quiet = quiet)
 
   return(result)
 }

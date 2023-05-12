@@ -3,6 +3,7 @@
 #' @param title An updated title
 #' @param description An updated description
 #' @param google_forms_request A google forms request object. If not supplied, it will be created new.
+#' @param quiet TRUE/FALSE you'd like a progress message?
 #' @importFrom assertthat assert_that is.string
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
@@ -18,7 +19,8 @@
 update_form_settings <- function(form_id = NULL,
                                  title = NULL,
                                  description = NULL,
-                                 google_forms_request = NULL) {
+                                 google_forms_request = NULL,
+                                 quiet = FALSE) {
 
   result_description <- NULL
   result_title <- NULL
@@ -43,7 +45,7 @@ update_form_settings <- function(form_id = NULL,
 
     google_forms_request$add_request(update_request)
 
-    result_title <- commit_to_form(form_id, google_forms_request)
+    result_title <- commit_to_form(form_id, google_forms_request, quiet = quiet)
   }
 
   if (!is.null(description)) {
@@ -54,7 +56,7 @@ update_form_settings <- function(form_id = NULL,
 
     google_forms_request$add_request(update_request)
 
-    result_description <- commit_to_form(form_id, google_forms_request)
+    result_description <- commit_to_form(form_id, google_forms_request, quiet = quiet)
   }
 
   if (!is.null(result_title) && !is.null(result_description)) {
@@ -71,6 +73,7 @@ update_form_settings <- function(form_id = NULL,
 #' Create a multiple choice question
 #' @param form_id The id of the google form to be updated
 #' @param question_kind Currently only choiceQuestion 's are supported
+#' @param commit_to_form Whether or not the request should be committed. If need to build the request further, you will want to say FALSE. Default is TRUE
 #' @param google_forms_request A google forms request object. If not supplied, it will be created new.
 #' @param required TRUE or FALSE is this a required question? Default is not required.
 #' @param question a string that is what the question should say
@@ -79,6 +82,7 @@ update_form_settings <- function(form_id = NULL,
 #' @param correct_answer The index that corresponds to the correct answer in the `choice_vector` supplied
 #' @param location Where should the new question be added
 #' @param point_value An integer representing how many points
+#' @param quiet TRUE/FALSE you'd like a progress message?
 #' @importFrom assertthat assert_that is.string
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
@@ -95,6 +99,7 @@ update_form_settings <- function(form_id = NULL,
 #' }
 create_multiple_choice_question <- function(form_id = NULL,
                                             question_kind = "choiceQuestion",
+                                            commit_to_form = TRUE,
                                             required = FALSE,
                                             question = NULL,
                                             choice_vector = NULL,
@@ -102,6 +107,7 @@ create_multiple_choice_question <- function(form_id = NULL,
                                             correct_answer = NULL,
                                             google_forms_request = NULL,
                                             point_value = 1,
+                                            quiet = FALSE,
                                             location = 0) {
   if (is.null(google_forms_request)) {
     google_forms_request <- google_forms_request_container$new()
@@ -145,7 +151,11 @@ create_multiple_choice_question <- function(form_id = NULL,
 
   google_forms_request$add_request(create_question_request)
 
-  result <- commit_to_form(form_id, google_forms_request)
+  if (commit_to_form) {
+    result <- commit_to_form(form_id, google_forms_request, quiet = quiet)
+  } else {
+    result <- google_forms_request
+  }
   return(result)
 }
 
@@ -154,12 +164,14 @@ create_multiple_choice_question <- function(form_id = NULL,
 #' @description This function makes a google request object that will be able to be posted with a batch request and
 #' and added to a Google form to edit it.
 #' @param form_id The id of the google form to be updated
+#' @param commit_to_form Whether or not the request should be committed. If need to build the request further, you will want to say FALSE. Default is TRUE
 #' @param google_forms_request A google forms request object. If not supplied, it will be created new.
 #' @param required TRUE or FALSE is this a required question? Default is not required.
 #' @param question a string that is what the question should say
 #' @param location Where should the new question be added
 #' @param correct_answer A string that matches exactly what would be considered a correct
 #' @param point_value An integer representing how many points
+#' @param quiet TRUE/FALSE you'd like a progress message?
 #' @importFrom assertthat assert_that is.string
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
@@ -174,13 +186,15 @@ create_multiple_choice_question <- function(form_id = NULL,
 #' }
 create_text_question <- function(
     form_id = NULL,
+    commit_to_form = TRUE,
     question_kind = "textQuestion",
     required = FALSE,
     question = NULL,
     correct_answer = NULL,
     google_forms_request = NULL,
     point_value = 1,
-    location = 0) {
+    location = 0,
+    quiet = FALSE) {
   if (is.null(google_forms_request)) {
     google_forms_request <- google_forms_request_container$new()
   }
@@ -213,6 +227,11 @@ create_text_question <- function(
 
   google_forms_request$add_request(create_question_request)
 
-  result <- commit_to_form(form_id, google_forms_request)
+  if (commit_to_form) {
+    result <- commit_to_form(form_id, google_forms_request, quiet = quiet)
+  } else {
+    result <- google_forms_request
+  }
+
   return(result)
 }

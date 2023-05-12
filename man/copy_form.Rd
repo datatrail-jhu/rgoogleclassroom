@@ -4,12 +4,14 @@
 \alias{copy_form}
 \title{Make a copy of an existing form}
 \usage{
-copy_form(form_id, new_name = NULL)
+copy_form(form_id, new_name = NULL, quiet = FALSE)
 }
 \arguments{
 \item{form_id}{The form_id that is desired to be copied.}
 
 \item{new_name}{What should the new file name for the copied file be?}
+
+\item{quiet}{TRUE or FALSE whether messages should be printed out.}
 }
 \description{
 Make a copy of an existing form

@@ -7,6 +7,7 @@
 create_multiple_choice_question(
   form_id = NULL,
   question_kind = "choiceQuestion",
+  commit_to_form = TRUE,
   required = FALSE,
   question = NULL,
   choice_vector = NULL,
@@ -14,6 +15,7 @@ create_multiple_choice_question(
   correct_answer = NULL,
   google_forms_request = NULL,
   point_value = 1,
+  quiet = FALSE,
   location = 0
 )
 }
@@ -21,6 +23,8 @@ create_multiple_choice_question(
 \item{form_id}{The id of the google form to be updated}
 
 \item{question_kind}{Currently only choiceQuestion 's are supported}
+
+\item{commit_to_form}{Whether or not the request should be committed. If need to build the request further, you will want to say FALSE. Default is TRUE}
 
 \item{required}{TRUE or FALSE is this a required question? Default is not required.}
 
@@ -35,6 +39,8 @@ create_multiple_choice_question(
 \item{google_forms_request}{A google forms request object. If not supplied, it will be created new.}
 
 \item{point_value}{An integer representing how many points}
+
+\item{quiet}{TRUE/FALSE you'd like a progress message?}
 
 \item{location}{Where should the new question be added}
 }

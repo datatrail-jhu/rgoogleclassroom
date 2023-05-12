@@ -17,7 +17,8 @@ ottr_quiz_to_google(
   new_name = NULL,
   assignment_description = "",
   quiz_description = "",
-  output_path = NULL
+  output_path = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -44,6 +45,8 @@ ottr_quiz_to_google(
 \item{quiz_description}{The description that will be given for the quiz}
 
 \item{output_path}{Optional file path to save the question formatted data to}
+
+\item{quiet}{TRUE/FALSE you'd like a progress message?}
 }
 \description{
 Takes a file path to a Markua formatted quiz and runs the steps to convert it to a Google Form Request and sends

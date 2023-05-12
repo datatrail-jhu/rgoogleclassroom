@@ -101,6 +101,10 @@ create_coursework <- function(course_id = NULL,
   # Only keep non NULL items
   body_params <- body_params %>% purrr::keep(~ !is.null(.))
 
+  if (lubridate::today() > lubridate::ymd(due_date)) {
+    stop("Due date must be in the future")
+  }
+
   # Modify course
   result <- httr::POST(url, config = config, accept_json(), body = body_params, encode = "json")
 
