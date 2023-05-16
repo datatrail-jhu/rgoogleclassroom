@@ -23,6 +23,12 @@ and added to a Google form to edit it."><!-- mathjax --><script src="https://cdn
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/getting-started.html">getting-started</a>
+  </div>
+</li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
@@ -57,7 +63,6 @@ and added to a Google form to edit it.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_text_question</span><span class="op">(</span></span>
 <span>  form_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  commit_to_form <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  question_kind <span class="op">=</span> <span class="st">"textQuestion"</span>,</span>
 <span>  required <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  question <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  correct_answer <span class="op">=</span> <span class="cn">NULL</span>,</span>
