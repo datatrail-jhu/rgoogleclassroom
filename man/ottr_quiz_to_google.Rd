@@ -28,6 +28,8 @@ ottr_quiz_to_google(
 
 \item{quiz_title}{The title for the quiz. If not supplied, it will attempt to be grabbed from the Markua doc}
 
+\item{topic_id}{topic ID that the quiz should be added under.}
+
 \item{coursework_title}{the title for the coursework to be created}
 
 \item{form_id}{form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.}

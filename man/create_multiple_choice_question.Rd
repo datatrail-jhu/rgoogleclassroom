@@ -6,7 +6,6 @@
 \usage{
 create_multiple_choice_question(
   form_id = NULL,
-  question_kind = "choiceQuestion",
   commit_to_form = TRUE,
   required = FALSE,
   question = NULL,
@@ -21,8 +20,6 @@ create_multiple_choice_question(
 }
 \arguments{
 \item{form_id}{The id of the google form to be updated}
-
-\item{question_kind}{Currently only choiceQuestion 's are supported}
 
 \item{commit_to_form}{Whether or not the request should be committed. If need to build the request further, you will want to say FALSE. Default is TRUE}
 

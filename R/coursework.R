@@ -164,6 +164,7 @@ get_coursework_properties <- function(course_id, coursework_id) {
 
 ##### This currently doesn't work! Not sure why.
 #' Delete a Google Classroom Coursework
+#' @param course_id Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"
 #' @param coursework_id ID of the archived course you wish to delete
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON

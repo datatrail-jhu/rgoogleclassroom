@@ -112,6 +112,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 
 #' @param quiz_path file path to a markdown Markua quiz
 #' @param course_id An id for the course where this is to be published and linked.
+#' @param topic_id topic ID that the quiz should be added under. 
 #' @param quiz_title The title for the quiz. If not supplied, it will attempt to be grabbed from the Markua doc
 #' @param coursework_title the title for the coursework to be created
 #' @param form_id form id where this quiz is to be published. Alternatively, if you want a new quiz to be made, you should set make_new_quiz = TRUE and leave this NULL.

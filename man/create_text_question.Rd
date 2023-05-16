@@ -7,7 +7,6 @@
 create_text_question(
   form_id = NULL,
   commit_to_form = TRUE,
-  question_kind = "textQuestion",
   required = FALSE,
   question = NULL,
   correct_answer = NULL,

@@ -7,6 +7,8 @@
 delete_coursework(course_id, coursework_id)
 }
 \arguments{
+\item{course_id}{Course id of where to make the new coursework. Can find from end of URL e.g. "https://classroom.google.com/c/COURSE_ID_IS_HERE"}
+
 \item{coursework_id}{ID of the archived course you wish to delete}
 }
 \description{

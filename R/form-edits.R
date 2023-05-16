@@ -72,7 +72,6 @@ update_form_settings <- function(form_id = NULL,
 
 #' Create a multiple choice question
 #' @param form_id The id of the google form to be updated
-#' @param question_kind Currently only choiceQuestion 's are supported
 #' @param commit_to_form Whether or not the request should be committed. If need to build the request further, you will want to say FALSE. Default is TRUE
 #' @param google_forms_request A google forms request object. If not supplied, it will be created new.
 #' @param required TRUE or FALSE is this a required question? Default is not required.
@@ -98,7 +97,6 @@ update_form_settings <- function(form_id = NULL,
 #' )
 #' }
 create_multiple_choice_question <- function(form_id = NULL,
-                                            question_kind = "choiceQuestion",
                                             commit_to_form = TRUE,
                                             required = FALSE,
                                             question = NULL,
@@ -118,7 +116,6 @@ create_multiple_choice_question <- function(form_id = NULL,
 
   # Input Validation
   assert_that(is.google_forms_request(google_forms_request))
-  assert_that(is.string(question_kind))
   assert_that(is.logical(required))
   assert_that(is.string(question))
   assert_that(is.vector(choice_vector))
@@ -187,7 +184,6 @@ create_multiple_choice_question <- function(form_id = NULL,
 create_text_question <- function(
     form_id = NULL,
     commit_to_form = TRUE,
-    question_kind = "textQuestion",
     required = FALSE,
     question = NULL,
     correct_answer = NULL,

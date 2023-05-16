@@ -91,7 +91,6 @@ create_form <- function(title = NULL,
                         description = "") {
   # Check validity of inputs
   assert_that(is.string(title))
-  if (!is.null(linked_sheet)) assert_that(is.string(linked_sheet))
 
   # Get endpoint url
   url <- get_endpoint("forms.endpoint.get")
