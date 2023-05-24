@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rgoogleclassroom</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,8 +86,8 @@
 <p><code>rgoogleclassroom</code> is a Google API wrapper that allows you
 to use Google Classroom and Google Forms from the coziness and comfort
 of R.</p>
-<p>You can <a href="https://datatrail-jhu.github.io/rgoogleclassroom/docs/index.html" class="external-link">read
-the rgoogleclassroom package documentation here</a>.</p>
+<p>You can <a href="https://datatrail-jhu.github.io/rgoogleclassroom/" class="external-link">read the
+rgoogleclassroom package documentation here</a>.</p>
 <div class="section level3">
 <h3 id="to-get-started">To get started<a class="anchor" aria-label="anchor" href="#to-get-started"></a>
 </h3>
@@ -99,11 +99,10 @@ here to get that: <a href="https://edu.google.com/workspace-for-education/classr
 </h3>
 <p>If you want the development version (not advised) you can install
 using the <code>remotes</code> package to install from GitHub.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"remotes"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<pre><code><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"remotes"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"datatrail-jhu/rgoogleclassroom"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"datatrail-jhu/rgoogleclassroom"</span><span class="op">)</span></span></code></pre>
 <div class="section level4">
 <h4 id="getting-your-owner-id">Getting your owner Id<a class="anchor" aria-label="anchor" href="#getting-your-owner-id"></a>
 </h4>
@@ -154,25 +153,21 @@ of a course given its id.</p>
 <h3 id="example-workflow">Example workflow<a class="anchor" aria-label="anchor" href="#example-workflow"></a>
 </h3>
 <p>Run the function to authorize the app to use your Google account.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
+<pre><code><span><span class="fu"><a href="../reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 <p>Retrieve whatever your owner id for Google Classroom is.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">owner_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_owner_id.html">get_owner_id</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="va">owner_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_owner_id.html">get_owner_id</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 <p>Now you can retrieve a list of courses that are associated with your
 owner id.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">course_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_course_list.html">get_course_list</a></span><span class="op">(</span><span class="va">owner_id</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="va">course_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_course_list.html">get_course_list</a></span><span class="op">(</span><span class="va">owner_id</span><span class="op">)</span></span></code></pre>
 <p>For the following examples, we will need to use</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Create a course</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>new_course <span class="ot">&lt;-</span> <span class="fu">create_course</span>(owner_id<span class="sc">$</span>id, <span class="at">name =</span> <span class="st">"New course"</span>)</span></code></pre></div>
+<pre><code>Create a course
+new_course &lt;- create_course(owner_id$id, name = "New course")</code></pre>
 <div class="section level4">
 <h4 id="managing-materials">Managing materials<a class="anchor" aria-label="anchor" href="#managing-materials"></a>
 </h4>
 <p>We can create new material for the students using by building this
 together like this:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create a course we will use for this test</span></span>
+<pre><code><span><span class="co"># Create a course we will use for this test</span></span>
 <span><span class="va">owner_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_owner_id.html">get_owner_id</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">new_course</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_course.html">create_course</a></span><span class="op">(</span><span class="va">owner_id</span><span class="op">$</span><span class="va">id</span>, name <span class="op">=</span> <span class="st">"New course"</span><span class="op">)</span></span>
 <span></span>
@@ -182,10 +177,9 @@ together like this:</p>
 <span></span>
 <span><span class="co"># Retrieve the material info</span></span>
 <span><span class="va">materials_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_materials_properties.html">get_materials_properties</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span>,</span>
-<span>                                             materials_id <span class="op">=</span> <span class="va">new_material</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
+<span>                                             materials_id <span class="op">=</span> <span class="va">new_material</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre>
 <p>Retrieve the list of all the materials for the course</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">materials_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_materials_list.html">get_materials_list</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="va">materials_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_materials_list.html">get_materials_list</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="managing-courseworks">Managing courseworks<a class="anchor" aria-label="anchor" href="#managing-courseworks"></a>
@@ -211,27 +205,25 @@ given.</p>
 <pre><code><span><span class="va">course_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_course_list.html">get_course_list</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">courses</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">quiz_form_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_quiz.html">create_quiz</a></span><span class="op">(</span></span>
-<span>  course_id <span class="op">=</span> <span class="va">course_id</span>, </span>
-<span>  quiz_title <span class="op">=</span> <span class="st">"new quiz"</span>, </span>
+<span>  course_id <span class="op">=</span> <span class="va">course_id</span>,</span>
+<span>  quiz_title <span class="op">=</span> <span class="st">"new quiz"</span>,</span>
 <span>  quiz_description <span class="op">=</span> <span class="st">"This is a great quiz"</span>,</span>
 <span>  due_date <span class="op">=</span> <span class="st">"2025-12-1"</span><span class="op">)</span></span></code></pre>
 <p>We can create a new multiple choice question in the quiz we just made
 by using these steps:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_multiple_choice_question.html">create_multiple_choice_question</a></span><span class="op">(</span></span>
+<pre><code><span><span class="fu"><a href="../reference/create_multiple_choice_question.html">create_multiple_choice_question</a></span><span class="op">(</span></span>
 <span>  form_id <span class="op">=</span> <span class="va">quiz_form_id</span><span class="op">$</span><span class="va">formId</span>,</span>
 <span>  question <span class="op">=</span> <span class="st">"What answer do you want?"</span>,</span>
 <span>  choice_vector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>,</span>
 <span>  correct_answer <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  shuffle_opt <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre>
 <p>We can create a text question in the quiz by doing this:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_text_question.html">create_text_question</a></span><span class="op">(</span></span>
+<pre><code><span><span class="fu"><a href="../reference/create_text_question.html">create_text_question</a></span><span class="op">(</span></span>
 <span>  form_id <span class="op">=</span> <span class="va">quiz_form_id</span><span class="op">$</span><span class="va">formId</span>,</span>
 <span>  question <span class="op">=</span> <span class="st">"Put some text here to answer this question"</span>,</span>
-<span>  </span>
-<span><span class="op">)</span></span></code></pre></div>
+<span></span>
+<span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="delete-or-archive-courses">Delete or archive courses<a class="anchor" aria-label="anchor" href="#delete-or-archive-courses"></a>
