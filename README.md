@@ -1,22 +1,16 @@
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/jhudsl/ottrpal/workflows/R-CMD-check/badge.svg)](https://github.com/jhudsl/ottrpal/actions) [![CRAN status](https://www.r-pkg.org/badges/version/ottrpal)](https://CRAN.R-project.org/package=ottrpal) [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/ottrpal)](https://cran.r-project.org/package=ottrpal) [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable) <!-- [![GitHub release (latest by --> <!-- date)](https://img.shields.io/github/v/release/jhudsl/ottrpal?style=social)](https://github.com/jhudsl/ottrpal/releases/tag/v1.0.0) --> <!-- [![Codecov test --> <!-- coverage](https://codecov.io/gh/jhudsl/ottrpal/branch/main/graph/badge.svg)](https://codecov.io/gh/jhudsl/ottrpal?branch=main) -->
-
-<!-- badges: end -->
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rgoogleclassroom 
+# rgoogleclassroom
 
-`rgoogleclassroom` is a Google API wrapper that allows you to use Google Classroom and Google Forms from the coziness and comfort of R. 
+`rgoogleclassroom` is a Google API wrapper that allows you to use Google Classroom and Google Forms from the coziness and comfort of R.
 
-You can [read the rgoogleclassroom package documentation here](https://datatrail-jhu.github.io/rgoogleclassroom/docs/index.html).
+You can [read the rgoogleclassroom package documentation here](https://datatrail-jhu.github.io/rgoogleclassroom/).
 
 To use this package you need to have a Google Classroom account. Go here to get that: https://edu.google.com/workspace-for-education/classroom/
 
 ## How to install
 
-If you want the development version (not advised) you can install using the `remotes` package to install from GitHub. 
+If you want the development version (not advised) you can install using the `remotes` package to install from GitHub.
 ``` r
 if (!("remotes" %in% installed.packages())) {
   install.packages("remotes")
@@ -24,56 +18,56 @@ if (!("remotes" %in% installed.packages())) {
 remotes::install_github("datatrail-jhu/rgoogleclassroom")
 ```
 
-## Usage 
+## Usage
 
-To start, you need to `authorize()` the package to access your files. Select all the scopes you feel comfortable sharing. Note that you need to select certain scopes for certain functions to work. 
+To start, you need to `authorize()` the package to access your files. Select all the scopes you feel comfortable sharing. Note that you need to select certain scopes for certain functions to work.
 
 ```r
 authorize()
 ```
 
-### Basics 
+### Basics
 
-There are different objects on the Google API: 
+There are different objects on the Google API:
 
-- courses 
-- forms 
-- courseWorks 
-- courseWork Materials 
+- courses
+- forms
+- courseWorks
+- courseWork Materials
 - topics
 
-Most of these objects have functions that do the following: 
+Most of these objects have functions that do the following:
 
-- `get_<object>_list()` 
+- `get_<object>_list()`
 - `create_<object>()`
 - `get_<object>_properties()`
 
-For example: 
+For example:
 
-`get_course_list(owner_id)` retrieves a list of courses for a particular owner id. 
+`get_course_list(owner_id)` retrieves a list of courses for a particular owner id.
 `create_course()` creates a course
-`get_course_properties(course_id)` retrieves the properties of a course given its id. 
+`get_course_properties(course_id)` retrieves the properties of a course given its id.
 
 These can be built together to be pretty nifty.
 
 ## Example workflow
 
-Run the function to authorize the app to use your Google account. 
+Run the function to authorize the app to use your Google account.
 ```r
-authorize() 
+authorize()
 ```
 
-Retrieve whatever your owner id for Google Classroom is. 
+Retrieve whatever your owner id for Google Classroom is.
 ```r
 owner_id <- get_owner_id()
 ```
 
-Now you can retrieve a list of courses that are associated with your owner id. 
+Now you can retrieve a list of courses that are associated with your owner id.
 ```r
 course_df <- get_course_list(owner_id)
 ```
 
-For the following examples, we will need to use 
+For the following examples, we will need to use
 ```r
 Create a course
 new_course <- create_course(owner_id$id, name = "New course")
@@ -102,7 +96,7 @@ Retrieve the list of all the materials for the course
 materials_list <- get_materials_list(course_id = new_course$id)
 ```
 
-### Managing courseworks 
+### Managing courseworks
 
 We can manage courseworks!
 
@@ -119,16 +113,16 @@ course_work_info <- get_coursework_properties(course_id = new_course$id, coursew
 coursework_list <- get_coursework_list(course_id = new_course$id)
 ```
 
-### Make a quiz 
+### Make a quiz
 
-We can build a quiz like this: 
+We can build a quiz like this:
 
 ```
 course_id <- get_course_list()$courses$id[1]
 
 quiz_form_id <- create_quiz(
-  course_id = course_id, 
-  quiz_title = "new quiz", 
+  course_id = course_id,
+  quiz_title = "new quiz",
   quiz_description = "This is a great quiz",
   due_date = "2025-12-1")
 ```
@@ -145,11 +139,10 @@ create_multiple_choice_question(
 )
 ```
 
-### Delete or archive courses 
+### Delete or archive courses
 
 ```
 # Clean up this test course
 archive_course(new_course$id)
 delete_course(new_course$id)
 ```
-

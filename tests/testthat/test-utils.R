@@ -1,7 +1,4 @@
 test_that("Test endpoints", {
-  authorize(cache = TRUE)
-  skip_if_no_auth()
-
   expect_type(get_endpoint("googledrive.endpoint"), "character")
   expect_type(get_endpoint("classroom.endpoint.user"), "character")
   expect_type(get_endpoint("classroom.endpoint.course.get"), "character")
