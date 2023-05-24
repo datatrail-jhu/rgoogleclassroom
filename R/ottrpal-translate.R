@@ -8,7 +8,7 @@
 #' @param output_path Optional file path to save the formatted data to a JSON file
 #' @importFrom magrittr %>%
 #' @return A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.
-#' #'
+#' @export
 #' @examples \dontrun{
 #'
 #' # Using quiz example
@@ -125,6 +125,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 #' @param output_path Optional file path to save the question formatted data to
 #' @param quiet TRUE/FALSE you'd like a progress message?
 #' @importFrom magrittr %>%
+#' @export
 #' @examples \dontrun{
 #'
 #' # Using quiz example

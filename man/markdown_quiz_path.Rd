@@ -6,6 +6,18 @@
 \usage{
 markdown_quiz_path()
 }
+\value{
+A file path to a markua markdown quiz example you can use for testing
+}
 \description{
 Get file path to an example quiz
+}
+\examples{
+\dontrun{
+
+# Find quiz path
+
+quiz_path <- markdown_quiz_path()
+}
+
 }

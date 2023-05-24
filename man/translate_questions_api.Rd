@@ -13,7 +13,6 @@ translate_questions_api(quiz_path, output_path = NULL)
 }
 \value{
 A list of the output from [ottrpal::check_question] with messages/warnings regarding each question and each check.
-#'
 }
 \description{
 Takes a Markua formatted quiz and translates it to something that can be sent to Google Forms API.

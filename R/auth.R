@@ -18,7 +18,7 @@ get_token <- function() {
 
 # Check that we have the package we need to decrypt
 can_decrypt <- function() {
-  ("openssl" %in% installed.packages())
+  require("openssl")
 }
 
 
