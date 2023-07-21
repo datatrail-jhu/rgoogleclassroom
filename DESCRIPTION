@@ -1,6 +1,6 @@
 Package: rgoogleclassroom
 Title: API Wrapper for Google Classroom and Google Forms
-Version: 0.9
+Version: 0.9.1
 Authors@R:
     person("Candace", "Savonen", , "csavonen@fredhutch.org", role = c("cre", "aut"))
 Description: This is a Google Forms and Google Classroom API Wrapper for R for managing Google Classrooms from R. The documentation for these APIs is here <https://developers.google.com/forms/api/guides> .

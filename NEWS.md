@@ -1,3 +1,3 @@
-# yourpackage 0.0.0.9000
+# rgoogleclassroom 0.9.5
 
-* Added a `NEWS.md` file to track changes to the package.
+* Some issues with ottrpal_translate()'s handling of quizzes were fixed. 
