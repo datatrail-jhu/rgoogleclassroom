@@ -32,7 +32,7 @@ get_form_responses <- function(form_id = NULL, form_url = NULL) {
   result <- httr::GET(url, config = config, accept_json(), encode = "json")
 
   if (httr::status_code(result) != 200) {
-    message("Cannot create form")
+    message("Cannot get form responses")
     return(result)
   }
   # Process and return results

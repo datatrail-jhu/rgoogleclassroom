@@ -42,7 +42,7 @@ get_endpoint <- function(type_of_endpoint = "classroom.endpoint.user",
     forms.endpoint.get = "https://forms.googleapis.com/v1/forms/",
     forms.endpoint = "https://forms.googleapis.com/v1/forms/{formId}",
     forms.endpoint.batchUpdate = "https://forms.googleapis.com/v1/forms/{formId}:batchUpdate",
-    forms.endpoint.responses = "https://forms.googleapis.com/v1beta/forms/{formId}/responses"
+    forms.endpoint.responses = "https://forms.googleapis.com/v1/forms/{formId}/responses"
   )
 
   if (!(type_of_endpoint %in% names(endpoint_list))) {

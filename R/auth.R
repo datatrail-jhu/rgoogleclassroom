@@ -16,12 +16,6 @@ get_token <- function() {
   .classroomEnv$Token
 }
 
-# Check that we have the package we need to decrypt
-can_decrypt <- function() {
-  require("openssl")
-}
-
-
 ### Declare all the scopes
 forms_scopes_list <- c(
   "https://www.googleapis.com/auth/drive",

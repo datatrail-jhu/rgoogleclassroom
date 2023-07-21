@@ -140,6 +140,7 @@ translate_questions_api <- function(quiz_path, output_path = NULL) {
 #' )
 #' }
 #'
+
 ottr_quiz_to_google <- function(quiz_path = NULL,
                                 course_id = NULL,
                                 quiz_title = NULL,
@@ -254,7 +255,17 @@ ottr_quiz_to_google <- function(quiz_path = NULL,
     }
   }
 
+  # Commit request to form
   result <- commit_to_form(form_id, google_forms_request, quiet = quiet)
+
+  # If it failed, stop and send error message.
+  if (names(result)[1] == "error") {
+    message(result$error)
+    stop("Error with commit to form")
+  }
+
+  # Return info as list
+  result <- list(result = result, form_id = form_id, new_quiz_info = new_quiz, quiz_url = quiz_link)
 
   return(result)
 }
