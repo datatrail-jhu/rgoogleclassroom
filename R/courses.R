@@ -3,7 +3,7 @@
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
-#' @return Data frame of course metadata
+#' @return Data frame of course metadata.
 #' @export
 #'
 #' @examples \dontrun{
@@ -38,7 +38,7 @@ get_course_list <- function(owner_id = get_owner_id()$id) {
   result_list <- fromJSON(result_content)
   result_df <- result_list$courses
 
-  return(result_df)
+  result_df
 }
 
 
@@ -49,6 +49,7 @@ get_course_list <- function(owner_id = get_owner_id()$id) {
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils browseURL
+#' @return List of metadata of newly created course.
 #' @export
 #'
 #' @examples \dontrun{
@@ -93,7 +94,7 @@ create_course <- function(owner_id = get_owner_id()$id, name = "New course", loa
   message(paste("Course created at", result_list$alternateLink))
   if (load_url) {browseURL(result_list$alternateLink)}
 
-  return(result_list)
+  result_list
 }
 
 #' Get Google Classroom Course Properties
@@ -122,7 +123,7 @@ get_course_properties <- function(course_id) {
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  return(result_list)
+  result_list
 }
 
 #' Archive a Google Classroom Course
@@ -158,7 +159,7 @@ archive_course <- function(course_id) {
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  return(result_list)
+  result_list
 }
 
 #' Delete a Google Classroom Course
@@ -187,5 +188,5 @@ delete_course <- function(course_id) {
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
 
-  return(result_list)
+  message("Course successfully deleted.")
 }

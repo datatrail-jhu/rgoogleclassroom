@@ -14,10 +14,14 @@ to get that: <https://edu.google.com/workspace-for-education/classroom/>
 
 ## Installation
 
-If you want the development version, you can install using the `remotes`
-package to install from GitHub.
+You can install this package from CRAN or the development version from
+GitHub with:
 
 ``` r
+# Install from CRAN
+install.packages("rgoogleclassroom")
+
+# or the development version from GitHub
 if (!("remotes" %in% installed.packages())) {
   install.packages("remotes")
 }
@@ -31,6 +35,8 @@ Select all the scopes you feel comfortable sharing. Note that you need
 to select certain scopes for certain functions to work.
 
 ``` r
+library(rgoogleclassroom)
+
 authorize()
 ```
 
@@ -90,8 +96,7 @@ new_course <- create_course(owner_id$id, name = "New course")
 
 ### Managing materials
 
-We can create new material for the students using by building this
-together like this:
+We can create new material for the students:
 
 ``` r
 # Create a course we will use for this test
@@ -139,7 +144,7 @@ course_id <- get_course_list()$courses$id[1]
 
 quiz_form_id <- create_quiz(
   course_id = course_id,
-  quiz_title = "new quiz",
+  quiz_title = "new quiz2",
   quiz_description = "This is a great quiz",
   due_date = "2025-12-1")
 ```
@@ -149,7 +154,7 @@ using these steps:
 
 ``` r
 create_multiple_choice_question(
-  form_id = quiz_form_id$formId,
+  form_id = quiz_form_id$form_info$formId,
   question = "What answer do you want?",
   choice_vector = c("A", "B", "C", "D"),
   correct_answer = 3,

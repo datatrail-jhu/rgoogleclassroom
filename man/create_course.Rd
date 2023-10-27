@@ -4,12 +4,21 @@
 \alias{create_course}
 \title{Create a new course}
 \usage{
-create_course(owner_id = get_owner_id()$id, name = NULL)
+create_course(
+  owner_id = get_owner_id()$id,
+  name = "New course",
+  load_url = TRUE
+)
 }
 \arguments{
 \item{owner_id}{The ownerId to use to create the course. Will attempt to retrieve ownerId based on credentials with get_owner_id()}
 
 \item{name}{Name of the new course. Required.}
+
+\item{load_url}{Load URL into an HTML Browser}
+}
+\value{
+List of metadata of newly created course.
 }
 \description{
 Create a new course
@@ -18,6 +27,6 @@ Create a new course
 \dontrun{
 
 owner_id <- get_owner_id()
-course_df <- create_course(owner_id, name = "New course")
+course_df <- create_course(name = "Computer Science 101")
 }
 }

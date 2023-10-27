@@ -9,6 +9,9 @@ get_materials_list(course_id)
 \arguments{
 \item{course_id}{ID of the course}
 }
+\value{
+Data frame of materials
+}
 \description{
 Get list of materials for a course
 }
