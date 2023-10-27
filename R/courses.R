@@ -6,13 +6,15 @@
 #' @export
 #'
 #' @examples \dontrun{
-#'
 #' owner_id <- get_owner_id()
 #' course_df <- get_course_list(owner_id)
 #' }
 get_course_list <- function(owner_id = get_owner_id()$id) {
   if (is.null(owner_id)) {
     stop("Need to provide owner_id from which to retrieve a list of courses from")
+  }
+  if (missing(owner_id)) {
+    message("Using `owner_id = \"", get_owner_id()$id, "\"`")
   }
 
   # Get endpoint url
