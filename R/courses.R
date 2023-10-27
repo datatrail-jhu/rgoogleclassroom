@@ -53,6 +53,10 @@ get_course_list <- function(owner_id = get_owner_id()$id) {
 #' course_df <- create_course(owner_id, name = "New course")
 #' }
 create_course <- function(owner_id = get_owner_id()$id, name = NULL) {
+  if (missing(owner_id)) {
+    message("Using `owner_id = \"", get_owner_id()$id, "\"`")
+  }
+
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.course.get")
 
