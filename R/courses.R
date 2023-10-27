@@ -3,6 +3,7 @@
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom assertthat assert_that is.string
+#' @return Data frame of course metadata
 #' @export
 #'
 #' @examples \dontrun{
@@ -35,13 +36,16 @@ get_course_list <- function(owner_id = get_owner_id()$id) {
   # Process and return results
   result_content <- content(result, "text")
   result_list <- fromJSON(result_content)
-  return(result_list)
+  result_df <- result_list$courses
+
+  return(result_df)
 }
 
 
 #' Create a new course
 #' @param owner_id The ownerId to use to create the course. Will attempt to retrieve ownerId based on credentials with get_owner_id()
 #' @param name Name of the new course. Required.
+#' @param load_url Load URL into an HTML Browser
 #' @importFrom httr config accept_json content
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils browseURL
@@ -50,12 +54,16 @@ get_course_list <- function(owner_id = get_owner_id()$id) {
 #' @examples \dontrun{
 #'
 #' owner_id <- get_owner_id()
-#' course_df <- create_course(owner_id, name = "New course")
+#' course_df <- create_course(name = "Computer Science 101")
 #' }
-create_course <- function(owner_id = get_owner_id()$id, name = NULL) {
+create_course <- function(owner_id = get_owner_id()$id, name = "New course", load_url = TRUE) {
   if (missing(owner_id)) {
     message("Using `owner_id = \"", get_owner_id()$id, "\"`")
   }
+  if (missing(name)) {
+    message("Using `name = \"", name, "\"`")
+  }
+
 
   # Get endpoint url
   url <- get_endpoint("classroom.endpoint.course.get")
@@ -83,8 +91,7 @@ create_course <- function(owner_id = get_owner_id()$id, name = NULL) {
   result_list <- fromJSON(result_content)
 
   message(paste("Course created at", result_list$alternateLink))
-
-  browseURL(result_list$alternateLink)
+  if (load_url) {browseURL(result_list$alternateLink)}
 
   return(result_list)
 }
