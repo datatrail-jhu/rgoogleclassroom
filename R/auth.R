@@ -1,5 +1,5 @@
-.onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Use authorize() function to begin give the package the proper credentials to run. ")
+.onLoad <- function(libname, pkgname) {
+  packageStartupMessage("To begin, run authorize() to supply rgoogleclassroom the proper credentials to run.")
 }
 
 .classroomEnv <- new.env(parent = emptyenv())
