@@ -42,13 +42,14 @@ authorize()
 
 ### Basics
 
-There are different objects on the Google API:
+There are different objects in the Google API:
 
-- courses
-- forms
-- courseWorks
-- courseWork Materials
-- topics
+- [Courses](https://developers.google.com/classroom/reference/rest/v1/courses)
+- [Forms](https://developers.google.com/classroom/reference/rest/v1/Form)
+- [courseWorks](https://developers.google.com/classroom/reference/rest/v1/courses.courseWork)
+- [courseWork
+  Materials](https://developers.google.com/classroom/reference/rest/v1/courses.courseWorkMaterials)
+- [Topics](https://developers.google.com/classroom/reference/rest/v1/courses.topics)
 
 Most of these objects have functions that do the following:
 
