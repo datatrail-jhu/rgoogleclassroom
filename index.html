@@ -73,11 +73,15 @@
 <p>You can <a href="https://datatrail-jhu.github.io/rgoogleclassroom/" class="external-link">read the rgoogleclassroom package documentation here</a>.</p>
 <p>To use this package you need to have a Google Classroom account. Go here to get that: <a href="https://edu.google.com/workspace-for-education/classroom/" class="external-link uri">https://edu.google.com/workspace-for-education/classroom/</a></p>
 <div class="section level2">
-<h2 id="how-to-install">How to install<a class="anchor" aria-label="anchor" href="#how-to-install"></a>
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>If you want the development version (not advised) you can install using the <code>remotes</code> package to install from GitHub.</p>
+<p>You can install this package from CRAN or the development version from GitHub with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"remotes"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="co"># Install from CRAN</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rgoogleclassroom"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or the development version from GitHub</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"remotes"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"datatrail-jhu/rgoogleclassroom"</span><span class="op">)</span></span></code></pre></div>
@@ -87,17 +91,19 @@
 </h2>
 <p>To start, you need to <code><a href="reference/authorize.html">authorize()</a></code> the package to access your files. Select all the scopes you feel comfortable sharing. Note that you need to select certain scopes for certain functions to work.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/datatrail-jhu/rgoogleclassroom" class="external-link">rgoogleclassroom</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="basics">Basics<a class="anchor" aria-label="anchor" href="#basics"></a>
 </h3>
-<p>There are different objects on the Google API:</p>
+<p>There are different objects in the Google API:</p>
 <ul>
-<li>courses</li>
-<li>forms</li>
-<li>courseWorks</li>
-<li>courseWork Materials</li>
-<li>topics</li>
+<li><a href="https://developers.google.com/classroom/reference/rest/v1/courses" class="external-link">Courses</a></li>
+<li><a href="https://developers.google.com/classroom/reference/rest/v1/Form" class="external-link">Forms</a></li>
+<li><a href="https://developers.google.com/classroom/reference/rest/v1/courses.courseWork" class="external-link">courseWorks</a></li>
+<li><a href="https://developers.google.com/classroom/reference/rest/v1/courses.courseWorkMaterials" class="external-link">courseWork Materials</a></li>
+<li><a href="https://developers.google.com/classroom/reference/rest/v1/courses.topics" class="external-link">Topics</a></li>
 </ul>
 <p>Most of these objects have functions that do the following:</p>
 <ul>
@@ -106,7 +112,14 @@
 <li><code>get_&lt;object&gt;_properties()</code></li>
 </ul>
 <p>For example:</p>
-<p><code>get_course_list(owner_id)</code> retrieves a list of courses for a particular owner id. <code><a href="reference/create_course.html">create_course()</a></code> creates a course <code>get_course_properties(course_id)</code> retrieves the properties of a course given its id.</p>
+<ul>
+<li>
+<code>get_course_list(owner_id)</code> retrieves a list of courses for a particular owner id.</li>
+<li>
+<code><a href="reference/create_course.html">create_course()</a></code> creates a course</li>
+<li>
+<code>get_course_properties(course_id)</code> retrieves the properties of a course given its id.</li>
+</ul>
 <p>These can be built together to be pretty nifty.</p>
 </div>
 </div>
@@ -123,12 +136,13 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">course_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_course_list.html">get_course_list</a></span><span class="op">(</span><span class="va">owner_id</span><span class="op">)</span></span></code></pre></div>
 <p>For the following examples, we will need to use</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Create a course</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>new_course <span class="ot">&lt;-</span> <span class="fu">create_course</span>(owner_id<span class="sc">$</span>id, <span class="at">name =</span> <span class="st">"New course"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a course</span></span>
+<span><span class="va">new_course</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_course.html">create_course</a></span><span class="op">(</span><span class="va">owner_id</span><span class="op">$</span><span class="va">id</span>, name <span class="op">=</span> <span class="st">"New course"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="managing-materials">Managing materials<a class="anchor" aria-label="anchor" href="#managing-materials"></a>
 </h3>
-<p>We can create new material for the students using by building this together like this:</p>
+<p>We can create new material for the students:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a course we will use for this test</span></span>
 <span><span class="va">owner_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_owner_id.html">get_owner_id</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -140,8 +154,8 @@
 <span></span>
 <span><span class="co"># Retrieve the material info</span></span>
 <span><span class="va">materials_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_materials_properties.html">get_materials_properties</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span>,</span>
-<span>                                             materials_id <span class="op">=</span> <span class="va">new_material</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
-<p>Retrieve the list of all the materials for the course</p>
+<span>                                           materials_id <span class="op">=</span> <span class="va">new_material</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
+<p>Retrieve the list of all the materials for the course:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">materials_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_materials_list.html">get_materials_list</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -149,7 +163,8 @@
 <h3 id="managing-courseworks">Managing courseworks<a class="anchor" aria-label="anchor" href="#managing-courseworks"></a>
 </h3>
 <p>We can manage courseworks!</p>
-<pre><code><span><span class="co"># Create a new coursework</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a new coursework</span></span>
 <span><span class="va">new_coursework</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_coursework.html">create_coursework</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span>,</span>
 <span>                                    title <span class="op">=</span> <span class="st">"New coursework"</span>,</span>
 <span>                                    due_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/period.html" class="external-link">hours</a></span><span class="op">(</span><span class="fl">24</span><span class="op">)</span><span class="op">)</span></span>
@@ -158,23 +173,24 @@
 <span><span class="va">course_work_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_coursework_properties.html">get_coursework_properties</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span>, coursework_id <span class="op">=</span> <span class="va">new_coursework</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Retrieve all the courseworks for this course</span></span>
-<span><span class="va">coursework_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_coursework_list.html">get_coursework_list</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre>
+<span><span class="va">coursework_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_coursework_list.html">get_coursework_list</a></span><span class="op">(</span>course_id <span class="op">=</span> <span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="make-a-quiz">Make a quiz<a class="anchor" aria-label="anchor" href="#make-a-quiz"></a>
 </h3>
 <p>We can build a quiz like this:</p>
-<pre><code><span><span class="va">course_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_course_list.html">get_course_list</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">courses</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">course_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_course_list.html">get_course_list</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">courses</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">quiz_form_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_quiz.html">create_quiz</a></span><span class="op">(</span></span>
 <span>  course_id <span class="op">=</span> <span class="va">course_id</span>,</span>
-<span>  quiz_title <span class="op">=</span> <span class="st">"new quiz"</span>,</span>
+<span>  quiz_title <span class="op">=</span> <span class="st">"new quiz2"</span>,</span>
 <span>  quiz_description <span class="op">=</span> <span class="st">"This is a great quiz"</span>,</span>
-<span>  due_date <span class="op">=</span> <span class="st">"2025-12-1"</span><span class="op">)</span></span></code></pre>
+<span>  due_date <span class="op">=</span> <span class="st">"2025-12-1"</span><span class="op">)</span></span></code></pre></div>
 <p>We can create a new multiple choice question in the quiz we just made by using these steps:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_multiple_choice_question.html">create_multiple_choice_question</a></span><span class="op">(</span></span>
-<span>  form_id <span class="op">=</span> <span class="va">quiz_form_id</span><span class="op">$</span><span class="va">formId</span>,</span>
+<span>  form_id <span class="op">=</span> <span class="va">quiz_form_id</span><span class="op">$</span><span class="va">form_info</span><span class="op">$</span><span class="va">formId</span>,</span>
 <span>  question <span class="op">=</span> <span class="st">"What answer do you want?"</span>,</span>
 <span>  choice_vector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>,</span>
 <span>  correct_answer <span class="op">=</span> <span class="fl">3</span>,</span>
@@ -184,9 +200,10 @@
 <div class="section level3">
 <h3 id="delete-or-archive-courses">Delete or archive courses<a class="anchor" aria-label="anchor" href="#delete-or-archive-courses"></a>
 </h3>
-<pre><code><span><span class="co"># Clean up this test course</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Clean up this test course</span></span>
 <span><span class="fu"><a href="reference/archive_course.html">archive_course</a></span><span class="op">(</span><span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/delete_course.html">delete_course</a></span><span class="op">(</span><span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre>
+<span><span class="fu"><a href="reference/delete_course.html">delete_course</a></span><span class="op">(</span><span class="va">new_course</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
