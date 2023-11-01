@@ -10,7 +10,8 @@ create_material(
   publish = FALSE,
   title = NULL,
   description = NULL,
-  link = NULL
+  link = NULL,
+  load_url = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,11 @@ create_material(
 \item{description}{A description for the new material}
 
 \item{link}{A URL to go with the associated material}
+
+\item{load_url}{Load URL into an HTML Browser}
+}
+\value{
+List of metadata of newly created material.
 }
 \description{
 Create a new material

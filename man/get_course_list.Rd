@@ -9,12 +9,14 @@ get_course_list(owner_id = get_owner_id()$id)
 \arguments{
 \item{owner_id}{owner_id to retrieve course listings from}
 }
+\value{
+Data frame of course metadata.
+}
 \description{
 Get list of courses
 }
 \examples{
 \dontrun{
-
 owner_id <- get_owner_id()
 course_df <- get_course_list(owner_id)
 }

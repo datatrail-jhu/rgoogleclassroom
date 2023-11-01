@@ -11,6 +11,9 @@ get_materials_properties(course_id, materials_id)
 
 \item{materials_id}{The material id you wish to retrieve}
 }
+\value{
+Data frame of material properties
+}
 \description{
 Get Google Classroom Materials properties
 }
